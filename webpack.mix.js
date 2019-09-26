@@ -11,30 +11,31 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.setPublicPath('src/public');
+mix.setPublicPath('public');
 
 //===== ADMIN =====//
 mix.styles([
-	'src/resources/css/admin/argon.css',
-	'src/resources/css/admin/admin.css',
-	'src/resources/vendor/animate.css',
-	'src/resources/vendor/croppie/croppie.css',
-], 'src/public/css/admin.min.css').version();
+	'resources/css/admin/argon.css',
+	'resources/css/admin/admin.css',
+	'resources/vendor/animate.css',
+	'resources/vendor/croppie/croppie.css',
+], 'public/css/admin.min.css').version();
 
 mix.js([
-    'src/resources/js/admin/argon.js',
-    'src/resources/js/admin/admin.js',
-], 'src/public/js/admin.min.js').version();
+    'resources/js/admin/argon.js',
+    'resources/js/admin/admin.js',
+], 'public/js/admin.min.js').version();
 
 mix.scripts([
-	'src/resources/vendor/jquery/dist/jquery.min.js',
-	'src/resources/vendor/bootstrap/dist/js/bootstrap.bundle.min.js',
-	'src/resources/vendor/notify.min.js',
-	'src/resources/vendor/croppie/croppie.min.js',
-    'src/resources/vendor/exif.js',
-    'src/resources/vendor/chart.js/dist/Chart.min.js',
-    'src/resources/vendor/chart.js/dist/Chart.extension.js'
-], 'src/public/js/admin-vendor.min.js').version();
+	'resources/vendor/jquery/dist/jquery.min.js',
+	'resources/vendor/bootstrap/dist/js/bootstrap.bundle.min.js',
+	'resources/vendor/notify.min.js',
+	'resources/vendor/croppie/croppie.min.js',
+    'resources/vendor/exif.js',
+    'resources/vendor/chart.js/dist/Chart.min.js',
+    'resources/vendor/chart.js/dist/Chart.extension.js',
+    'resources/vendor/jquery-ui.js'
+], 'public/js/admin-vendor.min.js').version();
 
 //===== FRONTEND =====//
 /*mix.js([

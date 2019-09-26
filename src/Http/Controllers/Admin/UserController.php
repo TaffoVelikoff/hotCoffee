@@ -83,6 +83,9 @@ class UserController extends Controller
             $user->croppieAttach($request->imagebase64, 'avatar', [600, 600]);
         }
 
+        // Verify user
+        $user->markEmailAsVerified();
+
         // Flash success message
         session()->flash('notify', array(
             'type'      => 'success',

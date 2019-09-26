@@ -8,6 +8,10 @@
 	if (! function_exists('coffee_asset')) {
 
 	   	function coffee_asset($asset) { 
+	   		if(!config('hotcoffee.load_published_assets') == false) {
+	    		return asset('hotcoffee/'.$asset);
+	    	}
+
 	    	return url('coffee_assets/'.$asset);
 		}
 	}

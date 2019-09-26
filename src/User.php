@@ -2,11 +2,11 @@
 
 namespace TaffoVelikoff\HotCoffee;
 
-use TaffoVelikoff\HotCoffee\Traits\HasCroppieAttachment;
 use Illuminate\Notifications\Notifiable;
 use Bnb\Laravel\Attachments\HasAttachment;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use TaffoVelikoff\HotCoffee\Traits\HasCroppieAttachment;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
