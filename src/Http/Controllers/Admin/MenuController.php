@@ -2,6 +2,7 @@
 
 namespace TaffoVelikoff\HotCoffee\Http\Controllers\Admin;
 
+use DB;
 use Illuminate\Http\Request;
 use TaffoVelikoff\HotCoffee\Menu;
 use App\Http\Controllers\Controller;
@@ -77,10 +78,20 @@ class MenuController extends Controller
       // Get the order
       parse_str($request->order, $items);
 
-      dd($items);
-
       // Update info page
       //$menu->update($request->all());
+
+      // Re-order items and re-assign parents
+      if(isset($items['item'])) {
+        $i = 0;
+        foreach ($items['item'] as $value=>$key) {
+          if($key == 'null')
+            $key = 0;
+          DB::table('menu_items')->where('id', $value)->update(['ord' => $i, 'parent' => (int)$key]);
+          $i++;
+        }
+      }
+
 
       // Flash success message
       session()->flash('notify', array(
@@ -106,23 +117,6 @@ class MenuController extends Controller
             'message' => __('hotcoffee::admin.suc_deleted')
         );
 
-    }
-
-     // Order menu
-    public function order() {
-      $i = 0;
-
-        // Re-order items and re-assign parents
-        foreach ($_POST['item'] as $value=>$key) {
-          
-          if($key == 'null') {
-            $key = 0;
-          }
-
-            DB::table('menus')->where('id', $value)->update(['ord' => $i]);
-            DB::table('menus')->where('id', $value)->update(['parent' => $key]);
-            $i++;
-        }
     }
 
 }

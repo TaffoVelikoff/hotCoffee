@@ -24,6 +24,7 @@ return [
     'edit'                  => 'Edit',
     'delete'                => 'Delete',
     'add'                   => 'Add',
+    'quick_add'             => 'Quick Add',
     'name'                  => 'Name',
     'title'                 => 'Title',
     'description'           => 'Description',
@@ -88,6 +89,8 @@ return [
 
     //===== Menu Items
     'menu_item_name_holder' => 'my page',
+    'url'                   => 'URL',
+    'new_window'            => 'open in new window',
 
     //===== Info Pages
     'infopage'              => 'Info Page',

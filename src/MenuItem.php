@@ -22,6 +22,13 @@ class MenuItem extends Model
     }
 
     /**
+     * Children
+     */
+    public function children() {
+        return MenuItem::where('parent', $this->id)->get();
+    }
+
+    /**
      * Delete event
      */
     public static function boot() {

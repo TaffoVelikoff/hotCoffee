@@ -20,7 +20,7 @@ class Menu extends Model
      * Menu relation
      */
     public function items() {
-        return $this->hasMany('TaffoVelikoff\HotCoffee\MenuItem');
+        return $this->hasMany('TaffoVelikoff\HotCoffee\MenuItem')->orderBy('ord', 'asc');
     }
 
     /**

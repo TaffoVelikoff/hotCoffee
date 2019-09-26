@@ -37,41 +37,45 @@
 											<div class="form-group">
 												<label class="form-control-label" for="input-keyword">{{ __('hotcoffee::admin.menu_items') }}</label>
 
-												<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-item">add</button>
+												<div class="float-right">
+													<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-item">
+														<i class="fas fa-plus-circle"></i> {{ __('hotcoffee::admin.quick_add') }}
+													</button>
 
-												<ol class="sortable">
-													@foreach($items as $item)
-														<li id="item-{{ $item->id }}">
-															<div>
-																<i class="fas fa-arrows-alt"></i> &nbsp; {{ $item->name }} 
-																<a href="{{ route('hotcoffee.admin.menuitems.destroy', $item) }}" class="float-right btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
-															</div>
-														</li>
-													@endforeach
-												</ol>
+													<a href="" class="btn btn-default btn-sm">
+														<i class="fas fa-folder-plus"></i> {{ __('hotcoffee::admin.add') }}
+													</a>
+												</div>
 
-												{{-- <ol class="sortable">
-													<li id="item-1">
-														<div><i class="fas fa-arrows-alt"></i> &nbsp; Item 1</div>
-													</li>
-													<li id="item-2">
-														<div><i class="fas fa-arrows-alt"></i> &nbsp; Item 2</div>
-													</li>
-													<li id="item-3">
-														<div><i class="fas fa-arrows-alt"></i> &nbsp; Item 3</div>
-													</li>
-													<li id="item-4">
-														<div><i class="fas fa-arrows-alt"></i> &nbsp; Item 4</div>
-														<ol>
-															<li id="item-5">
-																<div><i class="fas fa-arrows-alt"></i> &nbsp; Some sub-item content</div>
-															</li>
-															<li id="item-6">
-																<div><i class="fas fa-arrows-alt"></i> &nbsp; Some sub-item content</div>
-															</li>
+												<div class="row">
+													<div class="col-lg-12">
+														<ol class="sortable">
+															@foreach($items as $item)
+																@if($item->parent == 0)
+																	<li id="item-{{ $item->id }}">
+																		<div>
+																			<i class="fas fa-arrows-alt"></i> &nbsp; {{ $item->name }} 
+																			<a href="{{ route('hotcoffee.admin.menuitems.destroy', $item) }}" class="float-right btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
+																		</div>
+																		<ol>
+																			@foreach($item->children() as $child)
+																				<li id="item-{{ $child->id }}">
+																					<div>
+																						<i class="fas fa-arrows-alt"></i> &nbsp; {{ $child->name }}
+																						<a href="{{ route('hotcoffee.admin.menuitems.destroy', $child) }}" class="float-right btn btn-sm btn-danger">
+																							<i class="fas fa-trash-alt"></i>
+																						</a>
+																					</div>
+																				</li>
+																			@endforeach
+																		</ol>
+																	</li>
+																@endif
+															@endforeach
 														</ol>
-													</li>
-												</ol> --}}
+													</div>
+												</div>
+
 											</div>
 										</div>
 									</div>
@@ -107,42 +111,54 @@
 		// Deleting
 		$(document).on('click','.btn-save',function(){
 
-			var data = $('#item-form').serialize();
-			$('#modal-item').modal('hide');
+			if($('#input-name').val().length === 0) {
 
-		    $.ajax({
-				type: 'POST',
-				url: '{{ route('hotcoffee.admin.menuitems.store') }}',
-				data: data,
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				},
-				success: function(e){
-					$.notify({
-				        title: "<strong>Success</strong>",
-				        icon: 'glyphicon glyphicon-star',
-				        message: e.message
-				      },{
-				        type: e.type,
-				        animate: {
-				          enter: 'animated fadeInDown',
-				          exit: 'animated fadeOutRight'
-				        },
-				        placement: {
-				          from: 'top',
-				          align: 'right'
-				        },
-				        offset: 20,
-				        spacing: 10,
-				        z_index: 1031,
-				    });
-				    $('.sortable').prepend('<li id="item-90"><div class="ui-sortable-handle"><i class="fas fa-arrows-alt"></i> &nbsp; ' + e.name + '</div></li>');
-				},
-				error: function(){ 
-		        	notify('Ooops!', 'Something went wrong.', 'danger', 'top', 'right');
-				}
+				alert('Name is required');
 
-			});
+			} else {
+
+				var data = $('#item-form').serialize();
+				$('#modal-item').modal('hide');
+
+			    $.ajax({
+					type: 'POST',
+					url: '{{ route('hotcoffee.admin.menuitems.store') }}',
+					data: data,
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					success: function(e){
+						$.notify({
+					        title: "<strong>Success</strong>",
+					        icon: 'glyphicon glyphicon-star',
+					        message: e.message
+					      },{
+					        type: e.type,
+					        animate: {
+					          enter: 'animated fadeInDown',
+					          exit: 'animated fadeOutRight'
+					        },
+					        placement: {
+					          from: 'top',
+					          align: 'right'
+					        },
+					        offset: 20,
+					        spacing: 10,
+					        z_index: 1031,
+					    });
+					    $('.sortable').prepend('<li id="item-' + e.id + '"><div class="ui-sortable-handle"><i class="fas fa-arrows-alt"></i> &nbsp; ' + e.name + '<a href="' + e.del + '" class="float-right btn btn-sm btn-danger"><i class="fas fa-trash-alt"></div></li>');
+
+					    var result = $(".sortable").nestedSortable().sortable("serialize");
+	            		$("#order").val(result);
+	            		$('#item-form').trigger("reset");
+					},
+					error: function(){ 
+			        	notify('Ooops!', 'Something went wrong.', 'danger', 'top', 'right');
+					}
+
+				});
+
+			}
 
 		});
 

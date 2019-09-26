@@ -18,10 +18,10 @@ class CreateMenuItemsTable extends Migration
             $table->integer('menu_id');
             $table->integer('parent')->nullable();
             $table->string('name');
-            $table->string('link')->nullable();
-            $table->enum('type', ['nothing', 'link', 'page', 'scroll'])->default('nothing');
+            $table->string('url')->nullable();
+            $table->enum('type', ['nothing', 'link', 'page', 'scroll', 'route'])->default('nothing');
             $table->tinyInteger('new_window')->nullable();
-            $table->integer('ord');
+            $table->integer('ord')->default(0);
             $table->timestamps();
         });
     }
