@@ -19,11 +19,13 @@ return [
     */
 
     //===== Root
+    'ok'                    => 'OK',
     'error'                 => 'Error',
     'success'               => 'Success',
     'edit'                  => 'Edit',
     'delete'                => 'Delete',
     'add'                   => 'Add',
+    'update'                => 'Update',
     'quick_add'             => 'Quick Add',
     'name'                  => 'Name',
     'title'                 => 'Title',
@@ -56,6 +58,7 @@ return [
     'user_access_only'      => 'Only for users with roles:',
     'meta_desc'             => 'Meta description',
     'meta_desc_nfo'         => ' This is used when the page appears on social media & search engines. You can leave empty. The system will populate the "description" meta tag automatically, using the provided text in the content field.',
+    'none'                  => 'NONE',
 
     //===== Login
     'oops'                  => 'Oops!',
@@ -88,9 +91,19 @@ return [
     'menu_items'            => 'Menu items',
 
     //===== Menu Items
+    'menu_item'             => 'Menu item',
     'menu_item_name_holder' => 'my page',
     'url'                   => 'URL',
+    'or_page'               => 'or link to a page',
     'new_window'            => 'open in new window',
+    'icon_code'             => 'Icon code',
+    'store_order'           => 'Always click the SAVE button to store the order of the menu items.',
+    'example'               => 'Example',
+    'url_nfo_1'             => 'Enter a full url, starting with "http://" or "https://" to link to an external website.',
+    'url_nfo_2'             => 'Enter the name of a route to link to any part of your website.',
+    'url_nfo_3'             => 'For single page websites you can enter the name of the section (starting with "#") to scroll down to it.',
+    'url_nfo_4'             => 'Leave empty if you don\'t want to link to anything and just use it for a title for a submenu.',
+    'url_nfo_5'             => 'If you want to link to an external info page you can chose it from the drop down menu. In this case any URL entered in the field above will be ignored by the system.',
 
     //===== Info Pages
     'infopage'              => 'Info Page',

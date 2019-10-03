@@ -122,3 +122,8 @@ input[type='text'], textarea, select {
     margin-top: 8px;
     list-style-type: none;
 }
+
+/* Buttons */
+.btn-menu-actions {
+    margin-right: 8px;
+}

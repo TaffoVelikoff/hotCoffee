@@ -6,6 +6,7 @@ use DB;
 use Illuminate\Http\Request;
 use TaffoVelikoff\HotCoffee\Menu;
 use App\Http\Controllers\Controller;
+use TaffoVelikoff\HotCoffee\InfoPage;
 use TaffoVelikoff\HotCoffee\Http\Requests\Admin\StoreMenu;
 
 class MenuController extends Controller
@@ -40,6 +41,9 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu) {
 
+      // Get all info pages
+      view()->share('infos', InfoPage::all());
+
       // Get menu items
       view()->share('items', $menu->items);
 
@@ -66,20 +70,20 @@ class MenuController extends Controller
           'message'   => __('hotcoffee::admin.menu_create_suc')
       ));
 
-      return redirect()->route('hotcoffee.admin.menus.index');
+      return redirect()->route('hotcoffee.admin.menus.edit', $menu->id);
 
     }
 
     /**
      * Update
      */
-    public function update(Menu $Menu, StoreMenu $request) {
+    public function update(Menu $menu, StoreMenu $request) {
 
       // Get the order
       parse_str($request->order, $items);
 
       // Update info page
-      //$menu->update($request->all());
+      $menu->update($request->only('description'));
 
       // Re-order items and re-assign parents
       if(isset($items['item'])) {

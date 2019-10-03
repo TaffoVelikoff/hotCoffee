@@ -20,19 +20,7 @@ class MenuItemController extends Controller
       $item = MenuItem::create(request()->all());
 
       // Convert type
-      if(substr(request()->url, 0, 4) === "http") {
-        $item->type = 'link';
-      }
-
-      if(substr(request()->url, 0, 1) === "#") {
-        $item->type = 'scroll';
-      }
-
-      if(!empty(request()->url)) {
-        $item->type = 'route';
-      }
-
-      $item->save();
+      $item->setType(request());
 
       // Flash success message
       return [
@@ -46,6 +34,51 @@ class MenuItemController extends Controller
     }
 
     /**
+     * Edit
+     *
+     */
+    public function edit($item) {
+      return [
+        'id'          => $item->id,
+        'name'        => $item->name,
+        'url'         => $item->url,
+        'icon'        => $item->icon,
+        'page_id'     => $item->page_id,
+        'new_window'  => $item->new_window
+      ];
+    }
+
+    /**
+     * Update
+     *
+     */
+    public function update(MenuItem $item) {
+      
+      // Update item
+      $item->update(request()->only([
+        'name', 'page_id', 'new_window', 'url', 'icon', 'menu_id'
+      ]));
+
+      // Disable checkbox [needs a fix]
+      if(!request()->has('new_window')) {
+        $item->new_window = 0;
+        $item->save();
+      }
+
+      // Convert type
+      $item->setType(request());
+
+      // Flash success message
+      return [
+        'type'      => 'success',
+        'message'   => __('hotcoffee::admin.menu_update_suc'),
+        'id'        => $item->id,
+        'name'      => $item->name
+      ];
+
+    }
+
+    /**
      * Delete
      *
      */
@@ -53,13 +86,12 @@ class MenuItemController extends Controller
 
       $item->delete();
 
-      session()->flash('notify', array(
+      return [
           'type'  => 'warning',
           'title' => __('hotcoffee::admin.success').'!',
-          'message' => __('hotcoffee::admin.suc_deleted')
-      ));
-
-      return back();
+          'message' => __('hotcoffee::admin.suc_deleted'),
+          'id'    => $item->id
+      ];
 
     }
 }

@@ -27,38 +27,43 @@
                 <thead class="thead-light">
                   <tr>
                     <th scope="col">{{ __('hotcoffee::admin.name') }}</th>
+                    <th scope="col">{{ __('hotcoffee::admin.description') }}</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
 
                 	@foreach($menus as $menu)
-						<tr id="tr-{{ $menu->id }}">
+        						<tr id="tr-{{ $menu->id }}">
 
-							<td>
-								<a href="{{ route('hotcoffee.admin.menus.edit', $menu) }}">
-									{{ $menu->keyword }}
-								</a>
-							</td>
+        							<td>
+        								<a href="{{ route('hotcoffee.admin.menus.edit', $menu) }}">
+        									{{ $menu->keyword }}
+        								</a>
+        							</td>
 
-							<td class="text-right">
-								<div class="dropdown">
-									<a class="btn btn-sm btn-icon-only" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<i class="fas fa-edit"></i>
-									</a>
-									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-										<a href="{{ route('hotcoffee.admin.menus.edit', $menu) }}" class="dropdown-item">
-											<i class="fas fa-pencil-alt"></i> {{ __('hotcoffee::admin.edit') }}
-										</a>
-										
-										<button class="dropdown-item btn-delete-conf" data-id="{{ $menu->id }}" data-url="{{ route('hotcoffee.admin.menus.destroy', $menu) }}">
-											<i class="fas fa-trash-alt"></i> {{ __('hotcoffee::admin.delete') }}
-										</button>
-									</div>
-								</div>
-		                    </td>
+                      <td>
+                        {{ $menu->description }}
+                      </td>
 
-						</tr>
+        							<td class="text-right">
+        								<div class="dropdown">
+        									<a class="btn btn-sm btn-icon-only" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        										<i class="fas fa-edit"></i>
+        									</a>
+        									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+        										<a href="{{ route('hotcoffee.admin.menus.edit', $menu) }}" class="dropdown-item">
+        											<i class="fas fa-pencil-alt"></i> {{ __('hotcoffee::admin.edit') }}
+        										</a>
+        										
+        										<button class="dropdown-item btn-delete-conf" data-id="{{ $menu->id }}" data-url="{{ route('hotcoffee.admin.menus.destroy', $menu) }}">
+        											<i class="fas fa-trash-alt"></i> {{ __('hotcoffee::admin.delete') }}
+        										</button>
+        									</div>
+        								</div>
+        		                    </td>
+
+        						</tr>
                 	@endforeach
 
                 </tbody>

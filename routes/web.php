@@ -63,15 +63,12 @@ Route::group(['namespace' => 'TaffoVelikoff\HotCoffee\Http\Controllers'], functi
 				// Menu items
 				Route::group(['prefix' => 'menuitems'], function () {
 
-					/*Route::get('/create', 'Admin\MenuController@create')->name('hotcoffee.admin.menus.create');
-					Route::post('/', 'Admin\MenuController@store')->name('hotcoffee.admin.menuitems.store');
-
-					Route::get('/{menu}', 'Admin\MenuController@edit')->name('hotcoffee.admin.menus.edit');
-					Route::post('/{menu}', 'Admin\MenuController@update')->name('hotcoffee.admin.menuitems.update');*/
-
 					Route::post('/', 'Admin\MenuItemController@store')->name('hotcoffee.admin.menuitems.store');
+					Route::post('/{item}', 'Admin\MenuItemController@update')->name('hotcoffee.admin.menuitems.update');
 
-					Route::get('/{item}', 'Admin\MenuItemController@destroy')->name('hotcoffee.admin.menuitems.destroy');
+					Route::get('/{item}', 'Admin\MenuItemController@edit')->name('hotcoffee.admin.menuitems.edit');
+
+					Route::delete('/{item}', 'Admin\MenuItemController@destroy')->name('hotcoffee.admin.menuitems.destroy');
 				});
 
 				// Users

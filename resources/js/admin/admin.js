@@ -24,6 +24,8 @@ function notify(title='', message='', type='info', from='top', align='left') {
 $(document).on('click','.btn-delete',function(){
 	var data = $(this).data();
 	var tr = $('#tr-' + data.id);
+	var item = $('#item-' + data.id);
+
 	$('#modal-notification').modal('hide');
 
     $.ajax({
@@ -36,6 +38,7 @@ $(document).on('click','.btn-delete',function(){
 			notify(e.title, e.message, e.type, 'top', 'right');
 			if(e.type == 'warning') {
 				tr.remove();
+				item.remove();
 			}
 		},
 		error: function(){ 
@@ -135,40 +138,13 @@ $(document).ready(function(){
 	});
 });
 
-/*
+$(document).on('click', '#question-url', function(event) {
+	event.preventDefault();
+	$('#modal-question').modal('show');
+});
 
-// Adding a new row on item table
-function addRow(type, response, url, btnEditText = 'Edit', btnDelText = 'Delete') {
-	switch(type) {
-		case 'role':
-			$('#item-table tr:last').after('\
-				<tr>\
-					<td>' + response.id + '</td>\
-					<td>' + response.name + '</td>\
-					<td>' + response.description + '</td>\
-					<td class="text-right">\
-						<div class="dropdown">\
-							<a class="btn btn-sm btn-icon-only" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
-								<i class="fas fa-edit"></i>\
-							</a>\
-							<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">\
-								<a href="" class="dropdown-item">\
-									<i class="fas fa-pencil-alt"></i> ' + btnEditText +'\
-								</a>\
-								\
-								<button class="dropdown-item btn-delete" data-url="' + url + '" data-id="' + response.id + '">\
-									<i class="fas fa-trash-alt"></i> ' + btnDelText + '\
-								</button>\
-							</div>\
-						</div>\
-					</td>\
-				</tr>\
-			');
-		break;
-	}
-};
-
-var resp = {"id":99,"name":"tashak","description":"dadasdasdasd"}
-addRow('role', resp, 'http://localhost/hotcoffee/public/admin/roles', 'редакция', 'изтрий');
-*/
-
+// Open item editor
+$(document).on('click','.btn-add',function() {
+	$('#item-form').trigger("reset");
+	$('#modal-item').modal('show');
+});

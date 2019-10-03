@@ -26,7 +26,17 @@
 											</div>
 										</div>
 									</div>
-							
+								</div>
+
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="form-group">
+											<label class="form-control-label" for="input-description">{{ __('hotcoffee::admin.description') }}</label>
+											<div @if($errors->has('description')) class="has-danger" @endif>
+												<input type="text" name="description" class="form-control form-control-alternative @if($errors->has('description')) is-invalid-alt @endif" value="@if(session('post')){{ session('post.description') }}@elseif(isset($edit)){{ $edit->description }}@endif" />
+											</div>
+										</div>
+									</div>
 								</div>
 
 								<hr/>
@@ -38,13 +48,15 @@
 												<label class="form-control-label" for="input-keyword">{{ __('hotcoffee::admin.menu_items') }}</label>
 
 												<div class="float-right">
-													<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-item">
-														<i class="fas fa-plus-circle"></i> {{ __('hotcoffee::admin.quick_add') }}
+													<button type="button" class="btn btn-default btn-sm btn-add">
+														<i class="fas fa-plus-circle"></i> {{ __('hotcoffee::admin.add') }}
 													</button>
+												</div>
 
-													<a href="" class="btn btn-default btn-sm">
-														<i class="fas fa-folder-plus"></i> {{ __('hotcoffee::admin.add') }}
-													</a>
+												<div class="row">
+													<div class="col-lg-12">
+														<small>{{ __('hotcoffee::admin.store_order') }}</small>
+													</div>
 												</div>
 
 												<div class="row">
@@ -54,16 +66,26 @@
 																@if($item->parent == 0)
 																	<li id="item-{{ $item->id }}">
 																		<div>
-																			<i class="fas fa-arrows-alt"></i> &nbsp; {{ $item->name }} 
-																			<a href="{{ route('hotcoffee.admin.menuitems.destroy', $item) }}" class="float-right btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
+																			<i class="fas fa-arrows-alt"></i> &nbsp; <span id="item-name-{{ $item->id }}">{{ $item->name }}</span>
+																			
+																			<a class="float-right btn btn-sm btn-danger btn-delete-conf btn-menu-actions" data-id="{{ $item->id }}" data-url="{{ route('hotcoffee.admin.menuitems.destroy', $item) }}">
+																				<i class="fas fa-trash-alt"></i>
+																			</a>
+
+																			<a class="float-right btn btn-sm btn-success btn-menu-actions btn-menu-edit" data-id="{{ $item->id }}">
+																				<i class="fas fa-pencil-alt"></i>
+																			</a>
 																		</div>
 																		<ol>
 																			@foreach($item->children() as $child)
 																				<li id="item-{{ $child->id }}">
 																					<div>
 																						<i class="fas fa-arrows-alt"></i> &nbsp; {{ $child->name }}
-																						<a href="{{ route('hotcoffee.admin.menuitems.destroy', $child) }}" class="float-right btn btn-sm btn-danger">
+																						<a class="float-right btn btn-sm btn-danger btn-delete-conf" data-id="{{ $child->id }}" data-url="{{ route('hotcoffee.admin.menuitems.destroy', $child) }}">
 																							<i class="fas fa-trash-alt"></i>
+																						</a>
+																						<a class="float-right btn btn-sm btn-success btn-menu-actions btn-menu-edit" data-id="{{ $child->id }}">
+																							<i class="fas fa-pencil-alt"></i>
 																						</a>
 																					</div>
 																				</li>
@@ -107,9 +129,53 @@
 
 @section('page_js')
 	<script type="text/javascript">
-		
-		// Deleting
-		$(document).on('click','.btn-save',function(){
+
+		$(document).on('click','.btn-add',function() {
+			$('.btn-save').show();
+			$('.btn-update').hide();
+		});
+
+		$(document).on('click','.btn-menu-edit',function() {
+			var endpoint = '{{ url(config('hotcoffee.prefix').'/menuitems') }}' + '/' + $(this).data('id');
+
+			$.ajax({
+				type: 'GET',
+				url: endpoint,
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				success: function(e){
+					$('#input-name').val(e.name);
+					$('#input-url').val(e.url);
+					$('#input-icon').val(e.icon);
+
+					if(e.new_window == 1) {
+						$('#new-window').prop('checked', true);
+					} else {
+						$('#new-window').prop('checked', false);
+					}
+
+					if(e.page_id != 0) {
+						$("#input-page").val(e.page_id);
+					} else {
+						$("#input-page").val(0);
+					}
+
+					$('.btn-update').data("id", e.id);
+
+					$('.btn-update').show();
+					$('.btn-save').hide();
+
+					$('#modal-item').modal('show');
+				},
+				error: function(){ 
+		        	alert('Something went wrong...');
+				}
+
+			});
+		});
+
+		$(document).on('click','.btn-save',function() {
 
 			if($('#input-name').val().length === 0) {
 
@@ -146,11 +212,62 @@
 					        spacing: 10,
 					        z_index: 1031,
 					    });
-					    $('.sortable').prepend('<li id="item-' + e.id + '"><div class="ui-sortable-handle"><i class="fas fa-arrows-alt"></i> &nbsp; ' + e.name + '<a href="' + e.del + '" class="float-right btn btn-sm btn-danger"><i class="fas fa-trash-alt"></div></li>');
+					    $('.sortable').prepend('<li id="item-' + e.id + '"><div class="ui-sortable-handle"><i class="fas fa-arrows-alt"></i> &nbsp; ' + e.name + '<a class="float-right btn btn-sm btn-danger btn-delete-conf" data-id="' + e.id + '" data-url="' + e.del + '"><i class="fas fa-trash-alt"></i></a><a class="float-right btn btn-sm btn-success btn-menu-actions btn-menu-edit" data-id="' + e.id + '"><i class="fas fa-pencil-alt"></i></a></div></li>');
 
 					    var result = $(".sortable").nestedSortable().sortable("serialize");
 	            		$("#order").val(result);
-	            		$('#item-form').trigger("reset");
+					},
+					error: function(){ 
+			        	notify('Ooops!', 'Something went wrong.', 'danger', 'top', 'right');
+					}
+
+				});
+
+			}
+
+		});
+
+		$(document).on('click','.btn-update',function() {
+
+			var endpoint = '{{ url(config('hotcoffee.prefix').'/menuitems') }}' + '/' + $(this).data('id');
+
+			if($('#input-name').val().length === 0) {
+
+				alert('Name is required');
+
+			} else {
+
+				var data = $('#item-form').serialize();
+				$('#modal-item').modal('hide');
+
+			    $.ajax({
+					type: 'POST',
+					url: endpoint,
+					data: data,
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					success: function(e){
+						$.notify({
+					        title: "<strong>Success</strong>",
+					        icon: 'glyphicon glyphicon-star',
+					        message: e.message
+					      },{
+					        type: e.type,
+					        animate: {
+					          enter: 'animated fadeInDown',
+					          exit: 'animated fadeOutRight'
+					        },
+					        placement: {
+					          from: 'top',
+					          align: 'right'
+					        },
+					        offset: 20,
+					        spacing: 10,
+					        z_index: 1031,
+					    });
+
+					    $('#item-name-' + e.id).html(e.name);
 					},
 					error: function(){ 
 			        	notify('Ooops!', 'Something went wrong.', 'danger', 'top', 'right');
