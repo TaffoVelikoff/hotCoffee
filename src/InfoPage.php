@@ -4,12 +4,13 @@ namespace TaffoVelikoff\HotCoffee;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use TaffoVelikoff\HotCoffee\Traits\HasSef;
 use Bnb\Laravel\Attachments\HasAttachment;
 
 class InfoPage extends Model
 {
 
-	use HasTranslations, HasAttachment;
+	use HasTranslations, HasAttachment, HasSef;
 	
 	public $translatable = ['title', 'content', 'meta_desc'];
 
@@ -42,6 +43,9 @@ class InfoPage extends Model
 
             // Remove attachments
             $info->attachments()->delete();
+
+            // Remove sef
+            $info->sef()->delete();
 
         });
     }

@@ -45,6 +45,7 @@ return [
     'admin_area'            => 'Admin Area',
     'developed_by'          => 'Developed by',
     'key'                   => 'Key',
+    'custom_url'            => 'Custom Url',
     'from'                  => 'from',
     'keyword'               => 'Keyword',
     'attach_images'         => 'Attach Images',
@@ -59,6 +60,15 @@ return [
     'meta_desc'             => 'Meta description',
     'meta_desc_nfo'         => ' This is used when the page appears on social media & search engines. You can leave empty. The system will populate the "description" meta tag automatically, using the provided text in the content field.',
     'none'                  => 'NONE',
+    'comma_sep'             => 'Comma seperated.',
+    'see_all'               => 'see all',
+    'view'                  => 'View',
+    'pages'                 => 'Pages',
+    'date'                  => 'Date',
+    'name'                  => 'name',
+    'time'                  => 'time',
+    'no_nfo_yet'            => 'Nothing to show yet ...',
+    'version'               => 'Version',
 
     //===== Login
     'oops'                  => 'Oops!',
@@ -82,6 +92,18 @@ return [
     'dashboard'             => 'Dashboard',
     'infopages'             => 'Info Pages',
     'menus'                 => 'Menus',
+    'filemanager'           => 'File Manager',
+
+    //===== Dashboard
+    'registered_users'      => 'Registered users',
+    'registered_users_nfo'  => 'Total number of registered users (inc. Admins)',
+    'latest_user'           => 'Latest user',
+    'latest_user_nfo'       => 'Latest registered user',
+    'login_log'             => 'Admin login history',
+    'clear_history'         => 'Clear history',
+    'clear_auth_sure'       => 'Are you sure you want to delete the whole login history?',
+    'clear_auth_done'       => 'The auth history was succesfully deleted.',
+    'timezone_nfo'          => 'Can be changed on the settings page.',
 
     //===== Menus
     'menus'                 => 'Menus',
@@ -116,6 +138,14 @@ return [
     'page_content_nfo'      => 'Use the "Attach images" field bellow to attach any image files to a page. It is not recommended to upload images directly into the WYSIWYG editor (page content text field), rather use "Insert" -> "Image..." and give an external source. Put pictures in the WYSIWYG editor only if you need them at a specific place.',
     'page_roles_only'       => 'Only logged in users with these roles have access',
     'page_roles_all'        => 'All users have access to this page.',
+    'sef_nfo'               => 'At least 3 charecters long. Valid symbols: 0-9, A-Z, a-z, _, -',
+
+    //===== Articles
+    'articles'              => 'Articles',
+    'tags'                  => 'Tags',
+    'article_create_suc'    => 'The article was created successfully.',
+    'article_update_suc'    => 'The article was updated succesfully.',
+    'with_tag'              => 'with tag',
 
     //===== Users
     'user_create'           => 'Add a new user',
@@ -143,6 +173,10 @@ return [
     'role_edit'             => 'Edit role',
     'role_info'             => 'Role information',
     'role_root'             => 'You can not edit the admin role!',
+
+    //===== File Manager
+    'fm_images'                => 'images',
+    'fm_files'                 => 'other files',
 
     //===== Settings
     'main_mail'             => 'Main e-mail',
@@ -191,6 +225,11 @@ return [
     'err_title_min'         => 'The title for one of the languages [:lang] is too short.',
     'err_must_be_image'     => 'Trying to upload an invalid image file.',
     'err_image_upload'      => 'Problem with uploading one of the images. Check "upload_max_filesize" in your PHP settings.',
+    'err_sef_req'           => 'The custom url is required.',
+    'err_sef_min'           => 'Custom url should be at least 3 charecters long.',
+    'err_sef_max'           => 'Custom url should be no more than 64 charecters long.',
+    'err_sef_spaces'        => 'You can\'t have any empty spaces in the custom url link',
+    'err_sef_alpha_dash'    => 'Some of the charecters in the custom url are invalid.',
 
     'err_keyword_required'  => 'The keyword is requried.',
     'err_keyword_min'       => 'Keyword should be at least 3 charecters long.',

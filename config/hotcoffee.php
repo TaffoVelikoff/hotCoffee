@@ -28,6 +28,32 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Starting Route
+    |--------------------------------------------------------------------------
+    |
+    | The name of the default route where the admin users are redirected to when 
+    | they login.
+    |
+    */
+
+    'start_route'   => 'hotcoffee.admin.dashboard',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Where to load the assets from?
+    |--------------------------------------------------------------------------
+    |
+    | If you want to make any changes to css/js of the admin dashboard you need 
+    | to first publush the assets. Then you can change the value of the parameter
+    | bellow to true in order to make the package load the assets from your app's
+    | public folder, instead of it's own folder.
+    |
+    */
+
+    'load_published_assets'  => false,
+
+    /*
+    |--------------------------------------------------------------------------
     | Languages
     |--------------------------------------------------------------------------
     |
@@ -37,10 +63,28 @@ return [
     | for each language. If you don't need multiple language support leave only the
     | locale your app is going to use. Read more on how to create your own translatable
     | models and translatable fields for the admin panel pages in the documentation.
+    | The first language in the array is going to be the default one.
     |
     */
 
     'languages' => [
+        'en'    => 'English',
+        'bg'    => 'Bulgarian',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Zone Languages
+    |--------------------------------------------------------------------------
+    |
+    | At this time hotCoffee comes with English and Bulgarian translations for 
+    | it's admin zone interface. You can comment out the ones you don't need
+    | from the array bellow. The first language in the array is going to be the 
+    | default one.
+    |
+    */
+
+    'admin_languages' => [
         'en'    => 'English',
         'bg'    => 'Bulgarian',
     ],
@@ -59,6 +103,21 @@ return [
     'page_groups' => [
         'default' => 'default group / uncategorised',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Auth history
+    |--------------------------------------------------------------------------
+    |
+    | Keep track of admin user logins.
+    |
+    | auth_log - True for enabled and False to disable
+    | auth_log_count - How many recent logs to display in dashboard
+    |
+    */
+
+    'auth_log'          => true,
+    'auth_log_count'    => 10,
 
     /*
     |--------------------------------------------------------------------------
@@ -91,8 +150,23 @@ return [
         'dashboard' => [
             'name'      => 'hotcoffee::admin.dashboard', 
             'route'     => 'hotcoffee.admin.dashboard',
-            'views'     => ['hotcoffee::admin.dashboard'],
+            'views'     => ['admin.dashboard'],
             'icon'      => 'ni ni-tv-2',
+        ],
+
+        'menus' => [
+            'name'      => 'hotcoffee::admin.menus', 
+            'route'     => 'hotcoffee.admin.menus.index',
+            'views'     => ['hotcoffee::admin.menus', 'hotcoffee::admin.menu'],
+            'icon'      => 'ni ni-bullet-list-67',
+            'hr'        => false,
+        ],
+
+        'articles' => [
+            'name'      => 'hotcoffee::admin.articles', 
+            'route'     => 'hotcoffee.admin.articles.index',
+            'views'     => ['hotcoffee::admin.articles', 'hotcoffee::admin.article'],
+            'icon'      => 'ni ni-single-copy-04',
             'hr'        => false,
         ],
 
@@ -101,6 +175,14 @@ return [
             'route'     => 'hotcoffee.admin.infopages.index',
             'views'     => ['hotcoffee::admin.infopages', 'hotcoffee::admin.infopage'],
             'icon'      => 'ni ni-collection',
+            'hr'        => false,
+        ],
+
+        'filemanager' => [
+            'name'      => 'hotcoffee::admin.filemanager', 
+            'route'     => 'hotcoffee.admin.filemanager',
+            'views'     => ['hotcoffee::admin.filemanager'],
+            'icon'      => 'ni ni-folder-17',
             'hr'        => true,
         ],
 
@@ -206,6 +288,91 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Attachable images to models
+    |--------------------------------------------------------------------------
+    | For the Article (blog posts/news) and InfoPage model you can use by default
+    | the WYSIWYG editor to upload images and other files. However, if you have a
+    | special template for the frontend (for example a slider with product photos)
+    | the WYSIWYG becomes absolite. In this case a better way would be to use the 
+    | "ATTACH IMAGES" section and create dedicated attachments. By default this 
+    | option is enabled, but if you think you rather only use the WYSIWYG editor to
+    | add files to an article or an info page you can disable it bellow.
+    |
+    */
+
+    'info_image_atts'       => true,
+    'article_image_atts'    => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Models with search engine friendly urls (SEF)
+    |--------------------------------------------------------------------------
+    | Every model with the HasSef trait can use search engine friendly urls.
+    | The package has an included SefController, wich will handle this.
+    | Below you can specify what model uses what controller and method to display
+    | the page (or in other words view the model).
+    |
+    */
+
+    'sefs'  => [
+        'TaffoVelikoff\HotCoffee\Article' => [
+            'controller' => 'App\Http\Controllers\Front\ArticleController', 
+            'method' => 'index'
+        ],
+        'TaffoVelikoff\HotCoffee\InfoPage' => [
+            'controller' => 'App\Http\Controllers\Front\InfoPageController', 
+            'method' => 'index'
+        ],
+        // 'App\Product' => [
+        //     'controller' => 'App\Http\Controllers\Front\ProductController', 
+        //     'method' => 'index'
+        // ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Searchable models
+    |--------------------------------------------------------------------------
+    | These models will be included on the search page
+    |
+    | == LABEL:
+    |   The label of the tab in results.
+    |
+    | == FIELDS:
+    |   The database fields to search.
+    |
+    | == INDEX:
+    |   Model properties to show in the results table.
+    |
+    | == ROUTE:
+    |   The name of the route where admins will be redirected to when clicking 
+    |   the "VIEW" button.
+    |
+    */
+
+    'searchables' => [
+        'users' => [
+            'label'     => 'hotcoffee::admin.users',
+            'fields'    => ['name', 'email'],
+            'index'     => ['id', 'name', 'email'],
+            'route'     => 'hotcoffee.admin.users.edit'
+        ],
+        'info_pages'    => [
+            'label'     => 'hotcoffee::admin.pages',
+            'fields'    => ['title', 'content'],
+            'index'     => ['id', 'title'],
+            'route'     => 'hotcoffee.admin.infopages.edit'
+        ],
+        'articles'  => [
+            'label'     => 'hotcoffee::admin.articles',
+            'fields'    => ['title', 'content'],
+            'index'     => ['id', 'title'],
+            'route'     => 'hotcoffee.admin.articles.edit'
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Exportable models
     |--------------------------------------------------------------------------
     | These models will be included on the export page
@@ -230,14 +397,14 @@ return [
             'file_type' => 'csv',
         ],
 
-        // 'test' => [ // Custom export case
-        //     'name'      => 'custom',
-        //     'type'      => 'custom',
-        //     'case'      => 'custom',
-        //     'fields'    => ['id', 'name', 'email'],
-        //     'file_name' => 'custom',
-        //     'file_type' => 'xls',
-        // ],
+        'test' => [ // Custom export case
+            'name'      => 'custom',
+            'type'      => 'custom',
+            'case'      => 'custom',
+            'fields'    => ['id', 'name', 'email'],
+            'file_name' => 'custom',
+            'file_type' => 'xls',
+        ],
 
     ],
 ];

@@ -20,7 +20,9 @@
   <link href="{{ coffee_asset('plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
 
   <!-- CSS -->
-  <link rel="stylesheet" type="text/css" href="{{ coffee_asset('css/admin.min.css') }}">
+  <link type="text/css" href="{{ coffee_asset('css/admin/argon.css') }}" rel="stylesheet">
+  <link type="text/css" href="{{ coffee_asset('css/admin/admin.css') }}" rel="stylesheet">
+  <link type="text/css" href="{{ coffee_asset('vendor/animate.css') }}" rel="stylesheet">
 </head>
 
 <body class="bg-default">
@@ -92,8 +94,18 @@
   </div>
 
   <!-- JS -->
-  <script src="{{ coffee_asset('js/admin-vendor.min.js') }}"></script> 
-  <script src="{{ coffee_asset('js/admin.min.js') }}"></script> 
+  <script src="{{ coffee_asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ coffee_asset('vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ coffee_asset('vendor/notify.min.js') }}"></script>
+  <script src="{{ coffee_asset('vendor/croppie/croppie.min.js') }}"></script>
+  <script src="{{ coffee_asset('vendor/exif.js') }}"></script>
+  <script src="{{ coffee_asset('vendor/chart.js/dist/Chart.min.js') }}"></script>
+  <script src="{{ coffee_asset('vendor/chart.js/dist/Chart.extension.js') }}"></script>
+  <script src="{{ coffee_asset('vendor/jquery-ui.js') }}"></script>
+  <script src="{{ coffee_asset('plugins/nested_sortable/jquery.mjs.nestedSortable.js') }}"></script>
+
+  <script src="{{ coffee_asset('js/admin/admin.js') }}"></script>
+  <script src="{{ coffee_asset('js/admin/argon.js') }}"></script>
 
   @include('hotcoffee::admin.sections.notify')
 

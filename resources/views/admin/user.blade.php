@@ -149,6 +149,22 @@
                   </div>
                 </div>
 
+                @if(count(config('hotcoffee.admin_languages')) > 1)
+                  <hr class="my-4"/>
+
+                  <!-- Description -->
+                  <h6 class="heading-small text-muted mb-4">{{ __('hotcoffee::admin.user_about') }}</h6>
+                  <div class="pl-lg-4">
+                    <div class="form-group focused">
+                      <select id="input-locale" class="form-control form-control-alternative no-border-radius" name="locale">
+                          @foreach(config('hotcoffee.admin_languages') as $acronym=>$language)
+                            <option value="{{ $acronym }}"  @if( (session('post') && session('post.locale') == $acronym) || (isset($edit) && $edit->locale == $acronym) ) selected @endif>{{ $language }}</option>
+                          @endforeach
+                      </select>
+                    </div>
+                  </div>
+                @endif
+
                 <hr class="my-4"/>
 
                 <h6 class="heading-small text-muted mb-4">{{ __('hotcoffee::admin.user_role') }}</h6>

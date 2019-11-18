@@ -69,6 +69,9 @@ class InfoPageController extends Controller
           )
       );
 
+      // Save custom url (SEF)
+      $info->saveSef($request->keyword);
+
       // Attach pictures
       if($request->file('images')) {
           foreach($request->file('images') as $file) {
@@ -79,7 +82,7 @@ class InfoPageController extends Controller
       // Flash success message
       session()->flash('notify', array(
           'type'      => 'success',
-          'message'   => __('admin.page_create_suc')
+          'message'   => __('hotcoffee::admin.page_create_suc')
       ));
 
       return redirect()->route('hotcoffee.admin.infopages.index');
@@ -99,6 +102,9 @@ class InfoPageController extends Controller
           )
       );
 
+      // Save custom url (SEF)
+      $info->saveSef($request->keyword);
+
       // Attach pictures
       if($request->file('images')) {
           foreach($request->file('images') as $file) {
@@ -109,7 +115,7 @@ class InfoPageController extends Controller
       // Flash success message
       session()->flash('notify', array(
           'type'      => 'success',
-          'message'   => __('admin.page_create_suc')
+          'message'   => __('hotcoffee::admin.page_update_suc')
       ));
 
       return redirect()->route('hotcoffee.admin.infopages.index');

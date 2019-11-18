@@ -34,43 +34,43 @@
                 <tbody>
 
                 	@foreach($infos as $info)
-						<tr id="tr-{{ $info->id }}">
+      						<tr id="tr-{{ $info->id }}">
 
-							<td>
-								<a href="{{ route('hotcoffee.admin.infopages.edit', $info) }}">{{ $info->title }}</a>
-							</td>
+      							<td>
+      								<a href="{{ route('hotcoffee.admin.infopages.edit', $info) }}">{{ $info->title }}</a>
+      							</td>
 
-							<td>
-								{{ $info->key }}
-							</td>
+      							<td>
+      								{{ $info->key }}
+      							</td>
 
-							<td class="text-right">
-								<div class="dropdown">
-									<a class="btn btn-sm btn-icon-only" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<i class="fas fa-edit"></i>
-									</a>
-									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-										<a href="{{ route('hotcoffee.admin.infopages.edit', $info) }}" class="dropdown-item">
-											<i class="fas fa-pencil-alt"></i> {{ __('hotcoffee::admin.edit') }}
-										</a>
-										
-										<button class="dropdown-item btn-delete-conf" data-id="{{ $info->id }}" data-url="{{ route('hotcoffee.admin.infopages.destroy', $info) }}">
-											<i class="fas fa-trash-alt"></i> {{ __('hotcoffee::admin.delete') }}
-										</button>
-									</div>
-								</div>
-		          </td>
+      							<td class="text-right">
+      								<div class="dropdown">
+      									<a class="btn btn-sm btn-icon-only" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      										<i class="fas fa-edit"></i>
+      									</a>
+      									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+      										<a href="{{ route('hotcoffee.admin.infopages.edit', $info) }}" class="dropdown-item">
+      											<i class="fas fa-pencil-alt"></i> {{ __('hotcoffee::admin.edit') }}
+      										</a>
+      										
+      										<button class="dropdown-item btn-delete-conf" data-id="{{ $info->id }}" data-url="{{ route('hotcoffee.admin.infopages.destroy', $info) }}">
+      											<i class="fas fa-trash-alt"></i> {{ __('hotcoffee::admin.delete') }}
+      										</button>
+      									</div>
+      								</div>
+      		          </td>
 
-						</tr>
+      						</tr>
                 	@endforeach
 
                 </tbody>
               </table>
             </div>
 
-			<div class="card-footer py-4">
-				{{ $infos->links() }}
-			</div>
+      			<div class="card-footer py-4">
+      				{{ $infos->links() }}
+      			</div>
 
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 namespace TaffoVelikoff\HotCoffee;
 
+use TaffoVelikoff\HotCoffee\InfoPage;
 use Illuminate\Database\Eloquent\Model;
 
 class MenuItem extends Model
@@ -22,7 +23,7 @@ class MenuItem extends Model
     }
 
     /**
-     * Children
+     * Get all children items
      */
     public function children() {
         return MenuItem::where('parent', $this->id)->get();
@@ -50,6 +51,32 @@ class MenuItem extends Model
         }
 
         $this->save();
+    }
+
+    /**
+     * Get the route
+     */
+    public function getRoute() {
+        switch ($this->type) {
+            case 'nothing':
+                return 'javascript:void(0);';
+                break;
+
+            case 'link':
+            case 'scroll':
+                return $this->url;
+
+            case 'page':
+                $page = InfoPage::find($this->page_id);
+                return localeUrl($page->keyword());
+
+            case 'route':
+                return route($this->url);
+
+            default:
+                return '#';
+                break;
+        }
     }
 
     /**

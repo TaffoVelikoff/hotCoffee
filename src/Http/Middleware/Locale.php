@@ -2,7 +2,9 @@
 
 namespace TaffoVelikoff\HotCoffee\Http\Middleware;
 
+use Route;
 use Closure;
+use Illuminate\Support\Facades\URL;
 
 class Locale
 {
@@ -15,9 +17,20 @@ class Locale
      */
     public function handle($request, Closure $next)
     {
-        $prefix = substr($request->route()->getPrefix(), 1);
+        //dump($request->route());
 
-        ($prefix === '') ? app()->setLocale(config('app.locale')) : app()->setLocale($prefix);
+        if(!isset($request->route()->parameters['keyword']))
+            URL::defaults(['locale' => '']);
+
+        if(isset($request->route()->parameters['keyword']) && array_key_exists($request->route()->parameters['keyword'], config('hotcoffee.languages'))) {
+            URL::defaults(['locale' => $request->route()->parameters['keyword']]);
+            app()->setLocale($request->route()->parameters['keyword']);
+        }
+
+        if(isset($request->route()->parameters['locale']) && array_key_exists($request->route()->parameters['locale'], config('hotcoffee.languages'))) {
+            app()->setLocale($request->route()->parameters['locale']);
+            URL::defaults(['locale' => $request->route()->parameters['locale']]);
+        }
         
         return $next($request);
     }

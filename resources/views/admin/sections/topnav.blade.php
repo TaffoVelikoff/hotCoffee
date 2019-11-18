@@ -7,13 +7,14 @@
 
     @if(config('hotcoffee.ui_search_bar') == true)
       <!-- Search -->
-      <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto" action="" method="post">
+      <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto" action="{{ route('hotcoffee.admin.search') }}" method="post">
+        {{ csrf_field() }}
         <div class="form-group mb-0">
           <div class="input-group input-group-alternative">
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
-            <input class="form-control" placeholder="{{ __('hotcoffee::admin.search') }}" type="text">
+            <input class="form-control" placeholder="{{ __('hotcoffee::admin.search') }}" type="text" name="keyword" style="color: white !important;" @if(isset(request()->keyword)) value="{{ request()->keyword }}" @endif>
           </div>
         </div>
       </form>

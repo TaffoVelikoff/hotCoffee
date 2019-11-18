@@ -20,19 +20,35 @@ Route::group(['namespace' => 'TaffoVelikoff\HotCoffee\Http\Controllers'], functi
 		//===== THUMBNAILER =====//
 		Route::get('/img/{path}', 'ThumbnailController@show')->where('path', '.*')->name('hotcoffee.thumbnail');
 
+		//=====  File manager =====//
+		Route::group(['middleware' => 'hotcoffee.auth'], function () {
+			Route::get('/laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show')->name('hotcoffee.filemanager');;
+			Route::post('/laravel-filemanager/upload', '\UniSharp\LaravelFilemanager\Controllers\UploadController@upload');
+		});
+
 		//===== ADMIN =====//
 		Route::group(['prefix' => config('hotcoffee.prefix')], function () {
 
 			// NO AUTH
-			Route::get('/', 'Admin\SessionController@index');
-			Route::get('/login', 'Admin\SessionController@index')->name('hotcoffee.admin.login');
-			Route::post('/auth', 'Admin\SessionController@authenticate')->name('hotcoffee.admin.auth');
+			Route::get('/', 'Admin\AuthController@index');
+			Route::get('/login', 'Admin\AuthController@index')->name('hotcoffee.admin.login');
+			Route::post('/auth', 'Admin\AuthController@authenticate')->name('hotcoffee.admin.auth');
 
 			// AUTH
 			Route::group(['middleware' => array('hotcoffee.auth', 'hotcoffee.admin', 'hotcoffee.controllers', 'verified')], function () {
 
-				// Dashboard
-				Route::get('/dashboard', 'Admin\DashboardController@index')->name('hotcoffee.admin.dashboard');
+				// Articles
+				Route::group(['prefix' => 'article'], function () {
+					Route::get('/', 'Admin\ArticleController@index')->name('hotcoffee.admin.articles.index');
+
+					Route::get('/create', 'Admin\ArticleController@create')->name('hotcoffee.admin.articles.create');
+					Route::post('/', 'Admin\ArticleController@store')->name('hotcoffee.admin.articles.store');
+
+					Route::get('/{article}', 'Admin\ArticleController@edit')->name('hotcoffee.admin.articles.edit');
+					Route::post('/{article}', 'Admin\ArticleController@update')->name('hotcoffee.admin.articles.update');
+
+					Route::delete('/{article}', 'Admin\ArticleController@destroy')->name('hotcoffee.admin.articles.destroy');
+				});
 
 				// Info pages
 				Route::group(['prefix' => 'infopages'], function () {
@@ -97,6 +113,12 @@ Route::group(['namespace' => 'TaffoVelikoff\HotCoffee\Http\Controllers'], functi
 					Route::delete('/{role}', 'Admin\RoleController@destroy')->name('hotcoffee.admin.roles.destroy');
 				});
 
+				// Search
+				Route::post('/search', 'Admin\SearchController@index')->name('hotcoffee.admin.search');
+
+				// File manager
+				Route::get('/filemanager', 'Admin\FileManagerController@index')->name('hotcoffee.admin.filemanager');
+
 				// Attachments
 				Route::group(['prefix' => 'attachments'], function () {
 					Route::get('/{id}/delete', 'Admin\AttachmentController@destroy')->name('hotcoffee.admin.attachments.destroy');
@@ -114,11 +136,17 @@ Route::group(['namespace' => 'TaffoVelikoff\HotCoffee\Http\Controllers'], functi
 					Route::post('/', 'Admin\ExportController@export')->name('hotcoffee.admin.export.export');
 				});
 
+				// Change locale
+				Route::get('/locale/{locale}', 'Admin\LocaleController@switch')->name('hotcoffee.admin.locale');
+
 				// Clear cache
-				Route::get('/flush', 'Admin\FlushController@index')->name('hotcoffee.admin.flush');
+				Route::get('/flush', 'Admin\FlushController@cache')->name('hotcoffee.admin.flush');
+
+				// Clear auth history
+				Route::get('/clearauth', 'Admin\FlushController@history')->name('hotcoffee.admin.clearauth');
 
 				// Logout
-				Route::get('/logout', 'Admin\SessionController@logout')->name('hotcoffee.admin.logout');;
+				Route::get('/logout', 'Admin\AuthController@logout')->name('hotcoffee.admin.logout');
 
 			});
 

@@ -24,6 +24,13 @@ class Menu extends Model
     }
 
     /**
+     * Get only root items
+     */
+    public function getRootItems() {
+        return $this->items->where('parent', 0);
+    }
+
+    /**
      * Delete event
      */
     public static function boot() {

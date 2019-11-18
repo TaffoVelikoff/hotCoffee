@@ -19,11 +19,12 @@ class HotCoffee
         // hotCoffee info
         view()->share('hotcoffee',[
             'name'          => 'hotCoffee Admin',
+            'url'           => 'https://github.com/TaffoVelikoff/hotcoffee',
             'author'        => 'Taffo Velikoff',
             'authorUrl'     => 'http://taffovelikoff.com',
             'description'   => 'A simple laravel admin panel to kick start your freelance projects.',
             'company'       => 'TAVVO Ltd',
-            'version'       => '0.1'
+            'version'       => '1.0'
         ]);
 
         // Catch view name, default page name and auth user
@@ -35,6 +36,11 @@ class HotCoffee
             // View name
             view()->share('viewName', $view->getName());
         });
+
+        // Language
+        if(session()->has('locale'))
+            app()->setLocale(session('locale'));
+        app()->setLocale(config('app.locale'));
 
         return $next($request);
 

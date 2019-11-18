@@ -2,6 +2,7 @@
 
 namespace TaffoVelikoff\HotCoffee\Http\Requests\Admin;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreInfoPage extends FormRequest
@@ -27,13 +28,19 @@ class StoreInfoPage extends FormRequest
     {
 
         $normalRules = array(
-            'images.*'    => 'image|max:2048',
+            'images.*'  => 'image|max:2048',
         ); 
         
         $languageRules = language_validation_rules(array(
             'title'     => 'required|max:32|min:3',
             'content'   => 'min:69',
         ));
+
+        if(!request()->edit) {
+            $normalRules['keyword'] = 'required|min:3|max:64|without_spaces|alpha_dash|unique:sefs';
+        } else {
+            $normalRules['keyword'] = Rule::unique('sefs')->ignore(request()->keyword, 'keyword').'|required|min:3|max:64|without_spaces|alpha_dash';
+        }
 
         return array_merge($normalRules, $languageRules);
     }
@@ -49,6 +56,11 @@ class StoreInfoPage extends FormRequest
         $normalMessages = array(
             'images.*.image'    => __('hotcoffee::admin.err_must_be_image'),
             'images.*.uploaded' => __('hotcoffee::admin.err_image_upload'),
+            'sef.required'      => __('hotcoffee::admin.err_sef_req'),
+            'sef.min'           => __('hotcoffee::admin.err_sef_min'),
+            'sef.max'           => __('hotcoffee::admin.err_sef_max'),
+            'sef.without_spaces'=> __('hotcoffee::admin.err_sef_spaces'),
+            'sef.alpha_dash'    => __('hotcoffee::admin.err_sef_alpha_dash')
         );
 
         $languageMessages = language_validation_messages(array(

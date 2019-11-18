@@ -39,6 +39,7 @@ class HotCoffeeServiceProvider extends ServiceProvider {
         Schema::defaultStringLength(191);
 
         $this->commands([
+        	Console\PublishModule::class,
         	Console\MakeAdmin::class,
         	Console\DeleteUser::class,
         	Console\Install::class,
@@ -66,12 +67,12 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 	    // Config
 	    $this->publishes([
 	        __DIR__.'/../config/hotcoffee.php' => config_path('hotcoffee.php'),
-	    ]);
+	    ], 'hotcoffee.config');
 
 	    // Assets
 	    $this->publishes([
 	        __DIR__.'/../public' => public_path('hotcoffee'),
-	    ], 'assets');
+	    ], 'hotcoffee.assets');
 	}
 
 	/*

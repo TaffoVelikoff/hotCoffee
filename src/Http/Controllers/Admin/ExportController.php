@@ -6,9 +6,9 @@ use Excel;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\CustomExport;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use TaffoVelikoff\HotCoffee\Http\Controllers\Exports\ModelExport;
+use App\Http\Controllers\Admin\CustomExportController;
+use TaffoVelikoff\HotCoffee\Http\Controllers\Exports\ModelExportController;
 
 class ExportController extends Controller
 {
@@ -36,13 +36,13 @@ class ExportController extends Controller
 
                 // Export a model
                 if($exportable['type'] == 'model')
-                    return (new ModelExport($request->export, $exportable['fields']))->download($exportable['file_name'].'.'.$exportable['file_type']);
+                    return (new ModelExportController($request->export, $exportable['fields']))->download($exportable['file_name'].'.'.$exportable['file_type']);
 
                 if($exportable['type'] == 'emails')
-                    return (new ModelExport('App\User', $exportable['fields']))->download($exportable['file_name'].'.'.$exportable['file_type']);
+                    return (new ModelExportController('App\User', $exportable['fields']))->download($exportable['file_name'].'.'.$exportable['file_type']);
 
                 if($exportable['type'] == 'custom')
-                    return (new CustomExport($exportable['case'], $exportable['fields']))->download($exportable['file_name'].'.'.$exportable['file_type']);
+                    return (new CustomExportController($exportable['case'], $exportable['fields']))->download($exportable['file_name'].'.'.$exportable['file_type']);
         }
         
         // Flash warning message

@@ -3,7 +3,9 @@
 namespace TaffoVelikoff\HotCoffee\Console;
 
 use File;
+use Artisan;
 use Illuminate\Console\Command;
+use TaffoVelikoff\HotCoffee\Role;
 
 class Install extends Command {
 
@@ -35,24 +37,65 @@ class Install extends Command {
    	 */
 	public function handle() {
         
-        $routes = File::append(base_path('/routes/web.php'), File::get(__DIR__.'/../../resources/publish/routes.txt'));
-
-        exit;
-        if(!File::exists(base_path('/app/_backup/User.php'))) {
+        if(!File::exists(base_path('hotcoffee.installed'))) {
             // Create _backup directory
-            File::makeDirectory(base_path('/app/_backup'));
+            if(!File::exists(base_path('_backup')))
+                File::makeDirectory(base_path('_backup'));
 
-            // Move current User model
-            File::move(base_path('/app/User.php'), base_path('/app/_backup/User.php'));
+            // Move some files to the _backup folder
+            File::move(base_path('/app/User.php'), base_path('_backup/User.php'));
+            File::move(base_path('/routes/web.php'), base_path('_backup/web.php'));
 
-            // Create HotCoffee User model
+            // Copy hotCoffee User model
             File::put(base_path('/app/User.php'), File::get(__DIR__.'/../../resources/publish/User.php'));
 
-            // Create SefController
-            File::put(base_path('/app/Http/Controllers/SefController.php'), File::get(__DIR__.'/../../resources/publish/SefController.php'));
+            // Copy hotCoffee routes
+            File::put(base_path('/routes/web.php'), File::get(__DIR__.'/../../resources/publish/routes/web.php'));
 
-            // Create CustomExportController
-            File::put(base_path('/app/Http/Controllers/CustomExportController.php'), File::get(__DIR__.'/../../resources/publish/CustomExportController.php'));
+            // Copy example front controllers
+            if(!File::exists(base_path('/app/Http/Controllers/Front')))
+                File::makeDirectory(base_path('/app/Http/Controllers/Front'));
+
+            File::put(base_path('/app/Http/Controllers/Front/ArticleController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Front/ArticleController.php'));
+            File::put(base_path('/app/Http/Controllers/Front/HomeController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Front/HomeController.php'));
+            File::put(base_path('/app/Http/Controllers/Front/InfoPageController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Front/InfoPageController.php'));
+
+            // Create some admin controllers
+            if(!File::exists(base_path('/app/Http/Controllers/Admin')))
+                File::makeDirectory(base_path('/app/Http/Controllers/Admin'));
+
+            File::put(base_path('/app/Http/Controllers/Admin/CustomExportController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Admin/CustomExportController.php'));
+            File::put(base_path('/app/Http/Controllers/Admin/DashboardController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Admin/DashboardController.php'));
+
+            // Copy views
+            if(!File::exists(base_path('/resources/views/front')))
+                File::makeDirectory(base_path('/resources/views/front'));
+
+            if(!File::exists(base_path('/resources/views/admin')))
+                File::makeDirectory(base_path('/resources/views/admin'));
+
+            File::put(base_path('/resources/views/admin/dashboard.blade.php'), File::get(__DIR__.'/../../resources/publish/views/admin/dashboard.blade.php'));
+            File::put(base_path('/resources/views/front/_layout.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/_layout.blade.php'));
+            File::put(base_path('/resources/views/front/article.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/article.blade.php'));
+            File::put(base_path('/resources/views/front/home.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/home.blade.php'));
+            File::put(base_path('/resources/views/front/infopage.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/infopage.blade.php'));
+
+            // Copy the settings file
+            File::put(base_path('/storage/app/settings.json'), File::get(__DIR__.'/../../resources/publish/settings.json'));
+
+            // Migrate
+            Artisan::call('migrate');
+
+            // Create admin role
+            Role::create([
+                'name'          => 'admin',
+                'description'   => 'App administrator.',
+            ]);
+
+            // Create dummy menu
+
+            // Publish hotCoffee config
+            Artisan::call('vendor:publish --tag=hotcoffee.config');
 
             // Display message
             $this->info("\n===================================================================================");

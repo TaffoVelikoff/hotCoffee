@@ -10,6 +10,10 @@
 
               <form @if(isset($edit)) action="{{ route('hotcoffee.admin.infopages.edit', $edit) }}" @else action="{{ route('hotcoffee.admin.infopages.store') }}" @endif method="post" enctype="multipart/form-data" id="croppie-form">
 
+                @if(isset($edit))
+                  <input type="hidden" name="edit" value="{{ $edit->id }}" />
+                @endif
+
                 {{ csrf_field() }}
 
                 <h6 class="heading-small text-muted mb-4">{{ __('hotcoffee::admin.page_nfo') }}</h6>
@@ -21,6 +25,35 @@
                   'meta_desc' => ['type' => 'textarea', 'title' => __('hotcoffee::admin.meta_desc'), 'info' => ['content' => __('hotcoffee::admin.meta_desc_nfo')], 'rows' => '4']
                 ], $edit ?? null) !!}
                 <!-- END TRANSLATABLE FIELDS -->
+
+                <hr class="my-4"/>
+
+                <!-- CUSTOM URL -->
+                <h6 class="heading-small text-muted mb-4">
+                  {{ __('hotcoffee::admin.custom_url') }}
+                  <span class="text-danger">*</span>
+                </h6>
+
+                <div class="pl-lg-4">
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div @if($errors->has('keyword')) class="has-danger" @endif>
+                          <input type="text" name="keyword" id="keyword" class="form-control form-control-alternative @if($errors->has('keyword')) is-invalid-alt @endif" @if(session('post')) value="{{ session('post.keyword') }}" @elseif(isset($edit)) value="{{ $edit->keyword() }}" @endif>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-2">
+                    <div class="col-lg-12 info-div">
+                      {{ __('hotcoffee::admin.sef_nfo') }}
+                    </div>
+                  </div>
+
+                </div>
+                <!-- CUSTOM URL -->
                 
                 <hr class="my-4"/>
 
@@ -123,72 +156,74 @@
                 </div>
                 <!-- END ROLES -->
 
-                <hr class="my-4"/>
+                @if(config('hotcoffee.info_image_atts') == true)
+                  <hr/>
 
-                <!-- IMAGE ATTACHMENTS -->
-                <h6 class="heading-small text-muted mb-1">{{ __('hotcoffee::admin.attach_images') }}</h6>
+                  <!-- IMAGE ATTACHMENTS -->
+                  <h6 class="heading-small text-muted mb-1">{{ __('hotcoffee::admin.attach_images') }}</h6>
 
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
+                  <div class="pl-lg-4">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
 
-                        @if(isset($edit) && $edit->attachmentsGroup('images')->isEmpty() == false)
-                          <div class="row">
-                            @foreach($edit->attachmentsGroup('images') as $att)
-                              <div class="col-lg-3">
+                          @if(isset($edit) && $edit->attachmentsGroup('images')->isEmpty() == false)
+                            <div class="row">
+                              @foreach($edit->attachmentsGroup('images') as $att)
+                                <div class="col-lg-3">
 
-                                <div class="row">
-                                  <div class="col">
-                                    <a href="{{ thumbnail($att->filepath) }}" target="_blank" >
-                                      <img src="{{ thumbnail($att->filepath, 400, 'crop') }}" class="attachment-image" />
-                                    </a>
+                                  <div class="row">
+                                    <div class="col">
+                                      <a href="{{ thumbnail($att->filepath) }}" target="_blank" >
+                                        <img src="{{ thumbnail($att->filepath, 400, 'crop') }}" class="attachment-image" />
+                                      </a>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col text-center att-btns">
+                                      <a href="{{ $att->url }}" class="btn-att">
+                                        <i class="fas fa-download"></i>
+                                      </a>
+                                      <a href="{{ route('hotcoffee.admin.attachments.destroy', ['id' => $att->id]) }}" class="btn-att">
+                                        <i class="fas fa-trash-alt"></i>
+                                      </a>
+                                    </div>
                                   </div>
                                 </div>
+                              @endforeach
+                            </div>
+                          @endif
 
-                                <div class="row">
-                                  <div class="col text-center att-btns">
-                                    <a href="{{ $att->url }}" class="btn-att">
-                                      <i class="fas fa-download"></i>
-                                    </a>
-                                    <a href="{{ route('hotcoffee.admin.attachments.destroy', ['id' => $att->id]) }}" class="btn-att">
-                                      <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                  </div>
-                                </div>
+                          <br/>
+
+                          <label class="form-control-label" for="input-key">Upload images</label>
+                          <div class="row col-md-12">
+                            <div class="file-field">
+                              <div class="btn btn-primary btn-sm">
+                                <span>{{ __('hotcoffee::admin.choose_files') }}</span>
+                                <input type="file" multiple name="images[]">
                               </div>
-                            @endforeach
-                          </div>
-                        @endif
-
-                        <br/>
-
-                        <label class="form-control-label" for="input-key">Upload images</label>
-                        <div class="row col-md-12">
-                          <div class="file-field">
-                            <div class="btn btn-primary btn-sm">
-                              <span>{{ __('hotcoffee::admin.choose_files') }}</span>
-                              <input type="file" multiple name="images[]">
-                            </div>
-                            <div class="file-path-wrapper">
-                              <input class="file-path validate" type="text" placeholder="{{ __('hotcoffee::admin.upload_one_more') }}">
+                              <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="{{ __('hotcoffee::admin.upload_one_more') }}">
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <div class="row">
-                          <div class="col-lg-12 info-div mt-2">
-                            {{ __('hotcoffee::admin.choose_files_nfo') }}<br/>
-                            {{ __('hotcoffee::admin.choose_files_nfo_2') }}<br/>
-                            {{ __('hotcoffee::admin.choose_files_nfo_3') }}
+                          <div class="row">
+                            <div class="col-lg-12 info-div mt-2">
+                              {{ __('hotcoffee::admin.choose_files_nfo') }}<br/>
+                              {{ __('hotcoffee::admin.choose_files_nfo_2') }}<br/>
+                              {{ __('hotcoffee::admin.choose_files_nfo_3') }}
+                            </div>
                           </div>
-                        </div>
 
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <!-- END IMAGE ATTACHMENTS -->
+                  <!-- END IMAGE ATTACHMENTS -->
+                @endif
 
                 <hr class="my-4"/>
 
