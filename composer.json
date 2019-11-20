@@ -10,7 +10,7 @@
         }
     ],
     "minimum-stability": "dev",
-    "prefer-stable": true,
+    "prefer-stable": false,
     "require": {
 		"bnbwebexpertise/laravel-attachments": "^1.0",
 		"league/glide-laravel": "^1.0",
