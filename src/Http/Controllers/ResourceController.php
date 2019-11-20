@@ -2,6 +2,7 @@
 
 namespace TaffoVelikoff\HotCoffee\Http\Controllers;
 
+use Str;
 use File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,13 +20,14 @@ class ResourceController extends Controller
 
         if (File::exists($path)) {
             $mime = '';
-            if (ends_with($path, '.js')) {
+            if (Str::endsWith($path, '.js')) {
                 $mime = 'text/javascript';
-            } elseif (ends_with($path, '.css')) {
+            } elseif (Str::endsWith($path, '.css')) {
                 $mime = 'text/css';
             } else {
                 $mime = File::mimeType($path);
             }
+            
             $response = response(File::get($path), 200, ['Content-Type' => $mime]);
             $response->setSharedMaxAge(31536000);
             $response->setMaxAge(31536000);

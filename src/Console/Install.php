@@ -92,10 +92,18 @@ class Install extends Command {
                 'description'   => 'App administrator.',
             ]);
 
-            // Create dummy menu
-
             // Publish hotCoffee config
             Artisan::call('vendor:publish --tag=hotcoffee.config');
+
+            // Publish unisharp/laravel-filemanager assets
+            Artisan::call('vendor:publish --tag=lfm_config');
+            Artisan::call('vendor:publish --tag=lfm_public');
+
+            // Link storage
+            Artisan::call('storage:link');
+
+            // Clear cache
+            Artisan::call('optimize');
 
             // Display message
             $this->info("\n===================================================================================");
