@@ -35,6 +35,13 @@
             "TaffoVelikoff\\HotCoffee\\Tests\\": "tests/"
         }
     },
+	"extra": {
+        "laravel": {
+            "providers": [
+                "taffovelikoff\\hotcoffee\\HotCoffeeServiceProvider"
+            ]
+        }
+    },
     "require-dev": {
         "orchestra/testbench": "^4.0",
         "orchestra/testbench-browser-kit": "^4.0",
