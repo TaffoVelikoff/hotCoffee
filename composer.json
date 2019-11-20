@@ -9,7 +9,7 @@
             "email": "contact@taffovelikoff.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "dev-master",
     "prefer-stable": true,
     "require": {
 		"bnbwebexpertise/laravel-attachments": "^1.0",
