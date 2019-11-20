@@ -38,7 +38,7 @@
 	"extra": {
         "laravel": {
             "providers": [
-                "taffovelikoff\\hotcoffee\\HotCoffeeServiceProvider"
+                "TaffoVelikoff\\HotCoffee\\HotCoffeeServiceProvider"
             ]
         }
     },
