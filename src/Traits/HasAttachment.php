@@ -6,8 +6,10 @@ use File;
 use Image;
 use Storage;
 
-trait HasCroppieAttachment
+trait HasAttachment
 {
+	use \Bnb\Laravel\Attachments\HasAttachment;
+
 	/**
 	* Attach from croppie's base64
 	*

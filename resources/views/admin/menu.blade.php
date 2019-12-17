@@ -80,7 +80,7 @@
 																			@foreach($item->children() as $child)
 																				<li id="item-{{ $child->id }}">
 																					<div>
-																						<i class="fas fa-arrows-alt"></i> &nbsp; {{ $child->name }}
+																						<i class="fas fa-arrows-alt"></i> &nbsp; <span id="item-name-{{ $child->id }}">{{ $child->name }}</span>
 																						<a class="float-right btn btn-sm btn-danger btn-delete-conf" data-id="{{ $child->id }}" data-url="{{ route('hotcoffee.admin.menuitems.destroy', $child) }}">
 																							<i class="fas fa-trash-alt"></i>
 																						</a>
@@ -123,7 +123,7 @@
       	</div>
 	</div>
 
-	@if(isset($edit)) @include('hotcoffee::admin.modals.item') @endif
+	@if(isset($edit)) @include('hotcoffee::admin.modals.item_copy') @endif
 	@include('hotcoffee::admin.modals.delete')
 @endsection
 
@@ -145,7 +145,11 @@
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				},
 				success: function(e){
-					$('#input-name').val(e.name);
+
+					@foreach(config('hotcoffee.languages') as $langKey=>$langName)
+						$('#input-name-{{ $langKey }}').val(e.name.{{ $langKey }});
+					@endforeach
+
 					$('#input-url').val(e.url);
 					$('#input-icon').val(e.icon);
 
@@ -177,11 +181,11 @@
 
 		$(document).on('click','.btn-save',function() {
 
-			if($('#input-name').val().length === 0) {
+			//if($('#input-name').val().length === 0) {
 
-				alert('Name is required');
+				//alert('Name is required');
 
-			} else {
+			//} else {
 
 				var data = $('#item-form').serialize();
 				$('#modal-item').modal('hide');
@@ -223,7 +227,7 @@
 
 				});
 
-			}
+			//}
 
 		});
 
@@ -231,11 +235,11 @@
 
 			var endpoint = '{{ url(config('hotcoffee.prefix').'/menuitems') }}' + '/' + $(this).data('id');
 
-			if($('#input-name').val().length === 0) {
+			/*if($('#input-name').val().length === 0) {
 
 				alert('Name is required');
 
-			} else {
+			} else {*/
 
 				var data = $('#item-form').serialize();
 				$('#modal-item').modal('hide');
@@ -275,7 +279,7 @@
 
 				});
 
-			}
+			//}
 
 		});
 

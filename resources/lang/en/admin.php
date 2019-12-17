@@ -27,7 +27,6 @@ return [
     'add'                   => 'Add',
     'update'                => 'Update',
     'quick_add'             => 'Quick Add',
-    'name'                  => 'Name',
     'title'                 => 'Title',
     'description'           => 'Description',
     'content'               => 'Content',
@@ -114,7 +113,7 @@ return [
 
     //===== Menu Items
     'menu_item'             => 'Menu item',
-    'menu_item_name_holder' => 'my page',
+    'menu_item_name_holder' => 'Element title',
     'url'                   => 'URL',
     'or_page'               => 'or link to a page',
     'new_window'            => 'open in new window',

@@ -3,6 +3,7 @@
 namespace TaffoVelikoff\HotCoffee\Tests;
 
 use TaffoVelikoff\HotCoffee\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RoleTest extends TestCase {
 

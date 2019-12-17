@@ -5,7 +5,7 @@ namespace TaffoVelikoff\HotCoffee;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use TaffoVelikoff\HotCoffee\Traits\HasSef;
-use Bnb\Laravel\Attachments\HasAttachment;
+use TaffoVelikoff\HotCoffee\Traits\HasAttachment;
 
 class InfoPage extends Model
 {

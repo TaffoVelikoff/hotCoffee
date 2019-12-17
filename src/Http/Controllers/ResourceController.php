@@ -14,7 +14,7 @@ class ResourceController extends Controller
         $path = $asset;
         $asset = explode('.', $asset);
         $extension = end($asset);
-        $packagePath = 'vendor/taffovelikoff/hotcoffee/public';//package/hotcoffee/public/
+        $packagePath = 'package/hotcoffee/public/';
 
         $path = base_path($packagePath.$path);
 

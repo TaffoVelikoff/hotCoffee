@@ -20,6 +20,7 @@
 		"spatie/laravel-translatable": "^4.1",
 		"spatie/valuestore": "^1.2",
 		"rtconner/laravel-tagging": "~3.2",
+		"laravel/helpers": "^1.0",
 		"unisharp/laravel-filemanager": "dev-master"
     },
     "autoload": {

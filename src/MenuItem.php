@@ -4,16 +4,21 @@ namespace TaffoVelikoff\HotCoffee;
 
 use TaffoVelikoff\HotCoffee\InfoPage;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class MenuItem extends Model
 {
 
+	use HasTranslations;
+	
 	/**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $guarded = [];
+	
+	public $translatable = ['name'];
 
     /**
      * Menu relation

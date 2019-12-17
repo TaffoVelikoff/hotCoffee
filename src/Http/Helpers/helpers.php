@@ -80,7 +80,7 @@
 	if (!function_exists('prepare_request')) {
 		function prepare_request($request, array $trnslatables, array $special = null) {
 
-			$trans = array();
+			$trans = [];
 			if(!$special)
 				$special = array();
 

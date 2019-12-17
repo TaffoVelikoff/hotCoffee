@@ -36,8 +36,9 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 	public function register() {
 		
 		// Default string lenght
-        Schema::defaultStringLength(191);
+        Schema::defaultStringLength(255);
 
+        // Artisan commands
         $this->commands([
         	Console\PublishModule::class,
         	Console\MakeAdmin::class,

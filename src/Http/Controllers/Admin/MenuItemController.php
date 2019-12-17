@@ -14,10 +14,15 @@ class MenuItemController extends Controller
      * Store
      *
      */
-    public function store() {
+    public function store(StoreMenuItem $request) {
 
       // Store menu item
-      $item = MenuItem::create(request()->all());
+      //$item = MenuItem::create(request()->all());
+      $item = MenuItem::create(
+        prepare_request(
+          $request, ['name']
+        )
+      );
 
       // Convert type
       $item->setType(request());
@@ -40,7 +45,7 @@ class MenuItemController extends Controller
     public function edit($item) {
       return [
         'id'          => $item->id,
-        'name'        => $item->name,
+        'name'        => $item->getTranslations('name'),
         'url'         => $item->url,
         'icon'        => $item->icon,
         'page_id'     => $item->page_id,
@@ -52,12 +57,18 @@ class MenuItemController extends Controller
      * Update
      *
      */
-    public function update(MenuItem $item) {
+    public function update(MenuItem $item, StoreMenuItem $request) {
       
       // Update item
-      $item->update(request()->only([
+      /*$item->update(request()->only([
         'name', 'page_id', 'new_window', 'url', 'icon', 'menu_id'
-      ]));
+      ]));*/
+      
+      $item->update(
+        prepare_request(
+          $request, ['name']
+        )
+      );
 
       // Disable checkbox [needs a fix]
       if(!request()->has('new_window')) {
