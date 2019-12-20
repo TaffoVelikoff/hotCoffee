@@ -181,11 +181,20 @@
 
 		$(document).on('click','.btn-save',function() {
 
-			//if($('#input-name').val().length === 0) {
+			var reqlength = $('.input-name').length;
+			var value = $('.input-name').filter(function () {
+			    return this.value != '';
+			});
 
-				//alert('Name is required');
+			if (value.length>=0 && (value.length !== reqlength)) {
+					
+				@if(count(config('hotcoffee.languages')) > 1)
+					alert('{{ __('hotcoffee::admin.err_title_menu_req_lng') }}');
+				@else
+					alert('{{ __('hotcoffee::admin.err_title_menu_req') }}');
+				@endif
 
-			//} else {
+			} else {
 
 				var data = $('#item-form').serialize();
 				$('#modal-item').modal('hide');
@@ -227,7 +236,7 @@
 
 				});
 
-			//}
+			}
 
 		});
 
@@ -235,11 +244,20 @@
 
 			var endpoint = '{{ url(config('hotcoffee.prefix').'/menuitems') }}' + '/' + $(this).data('id');
 
-			/*if($('#input-name').val().length === 0) {
+			var reqlength = $('.input-name').length;
+			var value = $('.input-name').filter(function () {
+			    return this.value != '';
+			});
 
-				alert('Name is required');
+			if (value.length>=0 && (value.length !== reqlength)) {
+					
+				@if(count(config('hotcoffee.languages')) > 1)
+					alert('{{ __('hotcoffee::admin.err_title_menu_req_lng') }}');
+				@else
+					alert('{{ __('hotcoffee::admin.err_title_menu_req') }}');
+				@endif
 
-			} else {*/
+			} else {
 
 				var data = $('#item-form').serialize();
 				$('#modal-item').modal('hide');
@@ -279,7 +297,7 @@
 
 				});
 
-			//}
+			}
 
 		});
 

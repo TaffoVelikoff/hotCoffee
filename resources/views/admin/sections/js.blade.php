@@ -13,4 +13,8 @@
 <script src="{{ coffee_asset('js/admin/admin.js') }}"></script>
 <script src="{{ coffee_asset('js/admin/argon.js') }}"></script>
 
+@foreach(config('hotcoffee.additional_js') as $js)
+	<script src="{{ asset($js) }}"></script>
+@endforeach
+
 @yield('page_js')

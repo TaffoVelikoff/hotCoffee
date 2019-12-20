@@ -9,14 +9,6 @@
 
               <input type="hidden" id="input-menu-id" name="menu_id" value="{{ $edit->id }}">
 
-              {{--<!--<div class="form-group">
-                <label class="form-control-label text-capitalize" for="input-name">{{ __('hotcoffee::admin.title') }} <span class="text-danger">*</span></label>
-                @foreach(config('hotcoffee.languages') as $acr=>$lang)
-                  <input type="text" id="input-name" class="form-control form-control-alternative mt-2" name="name" required="" placeholder="{{ __('hotcoffee::admin.menu_item_name_holder') }} ({{ $acr }})">
-                @endforeach
-              </div>-->--}}
-
-
               @if(count(config('hotcoffee.languages')) > 1)
                 <div class="nav-wrapper">
                   <label class="form-control-label text-capitalize" for="input-name">{{ __('hotcoffee::admin.title') }} <span class="text-danger">*</span></label>
@@ -38,7 +30,7 @@
                       <div class="tab-content mt-2" id="myTabContent">
                         @foreach(config('hotcoffee.languages') as $acr=>$lang)
                           <div class="tab-pane fade @if(config('app.locale') == $acr) active show @endif" id="{{ $acr }}" role="tabpanel" aria-labelledby="{{ $acr }}-tab">
-                            <input type="text" id="input-name-{{ $acr }}" class="form-control form-control-alternative" name="{{ $acr }}[name]" required="" placeholder="{{ __('hotcoffee::admin.menu_item_name_holder') }} ({{ $acr }})">
+                            <input type="text" id="input-name-{{ $acr }}" class="form-control form-control-alternative input-name" name="{{ $acr }}[name]" required="" placeholder="{{ __('hotcoffee::admin.menu_item_name_holder') }} ({{ $acr }})" data-lang="{{ $acr }}">
                           </div>
                         @endforeach
                       </div>
@@ -48,7 +40,7 @@
                 <div class="form-group">
                   <label class="form-control-label text-capitalize" for="input-name">{{ __('hotcoffee::admin.title') }} <span class="text-danger">*</span></label>
                   @foreach(config('hotcoffee.languages') as $acr=>$lang)
-                    <input type="text" id="input-name-{{ $acr }}" class="form-control form-control-alternative mt-2" name="name" required="" placeholder="{{ __('hotcoffee::admin.menu_item_name_holder') }}">
+                    <input type="text" id="input-name-{{ $acr }}" class="form-control form-control-alternative mt-2 input-name" name="name" required="" placeholder="{{ __('hotcoffee::admin.menu_item_name_holder') }}" data-lang="{{ $acr }}">
                   @endforeach
                 </div>
               @endif

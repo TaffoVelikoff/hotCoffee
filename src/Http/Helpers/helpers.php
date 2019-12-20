@@ -1,7 +1,10 @@
 <?php
 
 	/**
-	 * Get an asset from the package public folder
+	 * Get an asset from the package public folder.
+	 * @param string $asset Path to the asset.
+	 *
+	 * @return string Returns a url to the asset.
 	 */
 	if (!function_exists('coffee_asset')) {
 	   	function coffee_asset($asset) { 
@@ -15,6 +18,8 @@
 
 	/**
 	 * Get the admin panel logo
+	 *
+	 * @return string Returns the path to the logo.
 	 */
 	if (!function_exists('coffee_logo')) {
 	   	function coffee_logo() { 
@@ -26,7 +31,11 @@
 	}
 
 	/**
-	 * Get a setting from the json file
+	 * Get a setting from the json file.
+	 * @param string $key Key of the setting.
+	 * @param string @default Default value, if key is not found.
+	 *
+	 * @return mixed[] Returns the value of the setting.
 	 */
 	if (!function_exists('settings')) {
 		function settings($key = null, $default = null) {
@@ -36,11 +45,14 @@
 	}
 
 	/**
-	 * Dynamically set validation rules for a translatable form request
+	 * Dynamically generate validation rules for a translatable field for every languages defined in hotcoffee.php config file.
+	 * @param array Array of Laravel validations (example: ['title' => 'required|unique:posts|max:255', 'content' => 'required|min:32']).
+	 *
+	 * @return array Returns an array of validation rules.
 	 */
 	if (!function_exists('language_validation_rules')) {
-		function language_validation_rules($ruleLines) {
-			$rules = array();
+		function language_validation_rules($ruleLines = []) {
+			$rules = [];
 
 			foreach(config('hotcoffee.languages') as $langKey => $langName) {
 				foreach($ruleLines as $field=>$fieldRule) {
@@ -53,13 +65,15 @@
 	}
 
 	/**
-	 * Dynamically set validation messages for a translatable form request
-	 * @param array $messageLine
+	 * Dynamically generate validation messages for a translatable field for every languages defined in hotcoffee.php config file.
+	 * @param array $messageLines (example: ['title.required' => __('admin.something_from_translation_file'), 'title.required' => 'Or just a string.']).
+	 *
+	 * @return array Returns an array of validation messages.
 	 */
 	if (!function_exists('language_validation_messages')) {
 		function language_validation_messages($messageLines) {
 
-	        $messages = array();
+	        $messages = [];
 	        
 	        foreach(config('hotcoffee.languages') as $langKey => $langName) {
 	        	foreach($messageLines as $fieldRule => $trans) {
@@ -72,17 +86,19 @@
 	}
 
 	/**
-	 * Prepare the data in the translatable fields to be stored and merge with the rest if the request
-	 * @param object $request
-	 * @param array $trnslatables
-	 * @param array $special
+	 * Prepare the data in the translatable fields to be stored and merge with the rest if the request.
+	 * @param object $request All the fields that have to be stored/updated in the model's table.
+	 * @param array $trnslatables All translatable fields should be placed in this array.
+	 * @param array $special Anything that needs to be removed and not saved/updated.
+	 *
+	 * @return array Returns an array of fields and values to be stored in the database by an update() or create() method.
 	 */
 	if (!function_exists('prepare_request')) {
 		function prepare_request($request, array $trnslatables, array $special = null) {
 
 			$trans = [];
 			if(!$special)
-				$special = array();
+				$special = [];
 
 	        $mainFields = $request->except(array_keys($special));
 
@@ -98,10 +114,10 @@
 	}
 
 	/**
-	 * This will dynamically generate a thumbnail
-	 * @param string $filePath
-	 * @param string $dimensions
-	 * @param string $fit
+	 * This will dynamically generate a thumbnail.
+	 * @param string $filePath Path to an image file.
+	 * @param mixed $dimensions String or array of dimensions. For example [300, 400] will create a thumbnail with width of 300px and height of 400px and '300' will create a square image of 300px.
+	 * @param bool $fit
 	 */
 	if (!function_exists('thumbnail')) {
 			function thumbnail($filePath, $dimentions = null, $fit = null) {
@@ -122,8 +138,8 @@
 	}
 
 	/**
-	 * Check if string is JSON
-	 * @param string $string
+	 * Check if string is JSON.
+	 * @param string $string String to be checked.
 	 */
 	if (!function_exists('isJson')) {
 		function isJson($string) {
@@ -133,7 +149,7 @@
 	}
 
 	/**
-	 * Record login in the database
+	 * Record current user's login in the database.
 	 */
 	if (!function_exists('record_auth')) {
 		function record_auth() {
@@ -147,7 +163,7 @@
 	}
 
 	/**
-	 * Used in the SearchController
+	 * Used in the SearchController.
 	 * @param string $string
 	 */
 	if (!function_exists('fieldContentForSearch')) {
@@ -166,6 +182,8 @@
 	/**
 	 * This will prepend the current locale to generated urls.
 	 * @param string $path
+	 *
+	 * @return Returns the path with the current locale prepended. 
 	 */
 	if (!function_exists('localeUrl')) {
 		function localeUrl($path) {
@@ -183,8 +201,8 @@
 	}
 
 	/**
-	 * This will prepend the current locale to generated route urls.
-	 * @param string $path
+	 * This will prepend the current locale to generated route urls. Similar to localeUrl.
+	 * @param string $path Name of path.
 	 */
 	if (!function_exists('localeRoute')) {
 		function localeRoute($routeName) {
@@ -205,10 +223,33 @@
 	}
 
 	/**
-	 * Dynamically create translatable fields in blade templates
+	 * Used for the Settings page to add any unchecked checkboxes/toggle fields to the request with value of null.
+	 *
+	 * @return array Returns an array of any unchecked checkboxes/toggles from the settings page.
+	 */
+
+	if (!function_exists('grab_empty_checkboxes')) {
+		function grab_empty_checkboxes() {
+
+			$empty = [];
+	        foreach(config('hotcoffee.settings') as $group) {
+	            foreach($group as $setting) {
+	                if(($setting['field_type'] == 'checkbox' || $setting['field_type'] == 'toggle') && !array_key_exists($setting['name'], request()->except('_token'))) {
+	                    $empty[$setting['name']] = null;
+	                }
+	            }
+	        }
+
+	        return $empty;
+
+		}
+    }
+
+	/**
+	 * Dynamically generate translatable fields in blade templates.
 	 */
 	if (!function_exists('language_fields')) {
-		function language_fields($errors, $fields = array(), $edit = null) {
+		function language_fields($errors, $fields = [], $edit = null) {
 
 			$languageFields = '';
 			$languageFieldsContent = '';

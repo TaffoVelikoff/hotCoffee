@@ -69,6 +69,15 @@ return [
     'no_nfo_yet'            => 'Nothing to show yet ...',
     'version'               => 'Version',
 
+    //===== Color
+    'default'               => 'Default',
+    'red'                   => 'Red',
+    'orange'                => 'Orange',
+    'black'                 => 'Black',
+    'gray'                  => 'Gray',
+    'blue'                  => 'Blue',
+    'green'                 => 'Green',
+
     //===== Login
     'oops'                  => 'Oops!',
     'err_credentials'       => 'Login failed. Please check your credentials again.',
@@ -189,8 +198,9 @@ return [
     'other_settings'        => 'Other Settings',
     'items_per_page'        => 'Items per page',
     'date_format'           => 'Date format',
-    'nfo_date_format'       => 'Should be a valid date format string. For more details visit ',
+    'nfo_date_format'       => 'Should be a valid date format string. For more details visit <a href="https://www.php.net/manual/en/datetime.formats.date.php" target="_blank">https://www.php.net/manual/en/datetime.formats.date.php</a>.',
     'timezone'              => 'Timezone',
+    'header_color'          => 'Header color',
 
     //===== Export
     'export_what'           => 'What do you want to export?',
@@ -235,5 +245,7 @@ return [
     'err_keyword_max'       => 'Keyword is too long.',
     'err_keyword_spaces'    => 'Keyword should not contain any white spaces.',
     'err_keyword_unique'    => 'The keyword should be unique.',
+    'err_title_menu_req'    => 'Title field is required.',
+    'err_title_menu_req_lng'=> 'Title field for all languages is requried.',
     
 ];

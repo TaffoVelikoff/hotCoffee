@@ -26,12 +26,21 @@ class StoreSettings extends FormRequest
      */
     public function rules()
     {
-        return [
-            'mail'                  => 'required|email',
-            'support_mail'          => 'nullable|email',
-            'website_name'          => 'required|max:48',
-            'website_description'   => 'max:128',
-            'paginate'              => 'required|numeric',
-        ];
+        return config('hotcoffee.settings_validation_rules');
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        $messages = [];
+        foreach(config('hotcoffee.settings_validation_messages') as $message) {
+            $messages[] = __($message);
+        }
+
+        return $messages;
     }
 }

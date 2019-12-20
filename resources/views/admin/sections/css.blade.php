@@ -10,6 +10,10 @@
 <link type="text/css" href="{{ coffee_asset('css/admin/argon.css') }}" rel="stylesheet">
 <link type="text/css" href="{{ coffee_asset('css/admin/admin.css') }}" rel="stylesheet">
 
+@foreach(config('hotcoffee.additional_css') as $css)
+	<link type="text/css" href="{{ asset($css) }}" rel="stylesheet">
+@endforeach
+
 <!-- Vendor -->
 <link type="text/css" href="{{ coffee_asset('vendor/croppie/croppie.css') }}" rel="stylesheet">
 <link type="text/css" href="{{ coffee_asset('vendor/animate.css') }}" rel="stylesheet">

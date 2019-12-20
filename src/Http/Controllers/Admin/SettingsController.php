@@ -27,15 +27,8 @@ class SettingsController extends Controller
      * Update settings
      */
     public function update(Settings $settings, StoreSettings $request) {
-    	$settings->put([
-    		'mail' 					=> $request->mail,
-    		'support_mail'			=> $request->support_mail,
-    		'website_name'			=> $request->website_name,
-    		'website_description'	=> $request->website_description,
-    		'paginate'				=> $request->paginate,
-    		'date_format'			=> $request->date_format,
-    		'timezone'				=> $request->timezone
-    	]);
+        
+    	$settings->put(array_merge($request->except('_token'), grab_empty_checkboxes()));
 
     	// Flash success message
         session()->flash('notify', array(

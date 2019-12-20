@@ -40,7 +40,7 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 
         // Artisan commands
         $this->commands([
-        	Console\PublishModule::class,
+        	//Console\PublishModule::class,
         	Console\MakeAdmin::class,
         	Console\DeleteUser::class,
         	Console\Install::class,

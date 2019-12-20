@@ -38,6 +38,7 @@ class Install extends Command {
 	public function handle() {
         
         if(!File::exists(base_path('hotcoffee.installed'))) {
+          
             // Create _backup directory
             if(!File::exists(base_path('_backup')))
                 File::makeDirectory(base_path('_backup'));
