@@ -6,7 +6,6 @@ use App\User;
 use Illuminate\Http\Request;
 use TaffoVelikoff\HotCoffee\Role;
 use App\Http\Controllers\Controller;
-use TaffoVelikoff\HotCoffee\UserAddress;
 use TaffoVelikoff\HotCoffee\Http\Requests\Admin\StoreUser;
 
 class UserController extends Controller
@@ -21,7 +20,7 @@ class UserController extends Controller
         view()->share('users', $users);
 
     	// Display view
-        return view('hotcoffee::admin.users');
+        return view((new User)->index_view);
 
     }
 
@@ -30,12 +29,15 @@ class UserController extends Controller
      */
     public function create() {
 
+        // Get all user address fields
+        view()->share('userAddressFields', config('hotcoffee.custom_user_address_namespace')::fields());
+
     	// Get all roles
         view()->share('roles', Role::all());
 
         // Display view
         view()->share('customPageName', __('hotcoffee::admin.user_create'));
-        return view('hotcoffee::admin.user');
+        return view((new User)->edit_view);
 
     }
 
@@ -43,6 +45,9 @@ class UserController extends Controller
      * Edit
      */
     public function edit(User $user) {
+
+        // Get all user address fields
+        view()->share('userAddressFields', config('hotcoffee.custom_user_address_namespace')::fields());
 
         // Send user view
         view()->share('edit', $user);
@@ -56,7 +61,7 @@ class UserController extends Controller
 
 		// Display view
 		view()->share('customPageName', __('hotcoffee::admin.user_edit'));
-		return view('hotcoffee::admin.user');
+		return view($user->edit_view);
 
     }
 
@@ -68,10 +73,11 @@ class UserController extends Controller
     public function store(StoreUser $request) {
 
         // Store user
-        $user = User::create($request->all());
-        $user->address()->create([
-            'user_id' => $user->id,
-        ]);
+        $user = User::create($request->only('name', 'email', 'password', 'locale'));
+        $user->address()->create(array_merge(
+            ['user_id' => $user->id],
+            $request->only(array_keys(config('hotcoffee.custom_user_address_namespace')::fields()))
+        ));
 
         // Set role
         if(isset($request->role) && $user->id != 1) {
@@ -80,7 +86,7 @@ class UserController extends Controller
 
         // Attach avatar
         if($request->file || $user->attachmentsGroup('avatar')->isEmpty() == false) {
-            $user->croppieAttach($request->imagebase64, 'avatar', [600, 600]);
+            $user->croppieAttach($request->imagebase64, 'avatar', $user->avatar_size);
         }
 
         // Verify user
@@ -102,10 +108,10 @@ class UserController extends Controller
      * @param  StoreUser  $request
      */
     public function update(User $user, StoreUser $request) {
-
+        
         // Update user
-        (empty($request->get('password'))) ? $user->update($request->except('password')) : $user->update($request->all());
-        $user->address->update($request->all());
+        (empty($request->get('password'))) ? $user->update($request->only('name', 'email', 'locale')) : $user->update($request->only('name', 'email', 'password', 'locale'));
+        $user->address->update($request->only(array_keys(config('hotcoffee.custom_user_address_namespace')::fields())));
 
         // Update role
         if(isset($request->role) && $user->id != 1) {

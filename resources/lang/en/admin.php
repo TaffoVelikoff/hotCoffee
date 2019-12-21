@@ -174,6 +174,7 @@ return [
     'user_city'             => 'City',
     'user_country'          => 'Country',
     'user_role'             => 'User Role',
+    'user_language'         => 'User language',
 
 
     //===== User roles

@@ -90,8 +90,40 @@
 
                 <h6 class="heading-small text-muted mb-4">{{ __('hotcoffee::admin.user_contact_info') }}</h6>
                 <div class="pl-lg-4">
-              
                   <div class="row">
+
+                    @foreach($userAddressFields as $field=>$properties)
+                      @switch($properties['type'])
+
+                        @case('text')
+                          <div class="col-lg-6">
+                            <div class="form-group focused">
+                              <label class="form-control-label" for="input-city">{{ __($properties['label']) }}</label>
+                              <div @if($errors->has($field)) class="has-danger" @endif>
+                                <input type="text" name="{{ $field }}" id="input-{{ $field }}" class="form-control form-control-alternative @if($errors->has($field)) is-invalid-alt @endif" @if(session('post')) value="{{ session('post.'.$field) }}" @elseif(isset($edit)) value="{{ $edit->address->$field }}" @endif @if(isset($properties['placeholder'])) placeholder="{{ __($properties['placeholder']) }}" @endif>
+                              </div>
+                            </div>
+                          </div>
+                          @break
+
+                        @case('textarea')
+                          <div class="col-lg-12">
+                            <div class="form-group focused">
+                              <label class="form-control-label" for="input-city">{{ __($properties['label']) }}</label>
+                              <div @if($errors->has($field)) class="has-danger" @endif>
+                                <textarea rows="4" maxlength="64" name="{{ $field }}" class="form-control form-control-alternative @if($errors->has($field)) is-invalid-alt @endif" @if(isset($properties['placeholder'])) placeholder="{{ __($properties['placeholder']) }}" @endif>@if(session('post')){{ session('post.'.$field) }}@elseif(isset($edit)){{ $edit->address->$field }}@endif</textarea>
+                              </div>
+                            </div>
+                          </div>
+                          @break
+
+
+                      @endswitch
+                    @endforeach
+
+                    @yield('custom')
+              
+                  {{--<!--
 
                     <div class="col-lg-6">
                       <div class="form-group focused">
@@ -135,9 +167,6 @@
 
                   </div>
 
-                </div>
-
-                <!-- Description -->
                 <div class="pl-lg-4">
                   <div class="form-group focused">
                     <label class="form-control-label" for="input-city">{{ __('hotcoffee::admin.user_about') }}</label>
@@ -145,13 +174,17 @@
                       <textarea rows="4" maxlength="64" name="bio" class="form-control form-control-alternative @if($errors->has('bio')) is-invalid-alt @endif" placeholder="{{ __('hotcoffee::admin.user_bio') }}">@if(session('post')){{ session('post.bio') }}@elseif(isset($edit)){{ $edit->address->bio }}@endif</textarea>
                     </div>
                   </div>
+                -->--}}
+
+                  </div>
                 </div>
 
+              
                 @if(count(config('hotcoffee.admin_languages')) > 1)
                   <hr class="my-4"/>
 
                   <!-- Description -->
-                  <h6 class="heading-small text-muted mb-4">{{ __('hotcoffee::admin.user_about') }}</h6>
+                  <h6 class="heading-small text-muted mb-4">{{ __('hotcoffee::admin.user_language') }}</h6>
                   <div class="pl-lg-4">
                     <div class="form-group focused">
                       <select id="input-locale" class="form-control form-control-alternative no-border-radius" name="locale">
