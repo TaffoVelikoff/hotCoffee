@@ -29,9 +29,6 @@ class UserController extends Controller
      */
     public function create() {
 
-        // Get all user address fields
-        view()->share('userAddressFields', config('hotcoffee.custom_user_address_namespace')::fields());
-
     	// Get all roles
         view()->share('roles', Role::all());
 
@@ -45,9 +42,6 @@ class UserController extends Controller
      * Edit
      */
     public function edit(User $user) {
-
-        // Get all user address fields
-        view()->share('userAddressFields', config('hotcoffee.custom_user_address_namespace')::fields());
 
         // Send user view
         view()->share('edit', $user);
@@ -73,29 +67,20 @@ class UserController extends Controller
     public function store(StoreUser $request) {
 
         // Store user
-        $user = User::create($request->only('name', 'email', 'password', 'locale'));
+        $user = User::create($request->all());
+
         $user->address()->create(array_merge(
             ['user_id' => $user->id],
-            $request->only(array_keys(config('hotcoffee.custom_user_address_namespace')::fields()))
+            $request->all()
         ));
 
-        // Set role
-        if(isset($request->role) && $user->id != 1) {
-            $user->roles()->sync($request->role);
-        }
-
-        // Attach avatar
-        if($request->file || $user->attachmentsGroup('avatar')->isEmpty() == false) {
-            $user->croppieAttach($request->imagebase64, 'avatar', $user->avatar_size);
-        }
-
-        // Verify user
-        $user->markEmailAsVerified();
+        // Any additional logic
+        $user->additionalCreatesViaAdmin($request);
 
         // Flash success message
         session()->flash('notify', array(
             'type'      => 'success',
-            'message'   => __('hotcoffee::admin.user_create_suc')
+            'message'   => __($user->create_success_message)
         ));
 
         return redirect()->route('hotcoffee.admin.users.index');
@@ -108,25 +93,20 @@ class UserController extends Controller
      * @param  StoreUser  $request
      */
     public function update(User $user, StoreUser $request) {
-        
+
         // Update user
-        (empty($request->get('password'))) ? $user->update($request->only('name', 'email', 'locale')) : $user->update($request->only('name', 'email', 'password', 'locale'));
-        $user->address->update($request->only(array_keys(config('hotcoffee.custom_user_address_namespace')::fields())));
+        (empty($request->get('password'))) ? $user->update($request->except('password')) : $user->update($request->all());
 
-        // Update role
-        if(isset($request->role) && $user->id != 1) {
-            $user->roles()->sync($request->role);
-        }
+        // Update user address
+        $user->address->update($request->all());
 
-        // Attach avatar
-        if($request->file || $user->attachmentsGroup('avatar')->isEmpty() == false) {
-            $user->croppieAttach($request->imagebase64, 'avatar', [600, 600]);
-        }
+        // Any additional updates
+        $user->additionalUpdatesViaAdmin($request);
 
         // Flash success message
         session()->flash('notify', array(
             'type'      => 'success',
-            'message'   => __('hotcoffee::admin.user_update_suc')
+            'message'   => __($user->update_success_message)
         ));
 
         return back();

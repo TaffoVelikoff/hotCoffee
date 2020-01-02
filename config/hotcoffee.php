@@ -315,6 +315,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | UserAddress
+    |--------------------------------------------------------------------------
+    | You can extend or use your own custom model for UserAddress. Read more in documentation.
+    |
+    */
+
+    'custom_user_address_namespace'    => 'TaffoVelikoff\HotCoffee\UserAddress', // 'App\UserAddress'
+
+    /*
+    |--------------------------------------------------------------------------
     | Attachable images to models
     |--------------------------------------------------------------------------
     | For the Article (blog posts/news) and InfoPage model you can use by default

@@ -2,6 +2,7 @@
 
 namespace TaffoVelikoff\HotCoffee;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use TaffoVelikoff\HotCoffee\Traits\HasAttachment;
@@ -11,7 +12,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasAttachment;
 
-    protected $guarded = [''];
+    protected $fillable = ['name', 'email', 'password', 'locale'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -31,15 +32,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Default dimensions for avatars.
-     *
-     */
-    public $avatar_size = [600, 600];
-
     // Views
     public $edit_view = 'hotcoffee::admin.user';
     public $index_view = 'hotcoffee::admin.users';
+
+    // Messages
+    public $update_success_message = 'hotcoffee::admin.user_update_suc';
+    public $create_success_message = 'hotcoffee::admin.user_create_suc';
 
     //===== ROLES =====//
 
@@ -94,6 +93,96 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function setPasswordAttribute($password) {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    //===== VALIDATIONS ====//
+    public static function validationRulesForAdmin() {
+        $rules = [
+            'name'      => 'required|min:3|max:18',
+            'email'     => 'required|without_spaces|email',
+            'city'      => 'max:32',
+            'country'   => 'max:32',
+            'company'   => 'max:48',
+            'bio'       => 'max:64',
+            'role'      => 'required',
+        ];
+
+        if(request()->edit && request()->edit == 1) {
+            $rules['role'] = '';
+        }
+
+        if(request()->edit) {
+            $rules['password'] = 'sometimes|nullable|confirmed|min:6';
+        }
+
+        if(!request()->edit) {
+             $rules['password'] = 'required|confirmed|min:6';
+        }
+
+        if(!request()->edit) {
+            $rules['email'] = 'unique:users,email|required|without_spaces|email';
+        }
+
+        if(request()->edit) {
+            $rules['email'] = Rule::unique('users')->ignore(request()->edit).'|email';
+        }
+
+        return $rules;
+    }
+
+    public static function validationMessagesForAdmin() {
+        return [];
+    }
+
+    //===== SAVE & UPDATE MODEL VIA ADMIN =====//
+
+    /**
+     *
+     *
+     */
+    public function additionalCreatesViaAdmin($request) {
+
+        // Update roles
+        $this->updateRole($request);
+
+        // Attach avatar
+        $this->attachAvatar($request);
+
+        // Verify user
+        $this->markEmailAsVerified();
+
+    }
+
+    /**
+     * You can re-define this method in your App/User model if you need some additional custom logic
+     * to be executed while updating the model via admin.
+     */
+    public function additionalUpdatesViaAdmin($request) {
+
+        // Update roles
+        $this->updateRole($request);
+
+        // Attach avatar
+        $this->attachAvatar($request);
+
+    }
+
+    /**
+     * Attach avatar
+     */
+    public function attachAvatar($request, $dimensions = [600, 600]) {
+        if($request->file || $this->attachmentsGroup('avatar')->isEmpty() == false) {
+            $this->croppieAttach($request->imagebase64, 'avatar', $dimensions);
+        }
+    }
+
+    /**
+     * Update user role
+     */
+    public function updateRole($request) {
+        if(isset($request->role) && $this->id != 1) {
+            $this->roles()->sync($request->role);
+        }
     }
 
     /**

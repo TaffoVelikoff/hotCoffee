@@ -92,7 +92,7 @@
                 <div class="pl-lg-4">
                   <div class="row">
 
-                    @foreach($userAddressFields as $field=>$properties)
+                    {{--@foreach($userAddressFields as $field=>$properties)
                       @switch($properties['type'])
 
                         @case('text')
@@ -119,11 +119,9 @@
 
 
                       @endswitch
-                    @endforeach
+                    @endforeach --}}
 
                     @yield('custom')
-              
-                  {{--<!--
 
                     <div class="col-lg-6">
                       <div class="form-group focused">
@@ -143,10 +141,6 @@
                       </div>
                     </div>
 
-                  </div>
-
-                  <div class="row">
-
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-last-name">{{ __('hotcoffee::admin.user_company') }}</label>
@@ -165,16 +159,15 @@
                       </div>
                     </div>
 
-                  </div>
 
-                <div class="pl-lg-4">
-                  <div class="form-group focused">
-                    <label class="form-control-label" for="input-city">{{ __('hotcoffee::admin.user_about') }}</label>
-                    <div @if($errors->has('bio')) class="has-danger" @endif>
-                      <textarea rows="4" maxlength="64" name="bio" class="form-control form-control-alternative @if($errors->has('bio')) is-invalid-alt @endif" placeholder="{{ __('hotcoffee::admin.user_bio') }}">@if(session('post')){{ session('post.bio') }}@elseif(isset($edit)){{ $edit->address->bio }}@endif</textarea>
+                    <div class="col-lg-12">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-city">{{ __('hotcoffee::admin.user_about') }}</label>
+                        <div @if($errors->has('bio')) class="has-danger" @endif>
+                          <textarea rows="4" maxlength="64" name="bio" class="form-control form-control-alternative @if($errors->has('bio')) is-invalid-alt @endif" placeholder="{{ __('hotcoffee::admin.user_bio') }}">@if(session('post')){{ session('post.bio') }}@elseif(isset($edit)){{ $edit->address->bio }}@endif</textarea>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                -->--}}
 
                   </div>
                 </div>
