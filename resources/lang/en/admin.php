@@ -54,7 +54,7 @@ return [
     'choose_files_nfo_3'    => 'Allowed extentions: jpg, jpeg, png, gif, svg',
     'upload_one_more'       => 'Upload one or more files',
     'user_access'           => 'User access',
-    'user_access_nfo'       => 'Do not select any roles if you want the page to be public to everybody (including not logged in users). Admins always have access to all pages.',
+    'user_access_nfo'       => 'Do not select any roles if you want the page to be public to everyone (including not logged in users). Admins always have access to all pages.',
     'user_access_only'      => 'Only for users with roles:',
     'meta_desc'             => 'Meta description',
     'meta_desc_nfo'         => ' This is used when the page appears on social media & search engines. You can leave empty. The system will populate the "description" meta tag automatically, using the provided text in the content field.',
@@ -68,6 +68,7 @@ return [
     'time'                  => 'time',
     'no_nfo_yet'            => 'Nothing to show yet ...',
     'version'               => 'Version',
+    'no_keyword'            => 'Please enter a term to search for.',
 
     //===== Color
     'default'               => 'Default',
@@ -134,6 +135,8 @@ return [
     'url_nfo_3'             => 'For single page websites you can enter the name of the section (starting with "#") to scroll down to it.',
     'url_nfo_4'             => 'Leave empty if you don\'t want to link to anything and just use it for a title for a submenu.',
     'url_nfo_5'             => 'If you want to link to an external info page you can chose it from the drop down menu. In this case any URL entered in the field above will be ignored by the system.',
+    'menu_create'           => 'Create a menu',
+    'menu_edit'             => 'Edit menu',
 
     //===== Info Pages
     'infopage'              => 'Info Page',
@@ -143,10 +146,12 @@ return [
     'nfo_page_group'        => 'You can add new page groups (keys) in config/app.php.',
     'page_create_suc'       => 'The info page was succesfully created.',
     'page_update_suc'       => 'The info page was succesfully updated.',
-    'page_content_nfo'      => 'Use the "Attach images" field bellow to attach any image files to a page. It is not recommended to upload images directly into the WYSIWYG editor (page content text field), rather use "Insert" -> "Image..." and give an external source. Put pictures in the WYSIWYG editor only if you need them at a specific place.',
+    'page_content_nfo'      => '',
     'page_roles_only'       => 'Only logged in users with these roles have access',
     'page_roles_all'        => 'All users have access to this page.',
     'sef_nfo'               => 'At least 3 charecters long. Valid symbols: 0-9, A-Z, a-z, _, -',
+    'page_create'           => 'Create a new page',
+    'page_edit'             => 'Edit info page',
 
     //===== Articles
     'articles'              => 'Articles',
@@ -154,6 +159,8 @@ return [
     'article_create_suc'    => 'The article was created successfully.',
     'article_update_suc'    => 'The article was updated succesfully.',
     'with_tag'              => 'with tag',
+    'article_create'        => 'Create a new article',
+    'article_edit'          => 'Edit article',
 
     //===== Users
     'user_create'           => 'Add a new user',
@@ -178,6 +185,7 @@ return [
 
 
     //===== User roles
+    'role'                  => 'Role',
     'create_role'           => 'Create a new role',
     'role_edit'             => 'Edit role',
     'role_info'             => 'Role information',
@@ -228,11 +236,11 @@ return [
     'these_changes'         => 'These changes can not be restored.',
     'err_access_denied'     => 'Access denied.',
 
-    'err_title_required'    => 'The title field for one of the languages [:lang] is required.',
-    'err_content_required'  => 'The content field for one of the languages [:lang] is required.',
-    'err_title_max'         => 'The title for one of the languages [:lang] is too long.',
-    'err_content_max'       => 'The content for one of the languages [:lang] is long.',
-    'err_title_min'         => 'The title for one of the languages [:lang] is too short.',
+    'err_title_required'    => 'The title field for one of the languages (:lang) is required.',
+    'err_content_required'  => 'The content field for one of the languages (:lang) is required.',
+    'err_title_max'         => 'The title for one of the languages (:lang) is too long.',
+    'err_content_max'       => 'The content for one of the languages (:lang) is long.',
+    'err_title_min'         => 'The title for one of the languages (:lang) is too short.',
     'err_must_be_image'     => 'Trying to upload an invalid image file.',
     'err_image_upload'      => 'Problem with uploading one of the images. Check "upload_max_filesize" in your PHP settings.',
     'err_sef_req'           => 'The custom url is required.',

@@ -94,9 +94,9 @@ return [
     |
     */
 
-    'languages' => [
+  'languages' => [
         'en'    => 'English',
-        'bg'    => 'Bulgarian',
+        'bg'    => 'Български [Bulgarian]',
     ],
 
     /*
@@ -113,7 +113,7 @@ return [
 
     'admin_languages' => [
         'en'    => 'English',
-        'bg'    => 'Bulgarian',
+        'bg'    => 'Български [Bulgarian]',
     ],
 
     /*

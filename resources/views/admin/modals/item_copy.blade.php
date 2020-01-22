@@ -40,7 +40,7 @@
                 <div class="form-group">
                   <label class="form-control-label text-capitalize" for="input-name">{{ __('hotcoffee::admin.title') }} <span class="text-danger">*</span></label>
                   @foreach(config('hotcoffee.languages') as $acr=>$lang)
-                    <input type="text" id="input-name-{{ $acr }}" class="form-control form-control-alternative mt-2 input-name" name="name" required="" placeholder="{{ __('hotcoffee::admin.menu_item_name_holder') }}" data-lang="{{ $acr }}">
+                    <input type="text" id="input-name-{{ $acr }}" class="form-control form-control-alternative mt-2 input-name" name="{{ $acr }}[name]" required="" placeholder="{{ __('hotcoffee::admin.menu_item_name_holder') }}" data-lang="{{ $acr }}">
                   @endforeach
                 </div>
               @endif

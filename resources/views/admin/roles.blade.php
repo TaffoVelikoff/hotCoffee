@@ -26,8 +26,8 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col">Role</th>
-                    <th scope="col">Description</th>
+                    <th scope="col">{{ __('hotcoffee::admin.role') }}</th>
+                    <th scope="col">{{ __('hotcoffee::admin.description') }}</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>

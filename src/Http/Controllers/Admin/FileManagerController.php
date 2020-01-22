@@ -13,6 +13,9 @@ class FileManagerController extends Controller
      */
     public function index() {
 
+    	// Custom page name
+		view()->share('customPageName', __('hotcoffee::admin.filemanager'));
+
         // Display view
         return view('hotcoffee::admin.filemanager');
 

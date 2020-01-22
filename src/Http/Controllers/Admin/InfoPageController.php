@@ -21,6 +21,9 @@ class InfoPageController extends Controller
       $infos = InfoPage::orderBy('id', 'desc')->paginate(settings('paginate'));
       view()->share('infos', $infos);
 
+      // Custom page name
+      view()->share('customPageName', __('hotcoffee::admin.infopages'));
+
     	// Display view
       return view('hotcoffee::admin.infopages');
 
@@ -33,6 +36,9 @@ class InfoPageController extends Controller
 
       // All roles
       view()->share('roles', Role::all());
+
+      // Custom page name
+      view()->share('customPageName', __('hotcoffee::admin.page_create'));
 
     	// Display view
       return view('hotcoffee::admin.infopage');
@@ -49,6 +55,9 @@ class InfoPageController extends Controller
       
       // Send info page to view
       view()->share('edit', $info);
+
+      // Custom page name
+      view()->share('customPageName', __('hotcoffee::admin.page_edit'));
 
       // Display view
       return view('hotcoffee::admin.infopage');

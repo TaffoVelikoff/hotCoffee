@@ -18,6 +18,9 @@ class SettingsController extends Controller
 
     	// Timezones
 		view()->share('timezones', DateTimeZone::listIdentifiers(DateTimeZone::ALL));
+
+        // Custom page name
+        view()->share('customPageName', __('hotcoffee::admin.settings'));
     	
     	// Display view
         return view('hotcoffee::admin.settings');

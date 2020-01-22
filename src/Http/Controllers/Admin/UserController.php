@@ -19,6 +19,9 @@ class UserController extends Controller
         $users = User::paginate(settings('paginate'));
         view()->share('users', $users);
 
+        // Custom page name
+        view()->share('customPageName', __('hotcoffee::admin.users'));
+
     	// Display view
         return view((new User)->index_view);
 

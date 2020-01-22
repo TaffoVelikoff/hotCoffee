@@ -21,6 +21,9 @@ class MenuController extends Controller
       $menus = Menu::orderBy('id', 'desc')->paginate(settings('paginate'));
       view()->share('menus', $menus);
 
+      // Custom page name
+      view()->share('customPageName', __('hotcoffee::admin.menus'));
+
       // Display view
       return view('hotcoffee::admin.menus');
 
@@ -30,6 +33,9 @@ class MenuController extends Controller
      * Create
      */
     public function create() {
+
+      // Custom page name
+      view()->share('customPageName', __('hotcoffee::admin.menu_create'));
 
       // Display view
       return view('hotcoffee::admin.menu');
@@ -49,6 +55,9 @@ class MenuController extends Controller
 
       // Send menu to view
       view()->share('edit', $menu);
+
+      // Custom page name
+      view()->share('customPageName', __('hotcoffee::admin.menu_edit'));
 
       // Display view
       return view('hotcoffee::admin.menu');
@@ -96,14 +105,13 @@ class MenuController extends Controller
         }
       }
 
-
       // Flash success message
       session()->flash('notify', array(
           'type'      => 'success',
           'message'   => __('hotcoffee::admin.menu_update_suc')
       ));
 
-      return redirect()->route('hotcoffee.admin.menus.index');
+      return redirect()->route('hotcoffee.admin.menus.edit', $menu->id);
 
     }
 

@@ -56,7 +56,7 @@
         @foreach(config('hotcoffee.nav') as $item)
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link @if(in_array($viewName, $item['views'])) active @endif" href="{{ route($item['route']) }}">
+              <a class="nav-link @if(in_array($viewName, $item['views'])) active @endif" @if(isset($item['target'])) target="{{ $item['target'] }}" @endif href="@if(\Route::has($item['route'])) @if(!isset($item['params'])) {{ route($item['route']) }} @else {{ route($item['route'], $item['params']) }} @endif @else {{ $item['route'] }} @endif">
                 <i class="{{ $item['icon'] }} text-primary"></i> {{ __($item['name']) }}
               </a>
             </li>

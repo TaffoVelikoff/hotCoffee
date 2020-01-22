@@ -17,6 +17,9 @@ class ExportController extends Controller
      */
     public function index() {
 
+        // Custom page name
+        view()->share('customPageName', __('hotcoffee::admin.xls_export'));
+
     	// Display view
         return view('hotcoffee::admin.export');
     }

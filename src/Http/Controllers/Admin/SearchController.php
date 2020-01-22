@@ -14,6 +14,17 @@ class SearchController extends Controller
      */
     public function index() {
 
+        // Check for a keyword
+        if(request()->keyword == null || request()->keyword == '') {
+            // Flash success message
+            session()->flash('notify', array(
+                'type'      => 'warning',
+                'message'   => __('hotcoffee::admin.no_keyword')
+            ));
+
+          return back();
+        }
+
     	$results = [];
 
     	$searchables = config('hotcoffee.searchables');
@@ -35,6 +46,9 @@ class SearchController extends Controller
 
     	// Share results to template
 		view()->share('results', $results);
+
+        // Custom page name
+        view()->share('customPageName', __('hotcoffee::admin.search'));
 
     	// Display template
     	return View('hotcoffee::admin.search');

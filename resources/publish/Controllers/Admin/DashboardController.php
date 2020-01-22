@@ -32,7 +32,7 @@ class DashboardController extends Controller
 		}
     	
 		// Display Template
-		//view()->share('customPageName', 'Custom Name');
+		view()->share('customPageName', __('hotcoffee::admin.dashboard'));
 		return View('admin.dashboard');
     }
 }

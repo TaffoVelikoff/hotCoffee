@@ -26,6 +26,9 @@ class ArticleController extends Controller
       $articles = $articles->paginate(settings('paginate'));
       view()->share('articles', $articles);
 
+      // Custom page name
+      view()->share('customPageName', __('hotcoffee::admin.articles'));
+
     	// Display view
       return view('hotcoffee::admin.articles');
 
@@ -38,6 +41,9 @@ class ArticleController extends Controller
 
       // Get all tags
       view()->share('allTags', Article::existingTags());
+
+      // Custom page name
+      view()->share('customPageName', __('hotcoffee::admin.article_create'));
 
       // Display view
       return view('hotcoffee::admin.article');
@@ -57,6 +63,9 @@ class ArticleController extends Controller
 
       // Get tags
       view()->share('tags', implode(',', $article->tagNames()));
+
+      // Custom page name
+      view()->share('customPageName', __('hotcoffee::admin.article_edit'));
 
       // Display view
       return view('hotcoffee::admin.article');

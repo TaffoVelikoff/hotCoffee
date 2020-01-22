@@ -19,7 +19,7 @@ class RoleController extends Controller
     	view()->share('roles', $roles);
 
     	// Display template
-    	view()->share('customPageName', 'User Roles');
+    	view()->share('customPageName', __('hotcoffee::admin.user_roles'));
     	return view('hotcoffee::admin.roles');
 
     }
@@ -44,7 +44,7 @@ class RoleController extends Controller
         view()->share('edit', $role);
 
         // Display template
-        view()->share('customPageName', __('hotcoffee.admin.role_edit'));
+        view()->share('customPageName', __('hotcoffee::admin.role_edit'));
         return view('hotcoffee::admin.role');
 
     }

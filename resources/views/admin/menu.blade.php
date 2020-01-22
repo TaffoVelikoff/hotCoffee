@@ -22,7 +22,7 @@
 										<div class="form-group">
 											<label class="form-control-label" for="input-keyword">{{ __('hotcoffee::admin.keyword') }}</label>
 											<div @if($errors->has('keyword')) class="has-danger" @endif>
-												<input type="text" id="input-keyword" class="form-control form-control-alternative @if($errors->has('keyword')) is-invalid-alt @endif" @if(session('post')) value="{{ session('post.keyword') }}" @elseif(isset($edit)) value="{{ $edit->keyword }}" @endif name="keyword" required="" @if(isset($edit)) disabled="" @endif>
+												<input type="text" id="input-keyword" class="form-control form-control-alternative @if($errors->has('keyword')) is-invalid-alt @endif" @if(session('post.keyword')) value="{{ session('post.keyword') }}" @elseif(isset($edit)) value="{{ $edit->keyword }}" @endif name="keyword" required="" @if(isset($edit)) disabled="" @endif>
 											</div>
 										</div>
 									</div>
