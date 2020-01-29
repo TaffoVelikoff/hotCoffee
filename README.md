@@ -6,16 +6,20 @@ Laravel admin panel package to kick start your new web app.
 
 [Computer psd created by rawpixel.com - www.freepik.com](https://www.freepik.com/free-photos-vectors/computer)
 
-### Screenshots
-
-<a href="http://dev.taffovelikoff.com/images/hotcoffee/shot3.png" target="_blank">User Profile</a> | 
-<a href="http://dev.taffovelikoff.com/images/hotcoffee/shot2.png" target="_blank">Page Editor</a> | 
-<a href="http://dev.taffovelikoff.com/images/hotcoffee/shot4.png" target="_blank">Menu Editor</a> | 
-<a href="http://dev.taffovelikoff.com/images/hotcoffee/shot1.png" target="_blank">App Settings</a>
-
 ## What is hotCoffee
 
 -- will add description soon --
+
+### Some Screenshots
+
+User Profile
+![alt text](http://dev.taffovelikoff.com/images/hotcoffee/shot3.png "User Profile")
+
+Page Editor
+![alt text](http://dev.taffovelikoff.com/images/hotcoffee/shot2.png "Page Editor")
+
+Menu Editor
+![alt text](http://dev.taffovelikoff.com/images/hotcoffee/shot4.png "Menu Editor")
 
 ### Prerequisites
 
