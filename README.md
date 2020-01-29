@@ -10,8 +10,6 @@ Laravel admin panel package to kick start your new web app.
 
 -- will add description soon --
 
-## Some Screenshots
-
 #### User Profile
 ![alt text](http://dev.taffovelikoff.com/images/hotcoffee/profile.png "hotCoffee User Profile")
 
