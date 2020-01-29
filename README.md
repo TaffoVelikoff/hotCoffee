@@ -10,7 +10,7 @@ Laravel admin panel package to kick start your new web app.
 
 -- will add description soon --
 
-### Some Screenshots
+## Some Screenshots
 
 #### User Profile
 ![alt text](http://dev.taffovelikoff.com/images/hotcoffee/profile.png "hotCoffee User Profile")
@@ -21,11 +21,11 @@ Laravel admin panel package to kick start your new web app.
 #### Menu Editor
 ![alt text](http://dev.taffovelikoff.com/images/hotcoffee/menu.png "hotCoffee Menu Editor")
 
-### Prerequisites
+## Prerequisites
 
 Before installing hotCoffee make sure you have installed Laravel 6 or above and PHP 7.2 or newer.
 
-### Installing
+## Installing
 
 #### STEP 1: Required the package
 The installation process is really simple. Create a new Laravel application and include the package with the following command:
