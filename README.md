@@ -13,13 +13,13 @@ Laravel admin panel package to kick start your new web app.
 ### Some Screenshots
 
 User Profile
-![alt text](http://dev.taffovelikoff.com/images/hotcoffee/shot3.png "User Profile")
+![alt text](http://dev.taffovelikoff.com/images/hotcoffee/shot3.png "hotCoffee: User Profile")
 
 Page Editor
-![alt text](http://dev.taffovelikoff.com/images/hotcoffee/shot2.png "Page Editor")
+![alt text](http://dev.taffovelikoff.com/images/hotcoffee/shot2.png "hotCoffee: Page Editor")
 
 Menu Editor
-![alt text](http://dev.taffovelikoff.com/images/hotcoffee/shot4.png "Menu Editor")
+![alt text](http://dev.taffovelikoff.com/images/hotcoffee/shot4.png "hotCoffee: Menu Editor")
 
 ### Prerequisites
 
