@@ -1,6 +1,6 @@
 {
     "name": "taffovelikoff/hotcoffee",
-    "description": "A simple laravel admin panel to kick start your production as a freelancer.",
+    "description": "A simple laravel admin panel to kick start your new web app.",
     "type": "library",
     "license": "MIT",
     "authors": [
