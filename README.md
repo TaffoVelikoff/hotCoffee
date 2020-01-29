@@ -9,9 +9,13 @@ Laravel admin panel package to kick start your new web app.
 ### Screenshots
 
 [User Profile](http://dev.taffovelikoff.com/images/hotcoffee/shot3.png)
+
 [Page Editor](http://dev.taffovelikoff.com/images/hotcoffee/shot2.png)
+
 [Menu Editor](http://dev.taffovelikoff.com/images/hotcoffee/shot4.png)
+
 [App Settings](http://dev.taffovelikoff.com/images/hotcoffee/shot4.png)
+
 
 ## What is hotCoffee
 
