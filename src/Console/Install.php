@@ -29,37 +29,49 @@ class Install extends Command {
      * @return void
      */
    	public function __construct() {
-		parent::__construct();
+		  parent::__construct();
    	}
 
    	/*
    	 * Process the command
    	 */
-	public function handle() {
-        
-        if(!File::exists(base_path('hotcoffee.installed'))) {
-          
-            // Create _backup directory
-            if(!File::exists(base_path('_backup')))
-                File::makeDirectory(base_path('_backup'));
+	 public function handle() {
 
-            // Move some files to the _backup folder
-            File::move(base_path('/app/User.php'), base_path('_backup/User.php'));
-            File::move(base_path('/routes/web.php'), base_path('_backup/web.php'));
+        if(!File::exists(base_path('config/hotcoffee.php'))) {
 
-            // Copy hotCoffee User model
-            File::put(base_path('/app/User.php'), File::get(__DIR__.'/../../resources/publish/User.php'));
+            // Ask for example controllers and other logic
+            ($this->confirm(
+              'Do you want to install the example logic? This includes some example controllers, methods, routes and views for the front-end of your app.'
+            )) ? $example = true : $example = false;
 
-            // Copy hotCoffee routes
-            File::put(base_path('/routes/web.php'), File::get(__DIR__.'/../../resources/publish/routes/web.php'));
+            if($example == true) {
+              // Create _backup directory
+              if(!File::exists(base_path('_backup')))
+                  File::makeDirectory(base_path('_backup'));
 
-            // Copy example front controllers
-            if(!File::exists(base_path('/app/Http/Controllers/Front')))
-                File::makeDirectory(base_path('/app/Http/Controllers/Front'));
+              // Move some files to the _backup folder
+              File::move(base_path('/routes/web.php'), base_path('_backup/web.php'));
 
-            File::put(base_path('/app/Http/Controllers/Front/ArticleController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Front/ArticleController.php'));
-            File::put(base_path('/app/Http/Controllers/Front/HomeController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Front/HomeController.php'));
-            File::put(base_path('/app/Http/Controllers/Front/InfoPageController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Front/InfoPageController.php'));
+              // Copy hotCoffee routes
+              File::put(base_path('/routes/web.php'), File::get(__DIR__.'/../../resources/publish/routes/web.php'));
+
+              // Copy example front controllers
+              if(!File::exists(base_path('/app/Http/Controllers/Front')))
+                  File::makeDirectory(base_path('/app/Http/Controllers/Front'));
+
+              File::put(base_path('/app/Http/Controllers/Front/ArticleController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Front/ArticleController.php'));
+              File::put(base_path('/app/Http/Controllers/Front/HomeController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Front/HomeController.php'));
+              File::put(base_path('/app/Http/Controllers/Front/InfoPageController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Front/InfoPageController.php'));
+
+              // Copy front views
+              if(!File::exists(base_path('/resources/views/front')))
+                File::makeDirectory(base_path('/resources/views/front'));
+
+              File::put(base_path('/resources/views/front/_layout.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/_layout.blade.php'));
+              File::put(base_path('/resources/views/front/article.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/article.blade.php'));
+              File::put(base_path('/resources/views/front/home.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/home.blade.php'));
+              File::put(base_path('/resources/views/front/infopage.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/infopage.blade.php'));
+            }
 
             // Create some admin controllers
             if(!File::exists(base_path('/app/Http/Controllers/Admin')))
@@ -68,18 +80,11 @@ class Install extends Command {
             File::put(base_path('/app/Http/Controllers/Admin/CustomExportController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Admin/CustomExportController.php'));
             File::put(base_path('/app/Http/Controllers/Admin/DashboardController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Admin/DashboardController.php'));
 
-            // Copy views
-            if(!File::exists(base_path('/resources/views/front')))
-                File::makeDirectory(base_path('/resources/views/front'));
-
+            // Copy admin views
             if(!File::exists(base_path('/resources/views/admin')))
                 File::makeDirectory(base_path('/resources/views/admin'));
 
             File::put(base_path('/resources/views/admin/dashboard.blade.php'), File::get(__DIR__.'/../../resources/publish/views/admin/dashboard.blade.php'));
-            File::put(base_path('/resources/views/front/_layout.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/_layout.blade.php'));
-            File::put(base_path('/resources/views/front/article.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/article.blade.php'));
-            File::put(base_path('/resources/views/front/home.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/home.blade.php'));
-            File::put(base_path('/resources/views/front/infopage.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/infopage.blade.php'));
 
             // Copy the settings file
             File::put(base_path('/storage/app/settings.json'), File::get(__DIR__.'/../../resources/publish/settings.json'));
@@ -118,9 +123,11 @@ class Install extends Command {
             ___________
             `---------'
             ");
+
             $this->info("\n===================================================================================");
             $this->info("\nThe package was succesfully installed.");
-            $this->info("Run 'php artisan hotcoffee:make-admin' to create your first admin user.\n");
+            $this->info("Edit your User model (usually app/User.php) and make the class extend \TaffoVelikoff\HotCoffee\User instead of Authenticatable.\n");
+            $this->info("Then you can run 'php artisan hotcoffee:make-admin' to create your first admin user.\n");
             $this->info("===================================================================================");
         } else {
             // Already installed

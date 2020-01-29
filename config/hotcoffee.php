@@ -94,7 +94,7 @@ return [
     |
     */
 
-  'languages' => [
+    'languages' => [
         'en'    => 'English',
         'bg'    => 'Български [Bulgarian]',
     ],
@@ -321,7 +321,7 @@ return [
     |
     */
 
-    'custom_user_address_namespace'    => 'TaffoVelikoff\HotCoffee\UserAddress', // 'App\UserAddress'
+    'custom_user_address_namespace'    => 'TaffoVelikoff\HotCoffee\UserAddress',
 
     /*
     |--------------------------------------------------------------------------
@@ -410,6 +410,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Tinymce Options
+    |--------------------------------------------------------------------------
+    | Below you can setup the tinymce integration (WYSIWYG editor for pages and articles).
+    |
+    */
+    'tinymce_plugins' => 'textcolor preview fullpage importcss fullscreen image link media codesample table charmap hr insertdatetime advlist lists imagetools textpattern noneditable charmap',
+    'tinymce_context' => 'link image imagetools table spellchecker',
+    'tinymce_toolbar' => 'undo redo | alignleft aligncenter alignright alignjustify | bold italic underline strikethrough | outdent indent | fontselect fontsizeselect formatselect |  numlist bullist | forecolor backcolor | charmap | image media link codesample insertdatetime fullscreen',
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Settings Page
     |--------------------------------------------------------------------------
     | You can easily edit the settings page sections and fields below.
@@ -431,17 +443,6 @@ return [
                 'required'      => true,
                 'content'       => null,
             ],
-
-            // Support e-mail field
-            [
-                'name'          => 'support_mail',
-                'label'         => 'hotcoffee::admin.contact_info',
-                'field_type'    => 'text',
-                'icon'          => 'ni ni-email-83',
-                'info_text'     => null,
-                'required'      => false,
-                'content'       => null,
-            ]
 
         ],
 

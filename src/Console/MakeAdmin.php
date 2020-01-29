@@ -12,7 +12,7 @@ class MakeAdmin extends Command {
      *
      * @var string
      */
-	protected $signature = 'hotcoffee:make-admin';
+	protected $signature = 'hotcoffee:make-admin {--name=} {--email=}';
 
 	/**
      * The console command description.
@@ -36,17 +36,25 @@ class MakeAdmin extends Command {
 	public function handle() {
 
         // Validate user name
-        $validate['name'] = false;
-        while($validate['name'] == false) {
-        	$name = $this->ask('Enter a name for the new admin user (3 to 18 charecters long)');
-        	(strlen($name) < 3 || strlen($name) > 18) ? $this->error("Invalid name. Must be between 3 and 18 charecters long.") : $validate['name'] = true;
+        if(!$this->option('name')) {
+            $validate['name'] = false;
+            while($validate['name'] == false) {
+            	$name = $this->ask('Enter a name for the new admin user (3 to 18 charecters long)');
+            	(strlen($name) < 3 || strlen($name) > 18) ? $this->error("Invalid name. Must be between 3 and 18 charecters long.") : $validate['name'] = true;
+            }
+        } else {
+            $name = $this->option('name');
         }
 
         // Validate user e-mail
-        $validate['email'] = false;
-        while($validate['email'] == false) {
-        	$email = $this->ask('Enter an e-mail address');
-        	(!filter_var($email, FILTER_VALIDATE_EMAIL)) ? $this->error("Invalid e-mail address.") : $validate['email'] = true;
+        if(!$this->option('email')) {
+            $validate['email'] = false;
+            while($validate['email'] == false) {
+            	$email = $this->ask('Enter an e-mail address');
+            	(!filter_var($email, FILTER_VALIDATE_EMAIL)) ? $this->error("Invalid e-mail address.") : $validate['email'] = true;
+            }
+        } else {
+            $email = $this->option('email');
         }
 
         // Validate password

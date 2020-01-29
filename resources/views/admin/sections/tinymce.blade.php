@@ -1,27 +1,15 @@
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-<!--<script>
-	tinymce.init({
-		selector:'textarea.tinymce',
-		height: 400,
-		plugins: [
-		    'preview fullpage importcss fullscreen image link media codesample table charmap hr insertdatetime advlist lists imagetools textpattern noneditable help charmap quickbars emoticons'
-		],
-		contextmenu: "link image imagetools table spellchecker",
-		toolbar: "undo redo | alignleft aligncenter alignright alignjustify | bold italic underline strikethrough | outdent indent | fontselect fontsizeselect formatselect |  numlist bullist | forecolor backcolor | charmap emoticons | image media link codesample insertdatetime"
-	});
-</script>-->
+<script src="{{ coffee_asset('plugins/tinymce/tinymce.min.js') }}"></script>
 
 <script>
   var editor_config = {
     path_absolute : "{{ url('') }}/",
     selector: "textarea.tinymce",
     height: 400,
-    plugins: [
-	    'preview fullpage importcss fullscreen image link media codesample table charmap hr insertdatetime advlist lists imagetools textpattern noneditable help charmap emoticons'
-	],
-	contextmenu: "link image imagetools table spellchecker",
-    toolbar: "undo redo | alignleft aligncenter alignright alignjustify | bold italic underline strikethrough | outdent indent | fontselect fontsizeselect formatselect |  numlist bullist | forecolor backcolor | charmap emoticons | image media link codesample insertdatetime",
+    plugins: ['{{ config('hotcoffee.tinymce_plugins') }}'],
+    contextmenu: "{{ config('hotcoffee.tinymce_context') }}",
+    toolbar: "{{ config('hotcoffee.tinymce_toolbar') }}",
     relative_urls: false,
+    image_advtab: true,
     file_browser_callback : function(field_name, url, type, win) {
       var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
       var y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;

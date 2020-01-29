@@ -8,6 +8,11 @@
  * a recommendation.
  */
 
+Route::group(['middleware' => ['web', 'hotcoffee']], function () {
+	// You can re-declare any admin routes here
+	//Route::get('admin/infopages', 'Admin\InfoPageController@index')->name('hotcoffee.admin.infopages.index');
+});
+
 $routes = function () {
 	// ===== ADD YOUR ROUTES HERE ===== //
 	Route::get('/about', 'Front\HomeController@about')->name('about');

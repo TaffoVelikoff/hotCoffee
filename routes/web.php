@@ -37,6 +37,9 @@ Route::group(['namespace' => 'TaffoVelikoff\HotCoffee\Http\Controllers'], functi
 			// AUTH
 			Route::group(['middleware' => array('hotcoffee.auth', 'hotcoffee.admin', 'hotcoffee.controllers', 'verified')], function () {
 
+				// Dashboard
+				Route::get('/dashboard', '\App\Http\Controllers\Admin\DashboardController@index')->name('hotcoffee.admin.dashboard');
+
 				// Articles
 				Route::group(['prefix' => 'article'], function () {
 					Route::get('/', 'Admin\ArticleController@index')->name('hotcoffee.admin.articles.index');
@@ -114,7 +117,7 @@ Route::group(['namespace' => 'TaffoVelikoff\HotCoffee\Http\Controllers'], functi
 				});
 
 				// Search
-				Route::post('/search', 'Admin\SearchController@index')->name('hotcoffee.admin.search');
+				Route::get('/search', 'Admin\SearchController@index')->name('hotcoffee.admin.search');
 
 				// File manager
 				Route::get('/filemanager', 'Admin\FileManagerController@index')->name('hotcoffee.admin.filemanager');
