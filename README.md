@@ -2,7 +2,7 @@
 
 Laravel admin panel package to kick start your new web app.
 
-![alt text](http://dev.taffovelikoff.com/images/hotcoffee_intro.png "hotCoffee")
+![alt text](http://dev.taffovelikoff.com/images/hotcoffee/hotcoffee_intro.png "hotCoffee")
 
 [Computer psd created by rawpixel.com - www.freepik.com](https://www.freepik.com/free-photos-vectors/computer)
 
