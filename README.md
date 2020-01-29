@@ -8,7 +8,7 @@ Laravel admin panel package to kick start your new web app.
 
 ### Prerequisites
 
-Before installing Voyager make sure you have installed Laravel 6 or above and PHP 7.2 or newer.
+Before installing hotCoffee make sure you have installed Laravel 6 or above and PHP 7.2 or newer.
 
 ### Installing
 
