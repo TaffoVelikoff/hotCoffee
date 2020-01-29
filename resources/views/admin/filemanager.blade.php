@@ -19,7 +19,7 @@
 
 			<div class="row mt-4">
 				<div class="col-md-12">
-					<iframe id="manager" src="{{ url('') }}/laravel-filemanager?type=Images" style="width: 100%; height: 680px; overflow: hidden; border: none;"></iframe>
+					<iframe id="manager" src="{{ url('') }}/filemanager?type=Images" style="width: 100%; height: 680px; overflow: hidden; border: none;"></iframe>
 				</div>
 			</div>
 
@@ -40,7 +40,7 @@
 				$('#images').removeClass('btn-default').addClass('btn-primary');
 			}
 
-			url = '{{ url("laravel-filemanager?type=") }}' + type;
+			url = '{{ url("filemanager?type=") }}' + type;
 
 		    var iframe = $('#manager');
 		    if (iframe.length) {
