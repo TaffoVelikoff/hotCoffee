@@ -4,7 +4,8 @@ Laravel admin panel package to kick start your new web app.
 
 ![alt text](http://dev.taffovelikoff.com/images/hotcoffee/hotcoffee_intro.png "hotCoffee")
 
-[Computer psd created by rawpixel.com - www.freepik.com](https://www.freepik.com/free-photos-vectors/computer){:target="_blank" rel="noopener"}
+[Computer psd created by rawpixel.com - www.freepik.com](https://www.freepik.com/free-photos-vectors/computer)
+<a href="http://example.com/" target="_blank">Hello, world!</a>
 
 ### Screenshots
 
