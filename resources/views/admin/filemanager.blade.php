@@ -29,6 +29,7 @@
 
 @section('page_js')
 	<script type="text/javascript">
+
 		$( ".btn-switch" ).click(function() {
 			var type = $(this).data("type");
 
@@ -62,5 +63,6 @@
 		    }
 		    return true;
 		}
+		
 	</script>
 @endsection
