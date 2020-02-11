@@ -17,40 +17,8 @@
 
   </head>
   <body>
-
-  	@if(isset($menu))
-		<!-- Navigation -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="{{ route('sef') }}">{{ settings('website_name') }}</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-					@foreach($menu->getRootItems() as $item)
-						@if($item->children()->isEmpty())
-							<li class="nav-item">
-								<a class="nav-link" href="{{ $item->getRoute() }}" @if($item->new_window == 1) target="_blank" @endif>{!! $item->icon !!} {{ $item->name }}</a>
-							</li>
-						@else 
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="{{ $item->getRoute() }}" @if($item->new_window == 1) target="_blank" @endif id="{{ $item->name }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									{!! $item->icon !!} {{ $item->name }}
-								</a>
-								<div class="dropdown-menu" aria-labelledby="{{ $item->name }}">
-									@foreach($item->children() as $child)
-										<a class="dropdown-item" href="{{ $child->getRoute() }}" @if($item->new_window == 1) target="_blank" @endif>{!! $item->icon !!} {{ $child->name }}</a>
-									@endforeach
-								</div>
-							</li>
-						@endif
-					@endforeach
-				</ul>
-			</div>
-		</nav>
-		<!-- End Navigation -->
-	@endif
+  	
+  	{!! menu('main_menu', 'bootstrap') !!}
 
 	<!-- Page Content -->
 	<div class="container">

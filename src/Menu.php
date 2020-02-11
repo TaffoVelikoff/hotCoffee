@@ -17,6 +17,22 @@ class Menu extends Model
     protected $guarded = [];
 
     /**
+     * Boot
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saved(function ($model) {
+            $model->removeFromCache();
+        });
+
+        static::deleted(function ($model) {
+            $model->removeFromCache();
+        });
+    }
+
+    /**
      * Menu relation
      */
     public function items() {
@@ -24,23 +40,16 @@ class Menu extends Model
     }
 
     /**
-     * Get only root items
+     * Get only root items (parent items)
      */
-    public function getRootItems() {
+    public function rootItems() {
         return $this->items->where('parent', 0);
     }
 
     /**
-     * Delete event
+     * Remove a menu from application cache
      */
-    public static function boot() {
-        parent::boot();
-
-        // DELETING Menu
-        static::deleting(function($info) {
-
-            //
-
-        });
+    public function removeFromCache() {
+        \Cache::forget('hotcoffee_menu_'.$this->keyword);
     }
 }

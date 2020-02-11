@@ -30,8 +30,9 @@
 
                               @if($setting['field_type'])
                                 <label class="form-control-label" for="input-{{ $setting['name'] }}">
-                                  {{ __($setting['label']) }} 
+                                  {{ __($setting['label']) }}
                                   @if(isset($setting['required']) && $setting['required'] == true) <span class="text-danger">*</span> @endif 
+                                  <small class="text-primary">setting('{{ $setting['name'] }}')</small>
                                 </label>
                               @endif
                               

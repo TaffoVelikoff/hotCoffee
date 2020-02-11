@@ -10,7 +10,9 @@ class MenuItem extends Model
 {
 
 	use HasTranslations;
-	
+
+    public $childrenCount;
+
 	/**
      * The attributes that are mass assignable.
      *

@@ -45,6 +45,72 @@
 	}
 
 	/**
+	 * Get a menu and it's elements by keyword
+	 * @param string $keyword Keyword of the menu.
+	 *
+	 * @return mixed[] Returns the menu, menu items or renders a template.
+	 */
+	if (!function_exists('menu')) {
+		function menu($keyword, $type = 'ul') {
+			$menu = \TaffoVelikoff\HotCoffee\Menu::where('keyword', $keyword)->first();
+			
+			// Check if menu exists
+			if(!$menu)
+				return null;
+
+			// Get and cache items
+			$items = \Cache::remember('hotcoffee_menu_'.$keyword, \Carbon\Carbon::now()->addDays(30), function () use ($menu) {
+
+		        return $menu->items->where('parent', 0)->transform(function ($item) {
+
+		            // Generate the URL
+		            $item->link = $item->getRoute();
+
+		            // Get and count children elements
+		            $item->children_count = $item->children()->count();
+		            $item->children = $item->children()->transform(function ($child) {
+		                $child->link = $child->getRoute();
+		                return $child;
+		            });
+
+		            return $item;
+		        });
+
+	        });
+
+			switch ($type) {
+				case 'collection':
+					return $items;
+					break;
+
+				case 'json':
+					return $items->toJson();
+					break;
+
+				case 'menu':
+					return $menu;
+					break;
+
+				case 'bootstrap':
+					view()->share('menuItems', $items);
+					return view()->make('hotcoffee::components.menu_bootstrap');
+					break;
+
+				case 'ul':
+					view()->share('menuItems', $items);
+					return view()->make('hotcoffee::components.menu_ul');
+					break;
+				
+				default:
+					view()->share('menuItems', $items);
+					return view()->make($type);
+					break;
+			}
+
+		}
+	}
+
+	/**
 	 * Dynamically generate validation rules for a translatable field for every languages defined in hotcoffee.php config file.
 	 * @param array Array of Laravel validations (example: ['title' => 'required|unique:posts|max:255', 'content' => 'required|min:32']).
 	 *

@@ -16,7 +16,6 @@
 		"league/glide-laravel": "^1.0",
 		"intervention/image": "^2.5",
 		"maatwebsite/excel": "^3.1",
-		"spatie/laravel-db-snapshots": "^1.2",
 		"spatie/laravel-translatable": "^4.1",
 		"spatie/valuestore": "^1.2",
 		"rtconner/laravel-tagging": "~3.2",
