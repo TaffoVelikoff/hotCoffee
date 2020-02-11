@@ -1,23 +1,49 @@
 # hotCoffee Admin Panel
 
-Laravel admin panel package to kick start your new web app.
+☕ Laravel admin panel package to kick start your new web app.
 
-## What is hotCoffee
+🛠️ Created by [Taffo Velikoff](https://taffovelikoff.com) (TAVVO Ltd.), Bulgaria.
+
+![alt text](http://dev.taffovelikoff.com/images/hotcoffee/hotcoffee_intro.png "hotCoffee")
+
+[Computer psd created by rawpixel.com - www.freepik.com](https://www.freepik.com/free-photos-vectors/computer)
+
+## Contents
+[🤔  What is hotCoffee?](https://github.com/TaffoVelikoff/hotCoffee#what-is-hotcoffee)
+
+[💻 Requirements](https://github.com/TaffoVelikoff/hotCoffee#requirements)
+
+[⚙️ Installation](https://github.com/TaffoVelikoff/hotCoffee#installation)
+
+[📚 Documentation](https://github.com/TaffoVelikoff/hotCoffee#documentation)
+
+## What is hotCoffee?
 
 -- will add description soon --
 
-### Prerequisites
+#### User Profile
+![alt text](http://dev.taffovelikoff.com/images/hotcoffee/profile.png "hotCoffee User Profile")
 
-Before installing Voyager make sure you have installed Laravel 6 or above and PHP 7.2 or newer.
+#### Page Editor
+![alt text](http://dev.taffovelikoff.com/images/hotcoffee/page.png "hotCoffee Page Editor")
 
-### Installing
+#### Menu Editor
+![alt text](http://dev.taffovelikoff.com/images/hotcoffee/menu.png "hotCoffee Menu Editor")
 
+## Requirements
+
+Before installing hotCoffee make sure you have installed Laravel 6 or above and PHP 7.2 or newer.
+
+## Installation
+
+#### 🟢 STEP 1: Required the package
 The installation process is really simple. Create a new Laravel application and include the package with the following command:
 
 ```
 composer require taffovelikoff/hotcoffee
 ```
 
+#### 🟢 STEP 2: Setup the database
 Next make sure to create a new database and add your database credentials to the .env file. Also add your application URL in the APP_URL variable:
 
 ```
@@ -28,3 +54,44 @@ DB_USERNAME=root
 DB_PASSWORD=mypassword
 ```
 
+#### 🟢 STEP 3: Run the installation script
+After that you can run an artisan command to finilize the installation.
+
+```
+php artisan hotcoffee:install
+```
+
+The script will ask you if you want to also install the example logic (this includes some example controllers, routes, views and dummy pages for the front-end of your app). Type "yes" or "no" and hit enter to continue.
+
+#### 🟢 STEP 4: Extend the User model
+Edit your User model (usually app/User.php) and make the class extend \TaffoVelikoff\HotCoffee\User instead of Authenticatable.
+
+```php
+<?php
+
+namespace App;
+
+
+class User extends \TaffoVelikoff\HotCoffee\User
+{
+	//
+}
+
+```
+
+#### 🟢 STEP 5: Create your first admin user
+You can now create your first admin user with a simple artisan command:
+
+```
+php artisan hotcoffee:make-admin --name=admin --email=admin@site.com
+```
+
+#### 🟢 STEP 6: Make sure everything went ok
+Use php artisan serve to run PHP's built-in development server.
+The admin panel should be available on this address (or similar): http://127.0.0.1:8000/admin/login
+Login with your admin credential.
+
+👏 That's it!
+
+## Documentation
+-- DOCUMENTATION IS NOT READY YET --
