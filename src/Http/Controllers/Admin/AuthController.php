@@ -73,7 +73,7 @@ class AuthController extends Controller
             )); 
 
             // Log auth
-            record_auth();
+            \HotCoffee::recordAuth();
 
             // Redirect
 			return redirect()->route(config('hotcoffee.start_route'));

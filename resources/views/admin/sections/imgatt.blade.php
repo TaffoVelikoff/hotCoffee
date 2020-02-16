@@ -15,8 +15,8 @@
 
                 <div class="row">
                   <div class="col">
-                    <a href="{{ thumbnail($att->filepath) }}" target="_blank" >
-                      <img src="{{ thumbnail($att->filepath, 400, 'crop') }}" class="attachment-image" />
+                    <a href="{{ $att->url }}" target="_blank" >
+                      <img src="{{ $att->thumbnail(400, 'crop') }}" class="attachment-image" />
                     </a>
                   </div>
                 </div>
@@ -38,7 +38,7 @@
 
         <br/>
 
-        <label class="form-control-label" for="input-key">Upload images</label>
+        <label class="form-control-label" for="input-key">{{ __('hotcoffee::admin.upload_images') }}</label>
         <div class="row col-md-12">
           <div class="file-field">
             <div class="btn btn-primary btn-sm">

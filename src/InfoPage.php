@@ -5,12 +5,13 @@ namespace TaffoVelikoff\HotCoffee;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use TaffoVelikoff\HotCoffee\Traits\HasSef;
+use TaffoVelikoff\HotCoffee\Traits\HasAccessRole;
 use TaffoVelikoff\HotCoffee\Traits\HasAttachment;
 
 class InfoPage extends Model
 {
 
-	use HasTranslations, HasAttachment, HasSef;
+	use HasTranslations, HasAttachment, HasSef, HasAccessRole;
 	
 	public $translatable = ['title', 'content', 'meta_desc'];
 
@@ -33,13 +34,21 @@ class InfoPage extends Model
     ];
 
     /**
-     * Delete event
+     * Boot
      */
     public static function boot() {
         parent::boot();
 
-        // DELETING USER
+        // Saving page
+        static::saved(function ($info) {
+            $info->access_roles()->detach();
+        });
+
+        // Deleting page
         static::deleting(function($info) {
+
+            // Remove access roles
+            $info->access_roles()->detach();
 
             // Remove attachments
             $info->attachments()->delete();

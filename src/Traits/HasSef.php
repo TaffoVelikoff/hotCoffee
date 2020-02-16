@@ -10,8 +10,7 @@ trait HasSef
 	/**
      * Get the custom url (SEF)
      */
-    public function sef()
-    {
+    public function sef() {
         return $this->morphOne(\TaffoVelikoff\HotCoffee\Sef::class, 'model');
     }
 
@@ -42,7 +41,7 @@ trait HasSef
 	 * Full URL
 	 */
 	public function sefUrl() {
-		return localeUrl($this->sef->keyword);
+		return url($this->sef->keyword);
 	}
 
 }

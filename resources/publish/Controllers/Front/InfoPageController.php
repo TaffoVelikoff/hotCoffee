@@ -18,6 +18,9 @@ class InfoPageController extends Controller
 		if(!$page) 
 			abort(404);
 
+		// Authorize users
+		$page->authorizeAccess();
+
 		// Pass to view
 		view()->share('page', $page);
 		

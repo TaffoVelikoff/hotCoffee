@@ -82,9 +82,9 @@
 
           <div class="row mt-3">
             <div class="col-12 text-center">
-              <small>{{ $hotcoffee['name'] }} <small>[version {{ $hotcoffee['version'] }}]</small>. Developed by <a href="{{ $hotcoffee['authorUrl'] }}" target="_blank">{{ $hotcoffee['author'] }}</a>
+              <small>hotCoffee Admin <small>[version {{ coffee_info('version') }}]</small>. Developed by <a href="{{ coffee_info('author.homepage') }}" target="_blank">{{ coffee_info('author.name') }}</a>
               <br/>
-              {{ $hotcoffee['company'] }}.</small>
+              TAVVO Ltd.</small>
             </div>
           </div>
 

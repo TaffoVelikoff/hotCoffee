@@ -23,8 +23,4 @@ class HomeController extends Controller
     	// Display view
     	return view('front.home');
     }
-
-    public function about() {
-        dump('about');
-    }
 }

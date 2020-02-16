@@ -17,5 +17,7 @@ class Auth extends Middleware
         if (! $request->expectsJson()) {
             return route('hotcoffee.admin.login');
         }
+        
+        return $next($request);
     }
 }

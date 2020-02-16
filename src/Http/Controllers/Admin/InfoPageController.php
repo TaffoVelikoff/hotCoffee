@@ -49,7 +49,7 @@ class InfoPageController extends Controller
      * Edit
      */
     public function edit(InfoPage $info) {
-
+      
       // All roles
       view()->share('roles', Role::all());
       
@@ -73,8 +73,7 @@ class InfoPageController extends Controller
 	    // Store info page
       $info = InfoPage::create(
           prepare_request(
-            $request, ['title', 'content'], 
-            ($request->roles) ? ['roles' => $request->roles] : ['roles'  => null]
+            $request, ['title', 'content']
           )
       );
 
@@ -106,10 +105,12 @@ class InfoPageController extends Controller
       // Update info page
       $info->update(
           prepare_request(
-            $request, ['title', 'content', 'meta_desc'],
-            ($request->roles) ? ['roles' => $request->roles] : ['roles'  => null]
+            $request, ['title', 'content', 'meta_desc']
           )
       );
+
+      // Attach access roles
+      $info->access_roles()->attach($request->roles);
 
       // Save custom url (SEF)
       $info->saveSef($request->keyword);

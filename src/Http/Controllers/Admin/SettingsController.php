@@ -31,7 +31,8 @@ class SettingsController extends Controller
      */
     public function update(Settings $settings, StoreSettings $request) {
         
-    	$settings->put(array_merge($request->except('_token'), grab_empty_checkboxes()));
+        // Save Settings
+    	$settings->put(array_merge($request->except('_token'), \HotCoffee::grabEmptyCheckboxes()));
 
     	// Flash success message
         session()->flash('notify', array(

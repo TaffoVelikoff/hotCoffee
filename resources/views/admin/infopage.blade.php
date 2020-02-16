@@ -102,9 +102,9 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="form-control-label">{{ __('hotcoffee::admin.user_access_only')}}</label>
-                          
+
                           <div class="custom-control custom-control-alternative custom-checkbox mb-3">
-                            <input class="custom-control-input" id="role-admin" type="checkbox" disabled="">
+                            <input class="custom-control-input" id="role-admin" type="checkbox" disabled="" @if(session('post.roles')) checked @endif @if(isset($edit) && !session('post') && !$edit->access_roles->isEmpty()) checked @endif>
                             <label class="custom-control-label text-lowercase" for="admin">{{ __('hotcoffee::admin.admin') }}</label>
                           </div>
 
@@ -112,7 +112,7 @@
                             @foreach($roles as $role)
                               @if($role->id != 1)
                                 <div class="custom-control custom-control-alternative custom-checkbox mb-3">
-                                  <input class="custom-control-input role" id="role-{{ $role->id }}" type="checkbox" data-role="{{ $role->name }}" value="{{ $role->name }}" name="roles[]" @if(session('post.roles') && in_array($role->name, session('post.roles'))) checked @endif @if(isset($edit->roles) && in_array($role->name, $edit->roles)) checked @endif>
+                                  <input class="custom-control-input role" id="role-{{ $role->id }}" type="checkbox" data-role="{{ $role->name }}" value="{{ $role->id }}" name="roles[]" @if(session('post.roles') && in_array($role->id, session('post.roles'))) checked @endif @if(isset($edit) && !session('post') && $edit->access_roles->contains($role->id)) checked @endif>
                                   <label class="custom-control-label" for="role-{{ $role->id }}">{{ $role->name }}</label>
                                 </div>
                               @endif
@@ -130,15 +130,15 @@
                         <strong>
                           admin,
                           @foreach(session('post.roles') as $step => $postRole)
-                            {{ $postRole }}@if($step+1 < count(session('post.roles'))), @endif 
+                            {{ $roles->where('id', $postRole)->first()->name }}@if($step+1 < count(session('post.roles'))), @endif 
                           @endforeach
                         </strong>
-                      @elseif(isset($edit->roles))
+                      @elseif(!$edit->access_roles->isEmpty() && !session('post'))
                         {{ __('hotcoffee::admin.page_roles_only') }}: 
                         <strong>
                           admin,
-                          @foreach($edit->roles as $step => $postRole)
-                            {{ $postRole }}@if($step+1 < count($edit->roles)), @endif 
+                          @foreach($edit->access_roles as $step => $postRole)
+                            {{ $postRole->name }}@if($step+1 < $edit->access_roles->count()), @endif 
                           @endforeach
                         </strong>
                       @else
@@ -156,73 +156,8 @@
                 </div>
                 <!-- END ROLES -->
 
-                @if(config('hotcoffee.info_image_atts') == true)
-                  <hr/>
-
-                  <!-- IMAGE ATTACHMENTS -->
-                  <h6 class="heading-small text-muted mb-1">{{ __('hotcoffee::admin.attach_images') }}</h6>
-
-                  <div class="pl-lg-4">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-
-                          @if(isset($edit) && $edit->attachmentsGroup('images')->isEmpty() == false)
-                            <div class="row">
-                              @foreach($edit->attachmentsGroup('images') as $att)
-                                <div class="col-lg-3">
-
-                                  <div class="row">
-                                    <div class="col">
-                                      <a href="{{ thumbnail($att->filepath) }}" target="_blank" >
-                                        <img src="{{ thumbnail($att->filepath, 400, 'crop') }}" class="attachment-image" />
-                                      </a>
-                                    </div>
-                                  </div>
-
-                                  <div class="row">
-                                    <div class="col text-center att-btns">
-                                      <a href="{{ $att->url }}" class="btn-att">
-                                        <i class="fas fa-download"></i>
-                                      </a>
-                                      <a href="{{ route('hotcoffee.admin.attachments.destroy', ['id' => $att->id]) }}" class="btn-att">
-                                        <i class="fas fa-trash-alt"></i>
-                                      </a>
-                                    </div>
-                                  </div>
-                                </div>
-                              @endforeach
-                            </div>
-                          @endif
-
-                          <br/>
-
-                          <label class="form-control-label" for="input-key">Upload images</label>
-                          <div class="row col-md-12">
-                            <div class="file-field">
-                              <div class="btn btn-primary btn-sm">
-                                <span>{{ __('hotcoffee::admin.choose_files') }}</span>
-                                <input type="file" multiple name="images[]">
-                              </div>
-                              <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" placeholder="{{ __('hotcoffee::admin.upload_one_more') }}">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-lg-12 info-div mt-2">
-                              {{ __('hotcoffee::admin.choose_files_nfo') }}<br/>
-                              {{ __('hotcoffee::admin.choose_files_nfo_2') }}<br/>
-                              {{ __('hotcoffee::admin.choose_files_nfo_3') }}
-                            </div>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- END IMAGE ATTACHMENTS -->
+                @if(config('hotcoffee.article_image_atts') == true)
+                  @include('hotcoffee::admin.sections.imgatt')
                 @endif
 
                 <hr class="my-4"/>
@@ -256,7 +191,7 @@
         var selectedRoles = '';
 
         $('#roles :checked').each(function() {
-          selectedRoles += $(this).val();
+          selectedRoles += $(this).data('role');
           if($(this)[0] != $('#roles :checked').last()[0]) {
             selectedRoles += ', ';
           }

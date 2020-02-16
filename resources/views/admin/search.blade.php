@@ -37,7 +37,7 @@
                                   <tr>
                                       @foreach($searchables[$key]['index'] as $index)
                                         <td>
-                                          {{ fieldContentForSearch($rs->$index) }}
+                                          {{ field_content_for_search($rs->$index) }}
                                         </td>
                                       @endforeach
                                       <td>

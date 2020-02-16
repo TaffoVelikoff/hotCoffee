@@ -69,6 +69,7 @@ return [
     'no_nfo_yet'            => 'Nothing to show yet ...',
     'version'               => 'Version',
     'no_keyword'            => 'Please enter a term to search for.',
+    'upload_images'         => 'Upload images',
 
     //===== Color
     'default'               => 'Default',

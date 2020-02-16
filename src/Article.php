@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use TaffoVelikoff\HotCoffee\Traits\HasSef;
 use Bnb\Laravel\Attachments\HasAttachment;
+use Conner\Tagging\Taggable;
 
 class Article extends Model
 {
-    use HasTranslations, HasAttachment, HasSef;
-    use \Conner\Tagging\Taggable;
+    use HasTranslations, HasAttachment, HasSef, Taggable;
 
     public $translatable = ['title', 'content', 'meta_desc'];
 

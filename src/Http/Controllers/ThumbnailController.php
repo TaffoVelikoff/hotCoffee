@@ -11,10 +11,14 @@ class ThumbnailController extends Controller
 {
     public function show(Filesystem $filesystem, $path)
     {
+        $source = $filesystem->getDriver();
+        
+        if(isset(request()->source) && request()->source == 'public')
+            $source = public_path();
 
         $server = ServerFactory::create([
             'response' => new LaravelResponseFactory(app('request')),
-            'source' => $filesystem->getDriver(),
+            'source' => $source,
             'cache' => $filesystem->getDriver(),
             'cache_path_prefix' => '.cache',
             'base_url' => 'img',

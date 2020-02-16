@@ -6,7 +6,7 @@
 			<h1 class="mt-4">{{ $article->title }}</h1>
 			{!! $article->content !!}
 
-			<a href="{{ localeUrl('/') }}">back</a>
+			<a href="{{ route('home') }}">back</a>
 		</div>
 	</div>
 @endsection

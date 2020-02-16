@@ -84,9 +84,9 @@
 									<div class="card-body">
 										<div class="row">
 											<div class="col">
-												<h5 class="card-title text-uppercase text-muted mb-0">{{ $hotcoffee['name'] }}</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0">{{ coffee_info('name') }}</h5>
 												<span class="h2 font-weight-bold mb-0">
-													{{ __('hotcoffee::admin.version') }} {{ $hotcoffee['version'] }}
+													{{ __('hotcoffee::admin.version') }} {{ coffee_info('version') }}
 												</span>
 											</div>
 											<div class="col-auto">
@@ -96,7 +96,7 @@
 											</div>
 										</div>
 										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class="text-nowrap"><a href="{{ $hotcoffee['url'] }}" target="_blank">{{ $hotcoffee['url'] }}</a></span>
+											<span class="text-nowrap"><a href="{{ coffee_info('homepage') }}" target="_blank">{{ coffee_info('homepage') }}</a></span>
 										</p>
 									</div>
 								</div>
@@ -172,5 +172,5 @@
 				</div>
 			</div>
 		</div>
-	</div> 
+	</div>
 @endsection

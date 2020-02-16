@@ -16,16 +16,8 @@ class HotCoffee
     public function handle($request, Closure $next)
     {
 
-        // hotCoffee info
-        view()->share('hotcoffee',[
-            'name'          => 'hotCoffee Admin',
-            'url'           => 'https://github.com/TaffoVelikoff/hotcoffee',
-            'author'        => 'Taffo Velikoff',
-            'authorUrl'     => 'http://taffovelikoff.com',
-            'description'   => 'A simple laravel admin panel to kick start your freelance projects.',
-            'company'       => 'TAVVO Ltd',
-            'version'       => '1.0'
-        ]);
+        // Verify admin
+        $request->user()->authorizeRoles(['admin']);
 
         // Catch view name, default page name and auth user
         view()->composer('*', function($view){
@@ -41,6 +33,19 @@ class HotCoffee
         if(session()->has('locale'))
             app()->setLocale(session('locale'));
         app()->setLocale(config('app.locale'));
+
+        // Disabled controllers
+        $action = $request->route()->getAction();
+        $controller = explode('@', $action['controller']);
+
+        if(in_array($controller[0], config('hotcoffee.disabled_controllers'))) {
+            session()->flash('notify', array(
+                'type'      => 'danger',
+                'message'   => __('hotcoffee::admin.err_access_denied')
+            )); 
+
+            return back();
+        }
 
         return $next($request);
 

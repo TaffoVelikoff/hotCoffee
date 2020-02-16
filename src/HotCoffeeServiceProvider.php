@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use TaffoVelikoff\HotCoffee\Settings;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
 
 class HotCoffeeServiceProvider extends ServiceProvider {
 
@@ -38,6 +39,21 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 		// Default string lenght
         Schema::defaultStringLength(255);
 
+        // Facades
+		$loader = AliasLoader::getInstance();
+        $loader->alias('HotCoffee', \TaffoVelikoff\HotCoffee\Facades\HotCoffee::class);
+
+		$this->app->bind('hotcoffee', function() {
+			return new HotCoffee();
+		});
+
+
+		// Extending Bnb\Laravel\Attachments\Attachment
+		$this->app->bind(
+            \Bnb\Laravel\Attachments\Contracts\AttachmentContract::class,
+            \TaffoVelikoff\HotCoffee\Attachment::class
+        );
+
         // Artisan commands
         $this->commands([
         	Console\MakeAdmin::class,
@@ -53,7 +69,7 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 	private function registerResources() {
 
 		// Routes
-		$this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+		//$this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
 		// Views
 		$this->loadViewsFrom(__DIR__.'/../resources/views', 'hotcoffee');
@@ -79,12 +95,11 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 	 *	Registers the middlewares
 	 */
 	private function registerMiddlewares() {
-
-		$this->app['router']->aliasMiddleware('hotcoffee', \TaffoVelikoff\HotCoffee\Http\Middleware\HotCoffee::class);
-		$this->app['router']->aliasMiddleware('hotcoffee.auth', \TaffoVelikoff\HotCoffee\Http\Middleware\Auth::class);
-		$this->app['router']->aliasMiddleware('hotcoffee.admin', \TaffoVelikoff\HotCoffee\Http\Middleware\VerifyAdmin::class);
-		$this->app['router']->aliasMiddleware('hotcoffee.locale', \TaffoVelikoff\HotCoffee\Http\Middleware\Locale::class);
-		$this->app['router']->aliasMiddleware('hotcoffee.controllers', \TaffoVelikoff\HotCoffee\Http\Middleware\DisabledControllers::class);
 		
+		$this->app['router']->middlewareGroup('hotcoffee', [
+			\TaffoVelikoff\HotCoffee\Http\Middleware\Auth::class,
+			\TaffoVelikoff\HotCoffee\Http\Middleware\HotCoffee::class
+		]);
+
 	}
 }
