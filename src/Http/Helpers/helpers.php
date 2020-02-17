@@ -73,7 +73,7 @@
 
 
 	if (!function_exists('language_fields')) {
-		function language_fields($errors, $fields = [], $edit = null) {
-			return TaffoVelikoff\HotCoffee\Facades\HotCoffee::languageFields($errors, $fields, $edit);
+		function language_fields($fields = []) {
+			return TaffoVelikoff\HotCoffee\Facades\HotCoffee::languageFields($fields);
 		}
 	}

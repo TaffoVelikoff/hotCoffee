@@ -77,7 +77,7 @@
 																			</a>
 																		</div>
 																		<ol>
-																			@foreach($item->children() as $child)
+																			@foreach($item->children as $child)
 																				<li id="item-{{ $child->id }}">
 																					<div>
 																						<i class="fas fa-arrows-alt"></i> &nbsp; <span id="item-name-{{ $child->id }}">{{ $child->name }}</span>

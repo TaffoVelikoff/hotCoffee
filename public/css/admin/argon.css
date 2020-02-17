@@ -5703,7 +5703,7 @@ input[type='button'].btn-block
     word-wrap: break-word;
 
     border: 1px solid rgba(0, 0, 0, .05);
-    border-radius: .375rem; 
+    /*border-radius: .375rem; */
     background-color: #fff;
     background-clip: border-box;
 }
@@ -19145,7 +19145,7 @@ textarea[resize='horizontal']
 .navbar-vertical .navbar-brand > img
 {
     max-width: 100%;
-    max-height: 2rem;
+    max-height: 3rem;
 }
 @media (min-width: 768px)
 {

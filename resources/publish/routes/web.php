@@ -2,7 +2,7 @@
 
 /**
  * ADMIN
- * Below are all custom admin routes for your application.
+ * Below are all admin routes of your application.
  */
 
 HotCoffee::routes();
@@ -18,7 +18,7 @@ Route::group(['prefix' => config('hotcoffee.prefix'), 'middleware' => ['hotcoffe
 
 /**
  * FRONT
- * Below are the routes for your application. The part visible to your users/visitors (front-end).
+ * Below are the routes for the front-end of your application. The part visible to your visitors.
  */
 
 // ===== ADD YOUR ROUTES HERE ===== //

@@ -76,8 +76,10 @@ class HotCoffee
     public function recordAuth() {
     	if(config('hotcoffee.auth_log') == true) {
 			\TaffoVelikoff\HotCoffee\Login::create([
-				'user_id' => auth()->user()->id, 
-				'ip' => request()->ip()
+				'user_id' 		=> auth()->user()->id, 
+				'user_name'		=> auth()->user()->name,
+				'user_email' 	=> auth()->user()->email,
+				'ip'			=> request()->ip()
 			]);
 		}
     }
@@ -90,7 +92,7 @@ class HotCoffee
 	 */
     public function fieldContentForSearch($string) {
 
-		if(!is_numeric($string) && \HotCoffee::isJson($string)) {
+		if(!is_numeric($string) && \TaffoVelikoff\HotCoffee\Facades\HotCoffee::isJson($string)) {
 			$content = json_decode($string);
 			$locale = app()->getLocale();
 			return $content->$locale;
@@ -121,8 +123,8 @@ class HotCoffee
 				$item->link = $item->getRoute();
 
 				// Get and count children elements
-				$item->children_count = $item->children()->count();
-				$item->children = $item->children()->transform(function ($child) {
+				$item->children_count = $item->children->count();
+				$item->children = $item->children->transform(function ($child) {
 					$child->link = $child->getRoute();
 					return $child;
 				});
@@ -310,156 +312,11 @@ class HotCoffee
 
 	}
 
-	/**
-	 * Dynamically generate translatable fields in blade templates.
-	 */
-	public function languageFields($errors, $fields = [], $edit = null) {
+	public function languageFields($fields = []) {
 
-		$languageFields = '';
-		$languageFieldsContent = '';
+		view()->share('fields', $fields);
+		return view()->make('hotcoffee::components.language_fields');
 
-		if(count(config('hotcoffee.languages')) > 1) {
-          $languageFields .= '
-			<div class="nav-wrapper">
-              
-				<ul class="nav nav-pills nav-pills-circle" role="tablist" id="tabs_2">';
-
-					foreach(config('hotcoffee.languages') as $langKey=>$langName){
-						(config('app.locale') == $langKey) ? $active = 'active' : $active = '';
-						$languageFields .= '
-						<li class="nav-item">
-							<a class="nav-link rounded-circle '.$active.'" id="'.$langKey.'" data-toggle="tab" href="#tab-'.$langKey.'" role="tab" aria-controls="'.$langKey.'" aria-selected="true">
-						    	<img src="'.coffee_asset('img/flags/'.$langKey.'.svg').'" alt="'.$langName.'" class="flag-img" />
-							</a>
-						</li>';
-					}
-
-				$languageFields .= '
-				</ul>
-
-			</div>';
-        }
-
-        if(count(config('hotcoffee.languages')) == 1) {
-        	$borderNone = 'border-none';
-        	$paddingNone = 'padding-none';
-        } else {
-        	$borderNone = '';
-        	$paddingNone = '';
-        }
-
-        $languageFields .= '
-        <div class="card mb-4 mt-2 '.$borderNone.'">
-			<div class="card-body '.$paddingNone.'">
-				<div class="tab-content" id="lang-tabs">';
-
-			    foreach(config('hotcoffee.languages') as $langKey=>$langName) {
-			    	foreach($fields as $field => $attributes) {
-
-			    		if(session('post')){
-							$value = session('post.'.$langKey.'.'.$field);
-						} elseif (isset($edit)) {
-							$value = $edit->getTranslation($field, $langKey);
-						} else {
-							$value = '';
-						}
-
-						if(isset($errors) && $errors->has($langKey.'.'.$field)) {
-							$hasDanger = 'has-danger';
-							$isInvalid = 'is-invalid-alt';
-						} else {
-							$hasDanger = '';
-							$isInvalid = '';
-						}
-
-						if(isset($attributes['hr']) && $attributes['hr'] === true)
-							$languageFieldsContent .= '<hr style="width: 100%;">';
-
-						if($attributes['type'] == 'text') {
-
-							$languageFieldsContent .= '
-							<div class="col-lg-12">
-								<div class="form-group">
-									<label class="form-control-label" for="input-'.$field.'-'.$langKey.'">'.$attributes['title'].'</label>
-									<div class="'.$hasDanger.'">
-										<input type="text" name="'.$langKey.'['.$field.']" id="input-'.$field.'-'.$langKey.'" class="form-control form-control-alternative '.$isInvalid.'" value="'.$value.'">
-									</div>
-								</div>
-							</div>';
-
-							if(isset($attributes['info'])) {
-								
-								(isset($attributes['info']['type'])) ? $infoType = 'text-'.$attributes['info']['type'] : $infoType = '';
-
-								$languageFieldsContent .= '
-									<div class="col-lg-12 info-div '.$infoType.'">
-										'.$attributes['info']['content'].'
-									</div>';
-							}
-						}
-
-						if($attributes['type'] == 'textarea') {
-
-							(isset($attributes['class'])) ? $class = $attributes['class'] : $class = ''; 
-							(isset($attributes['rows'])) ? $rows = $attributes['rows'] : $rows = '12';
-
-							$languageFieldsContent .= '<div class="col-lg-12">
-								<div class="form-group" id="div-'.$field.'-'.$langKey.'">
-									<label class="form-control-label" for="input-'.$field.'-'.$langKey.'">'.$attributes['title'].'</label>';
-									$languageFieldsContent .= '
-									<div class="'.$hasDanger.' '.$isInvalid.'">
-										<textarea id="input-'.$field.'-'.$langKey.'" rows="'.$rows.'" name="'.$langKey.'['.$field.']" class="form-control form-control-alternative '.$class.'" placeholder="">'.$value.'</textarea>
-									</div>
-								</div>
-							</div>';
-
-							if(isset($attributes['info'])) {
-								
-								(isset($attributes['info']['type'])) ? $infoType = 'text-'.$attributes['info']['type'] : $infoType = '';
-
-								$languageFieldsContent .= '
-									<div class="col-lg-12 info-div '.$infoType.'">
-										'.$attributes['info']['content'].'
-									</div>';
-							}
-						}
-
-					}
-
-					/*  */
-			    	(config('app.locale') == $langKey) ? $active = 'show active' : $active = '';
-			    	(count(config('hotcoffee.languages')) > 1) ? $sectionTitle = '<h6 class="heading-small text-muted mb-4">'.$langName.'</h6>' : $sectionTitle = '';
-
-			    	$languageFields .= '
-			        <div class="tab-pane fade '.$active.'" id="tab-'.$langKey.'" role="tabpanel" aria-labelledby="tab-'.$langKey.'">
-			           <div class="pl-lg-4">
-			            <div class="row">
-
-			              '.$sectionTitle.$languageFieldsContent;
-
-			            	$languageFields .= '
-			            </div>
-			          </div>
-			        </div>';
-
-			        $languageFieldsContent = '';
-			    }
-
-				$languageFields .= '
-				</div>
-			</div>
-		</div>';
-
-        return $languageFields;
-
-	}
-
-	public function additionalAdminRotes($routes) {
-		foreach($routes as $route) {
-			return $route;
-		}
 	}
 
 }
-
-//Route::get('/dashboard', 'Admin\DashboardController@index')->name('hotcoffee.admin.dashboard');

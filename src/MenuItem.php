@@ -33,7 +33,14 @@ class MenuItem extends Model
      * Get all children items
      */
     public function children() {
-        return MenuItem::where('parent', $this->id)->get();
+        return $this->hasMany('TaffoVelikoff\HotCoffee\MenuItem', 'parent');
+    }
+
+    /**
+     * Get the parent element
+     */
+    public function parent() {
+        return $this->belongsTo('TaffoVelikoff\HotCoffee\MenuItem', 'parent');
     }
 
     /**
@@ -75,7 +82,7 @@ class MenuItem extends Model
 
             case 'page':
                 $page = InfoPage::find($this->page_id);
-                return localeUrl($page->keyword());
+                return url($page->keyword());
 
             case 'route':
                 return route($this->url);

@@ -4,9 +4,8 @@
 <script src="{{ coffee_asset('vendor/notify.min.js') }}"></script>
 <script src="{{ coffee_asset('vendor/croppie/croppie.min.js') }}"></script>
 <script src="{{ coffee_asset('vendor/exif.js') }}"></script>
-<script src="{{ coffee_asset('vendor/chart.js/dist/Chart.min.js') }}"></script>
-<script src="{{ coffee_asset('vendor/chart.js/dist/Chart.extension.js') }}"></script>
-<script src="{{ coffee_asset('vendor/jquery-ui.js') }}"></script>
+
+<script src="{{ coffee_asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
 <script src="{{ coffee_asset('plugins/nested_sortable/jquery.mjs.nestedSortable.js') }}"></script>
 
 <!-- JS -->

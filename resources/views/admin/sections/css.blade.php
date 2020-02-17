@@ -17,4 +17,4 @@
 <!-- Vendor -->
 <link type="text/css" href="{{ coffee_asset('vendor/croppie/croppie.css') }}" rel="stylesheet">
 <link type="text/css" href="{{ coffee_asset('vendor/animate.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="{{ coffee_asset('vendor/jquery-ui/jquery-ui.min.css') }}">

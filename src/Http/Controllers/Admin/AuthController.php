@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use TaffoVelikoff\HotCoffee\Login;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use TaffoVelikoff\HotCoffee\Facades\HotCoffee;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -73,7 +74,7 @@ class AuthController extends Controller
             )); 
 
             // Log auth
-            \HotCoffee::recordAuth();
+            HotCoffee::recordAuth();
 
             // Redirect
 			return redirect()->route(config('hotcoffee.start_route'));

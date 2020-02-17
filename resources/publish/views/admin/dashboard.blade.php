@@ -1,108 +1,108 @@
 @extends('hotcoffee::_layouts._admin')
 
+@section('header_content')
+      <div class="row">
+
+		<div class="col-xl-3 col-lg-6">
+			<div class="card card-stats mb-4 mb-xl-0">
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+							<h5 class="card-title text-uppercase text-muted mb-0">{{ __('hotcoffee::admin.registered_users') }}</h5>
+							<span class="h2 font-weight-bold mb-0">{{ $userCount }}</span>
+						</div>
+						<div class="col-auto">
+							<div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+								<i class="fas fa-users"></i>
+							</div>
+						</div>
+					</div>
+					<p class="mt-3 mb-0 text-muted text-sm">
+						<span class="text-nowrap">{{ __('hotcoffee::admin.registered_users_nfo') }}</span>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xl-3 col-lg-6">
+			<div class="card card-stats mb-4 mb-xl-0">
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+							<h5 class="card-title text-uppercase text-muted mb-0">{{ __('hotcoffee::admin.latest_user') }}</h5>
+							<span class="h2 font-weight-bold mb-0">
+								<small><a href="{{ route('hotcoffee.admin.users.edit', $latestUser) }}">{{ $latestUser->email }}</a></small>
+							</span>
+						</div>
+						<div class="col-auto">
+							<div class="icon icon-shape bg-success text-white rounded-circle shadow">
+								<i class="fas fa-user"></i>
+							</div>
+						</div>
+					</div>
+					<p class="mt-3 mb-0 text-muted text-sm">
+						<span class="text-nowrap">{{ __('hotcoffee::admin.latest_user') }}</span>
+					</p>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="col-xl-3 col-lg-6">
+			<div class="card card-stats mb-4 mb-xl-0">
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+							<h5 class="card-title text-uppercase text-muted mb-0">{{ __('hotcoffee::admin.timezone') }}</h5>
+							<span class="h2 font-weight-bold mb-0">
+								<a href="{{ route('hotcoffee.admin.settings.index') }}">{{ settings('timezone') }}</a>
+							</span>
+						</div>
+						<div class="col-auto">
+							<div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+								<i class="fas fa-clock"></i>
+							</div>
+						</div>
+					</div>
+					<p class="mt-3 mb-0 text-muted text-sm">
+						<span class="text-nowrap">{{ __('hotcoffee::admin.timezone_nfo') }}</span>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xl-3 col-lg-6">
+			<div class="card card-stats mb-4 mb-xl-0">
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+							<h5 class="card-title text-uppercase text-muted mb-0">{{ coffee_info('name') }}</h5>
+							<span class="h2 font-weight-bold mb-0">
+								{{ __('hotcoffee::admin.version') }} {{ coffee_info('version') }}
+							</span>
+						</div>
+						<div class="col-auto">
+							<div class="icon icon-shape bg-info text-white rounded-circle shadow">
+								<i class="fas fa-coffee"></i>
+							</div>
+						</div>
+					</div>
+					<p class="mt-3 mb-0 text-muted text-sm">
+						<span class="text-nowrap"><a href="{{ coffee_info('homepage') }}" target="_blank">{{ coffee_info('homepage') }}</a></span>
+					</p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+@endsection
+
 @section('content')
 	<div class="card-body">
 		<div class="row">
         	<div class="col">
           		<div class="card shadow">
 					<div class="card-body">
-				
-						<div class="row">
-
-							<div class="col-xl-6 col-lg-12">
-								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body">
-										<div class="row">
-											<div class="col">
-												<h5 class="card-title text-uppercase text-muted mb-0">{{ __('hotcoffee::admin.registered_users') }}</h5>
-												<span class="h2 font-weight-bold mb-0">{{ $userCount }}</span>
-											</div>
-											<div class="col-auto">
-												<div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-													<i class="fas fa-users"></i>
-												</div>
-											</div>
-										</div>
-										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class="text-nowrap">{{ __('hotcoffee::admin.registered_users_nfo') }}</span>
-										</p>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-xl-6 col-lg-12">
-								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body">
-										<div class="row">
-											<div class="col">
-												<h5 class="card-title text-uppercase text-muted mb-0">{{ __('hotcoffee::admin.latest_user') }}</h5>
-												<span class="h2 font-weight-bold mb-0">
-													<a href="{{ route('hotcoffee.admin.users.edit', $latestUser) }}">{{ $latestUser->email }}</a>
-												</span>
-											</div>
-											<div class="col-auto">
-												<div class="icon icon-shape bg-success text-white rounded-circle shadow">
-													<i class="fas fa-user"></i>
-												</div>
-											</div>
-										</div>
-										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class="text-nowrap">{{ __('hotcoffee::admin.latest_user') }}</span>
-										</p>
-									</div>
-								</div>
-							</div>
-
-						</div>
-
-						<div class="row mt-2">
-							<div class="col-xl-6 col-lg-12">
-								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body">
-										<div class="row">
-											<div class="col">
-												<h5 class="card-title text-uppercase text-muted mb-0">{{ __('hotcoffee::admin.timezone') }}</h5>
-												<span class="h2 font-weight-bold mb-0">
-													<a href="{{ route('hotcoffee.admin.settings.index') }}">{{ settings('timezone') }}</a>
-												</span>
-											</div>
-											<div class="col-auto">
-												<div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-													<i class="fas fa-clock"></i>
-												</div>
-											</div>
-										</div>
-										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class="text-nowrap">{{ __('hotcoffee::admin.timezone_nfo') }}</span>
-										</p>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-xl-6 col-lg-12">
-								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body">
-										<div class="row">
-											<div class="col">
-												<h5 class="card-title text-uppercase text-muted mb-0">{{ coffee_info('name') }}</h5>
-												<span class="h2 font-weight-bold mb-0">
-													{{ __('hotcoffee::admin.version') }} {{ coffee_info('version') }}
-												</span>
-											</div>
-											<div class="col-auto">
-												<div class="icon icon-shape bg-info text-white rounded-circle shadow">
-													<i class="fas fa-coffee"></i>
-												</div>
-											</div>
-										</div>
-										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class="text-nowrap"><a href="{{ coffee_info('homepage') }}" target="_blank">{{ coffee_info('homepage') }}</a></span>
-										</p>
-									</div>
-								</div>
-							</div>
-
-						</div>
 
 						@if(config('hotcoffee.auth_log') == true)
 							<div class="row mt-3">
@@ -144,10 +144,10 @@
 																{{ $auth->created_at->timezone(settings('timezone'))->format('H:i:s') }}
 															</td>
 															<td>
-																{{ $auth->user->name }}
+																ID: {{ $auth->user_id }} - <a href="{{ route('hotcoffee.admin.users.edit', $auth->user_id) }}">{{ $auth->user_name }}</a>
 															</td>
 															<td>
-																{{ $auth->user->email }}
+																{{ $auth->user_email }}
 															</td>
 															<td>
 																{{ $auth->ip }}

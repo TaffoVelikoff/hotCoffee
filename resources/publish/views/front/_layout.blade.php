@@ -12,8 +12,8 @@
 
     <!-- Meta -->
     <meta property="og:title" content="{{ settings('website_name') }}" />
-	<meta property="og:description" content="{{ settings('website_description') }}">
-	<meta property="og:url" content="{{ url()->current() }}" />
+	  <meta property="og:description" content="{{ settings('website_description') }}">
+	  <meta property="og:url" content="{{ url()->current() }}" />
 
   </head>
   <body>

@@ -106,7 +106,7 @@ return [
 
     //===== Dashboard
     'registered_users'      => 'Registered users',
-    'registered_users_nfo'  => 'Total number of registered users (inc. Admins)',
+    'registered_users_nfo'  => 'Total number of users',
     'latest_user'           => 'Latest user',
     'latest_user_nfo'       => 'Latest registered user',
     'login_log'             => 'Admin login history',

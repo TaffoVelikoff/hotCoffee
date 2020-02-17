@@ -19,11 +19,11 @@
                 <h6 class="heading-small text-muted mb-4">{{ __('hotcoffee::admin.page_nfo') }}</h6>
 
                 <!-- TRANSLATABLE FIELDS -->
-                {!! language_fields($errors, [
+                {!! language_fields([
                   'title' => ['type' => 'text', 'title' => __('hotcoffee::admin.title')],
-                  'content' => ['type' => 'textarea', 'title' => 'Content', 'class' => 'tinymce', 'info' => ['type' => 'warning', 'content' => __('hotcoffee::admin.page_content_nfo')]],
+                  'content' => ['type' => 'textarea', 'title' => 'Content', 'class' => 'tinymce'],
                   'meta_desc' => ['type' => 'textarea', 'title' => __('hotcoffee::admin.meta_desc'), 'info' => ['content' => __('hotcoffee::admin.meta_desc_nfo')], 'rows' => '4']
-                ], $edit ?? null) !!}
+                ]) !!}
                 <!-- END TRANSLATABLE FIELDS -->
 
                 <hr class="my-4"/>

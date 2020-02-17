@@ -47,7 +47,6 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 			return new HotCoffee();
 		});
 
-
 		// Extending Bnb\Laravel\Attachments\Attachment
 		$this->app->bind(
             \Bnb\Laravel\Attachments\Contracts\AttachmentContract::class,

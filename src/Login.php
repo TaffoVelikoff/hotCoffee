@@ -11,7 +11,7 @@ class Login extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'ip'];
+    protected $fillable = ['user_id', 'user_name', 'user_email', 'ip'];
 
     /**
      * User relationship

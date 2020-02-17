@@ -7,6 +7,7 @@ use DateTimeZone;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use TaffoVelikoff\HotCoffee\Settings;
+use TaffoVelikoff\HotCoffee\Facades\HotCoffee;
 use TaffoVelikoff\HotCoffee\Http\Requests\Admin\StoreSettings;
 
 class SettingsController extends Controller
@@ -32,7 +33,7 @@ class SettingsController extends Controller
     public function update(Settings $settings, StoreSettings $request) {
         
         // Save Settings
-    	$settings->put(array_merge($request->except('_token'), \HotCoffee::grabEmptyCheckboxes()));
+    	$settings->put(array_merge($request->except('_token'), HotCoffee::grabEmptyCheckboxes()));
 
     	// Flash success message
         session()->flash('notify', array(
