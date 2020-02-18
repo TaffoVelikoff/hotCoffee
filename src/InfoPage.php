@@ -34,6 +34,13 @@ class InfoPage extends Model
     ];
 
     /**
+     * The controller to view the model in the front-end.
+     *
+     * @var array
+     */
+    public $sef_method = 'App\Http\Controllers\Front\InfoPageController@index';
+
+    /**
      * Boot
      */
     public static function boot() {

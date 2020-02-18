@@ -132,7 +132,7 @@ return [
     'store_order'           => 'Always click the SAVE button to store the order of the menu items.',
     'example'               => 'Example',
     'url_nfo_1'             => 'Enter a full url, starting with "http://" or "https://" to link to an external website.',
-    'url_nfo_2'             => 'Enter the name of a route to link to any part of your website.',
+    'url_nfo_2'             => 'This will create a link to any part of your website.',
     'url_nfo_3'             => 'For single page websites you can enter the name of the section (starting with "#") to scroll down to it.',
     'url_nfo_4'             => 'Leave empty if you don\'t want to link to anything and just use it for a title for a submenu.',
     'url_nfo_5'             => 'If you want to link to an external info page you can chose it from the drop down menu. In this case any URL entered in the field above will be ignored by the system.',

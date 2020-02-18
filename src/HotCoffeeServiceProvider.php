@@ -8,6 +8,7 @@ use TaffoVelikoff\HotCoffee\Settings;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
+use TaffoVelikoff\HotCoffee\Providers\HotCoffeeEventServiceProvider;
 
 class HotCoffeeServiceProvider extends ServiceProvider {
 
@@ -46,7 +47,7 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 		$this->app->bind('hotcoffee', function() {
 			return new HotCoffee();
 		});
-
+		
 		// Extending Bnb\Laravel\Attachments\Attachment
 		$this->app->bind(
             \Bnb\Laravel\Attachments\Contracts\AttachmentContract::class,

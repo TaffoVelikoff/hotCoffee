@@ -16,6 +16,10 @@
 
                   <div class="pl-lg-4">
 
+                    <div class="alert alert-default" role="alert">
+                      <strong>How to use?</strong> To get the value of any setting you can call <strong>settings('field')</strong> anywhere in your code.
+                    </div>
+
                     @foreach(config('hotcoffee.settings') as $settingKey=>$settings)
 
                       <div class="col-md-12 form-header text-uppercase">

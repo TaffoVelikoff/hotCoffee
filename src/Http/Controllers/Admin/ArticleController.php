@@ -6,6 +6,9 @@ use Image;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use TaffoVelikoff\HotCoffee\Article;
+use TaffoVelikoff\HotCoffee\Events\ArticleCreated;
+use TaffoVelikoff\HotCoffee\Events\ArticleUpdated;
+use TaffoVelikoff\HotCoffee\Events\ArticleDeleted;
 use TaffoVelikoff\HotCoffee\Http\Requests\Admin\StoreArticle;
 
 
@@ -104,6 +107,9 @@ class ArticleController extends Controller
           'message'   => __('hotcoffee::admin.article_create_suc')
       ));
 
+      // Trigger event
+      event(new ArticleCreated($article));
+
       return redirect()->route('hotcoffee.admin.articles.index');
 
     }
@@ -139,6 +145,9 @@ class ArticleController extends Controller
           'message'   => __('hotcoffee::admin.article_update_suc')
       ));
 
+      // Trigger event
+      event(new ArticleUpdated($article));
+
       return redirect()->route('hotcoffee.admin.articles.index');
 
     }
@@ -150,6 +159,9 @@ class ArticleController extends Controller
     public function destroy(Article $article) {
 
         $article->delete();
+
+        // Trigger event
+        event(new ArticleDeleted);
 
         return array(
             'type'  => 'warning',

@@ -3,6 +3,7 @@
 namespace TaffoVelikoff\HotCoffee\Http\Requests\Admin;
 
 use App\User;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUser extends FormRequest
@@ -27,15 +28,36 @@ class StoreUser extends FormRequest
      */
     public function rules()
     {
-        return User::validationRulesForAdmin();
-    }
+        $rules = [
+            'name'      => 'required|min:3|max:18',
+            'email'     => 'required|without_spaces|email',
+            'city'      => 'max:32',
+            'country'   => 'max:32',
+            'company'   => 'max:48',
+            'bio'       => 'max:64',
+            'role'      => 'required',
+        ];
 
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
-    public function messages() {
-        return User::validationMessagesForAdmin();
+        if($this->edit && request()->edit == 1) {
+            $rules['role'] = '';
+        }
+
+        if($this->edit) {
+            $rules['password'] = 'sometimes|nullable|confirmed|min:6';
+        }
+
+        if(!$this->edit) {
+             $rules['password'] = 'required|confirmed|min:6';
+        }
+
+        if(!$this->edit) {
+            $rules['email'] = 'unique:users,email|required|without_spaces|email';
+        }
+
+        if($this->edit) {
+            $rules['email'] = Rule::unique('users')->ignore(request()->edit).'|email';
+        }
+
+        return $rules;
     }
 }

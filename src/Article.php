@@ -23,4 +23,11 @@ class Article extends Model
         'title', 'content', 'meta_desc'
     ];
 
+    /**
+     * The controller 
+     *
+     * @var array
+     */
+    public $sef_method = 'App\Http\Controllers\Front\ArticleController@index';
+
 }

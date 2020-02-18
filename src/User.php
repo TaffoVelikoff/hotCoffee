@@ -2,7 +2,6 @@
 
 namespace TaffoVelikoff\HotCoffee;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use TaffoVelikoff\HotCoffee\Traits\HasAttachment;
@@ -32,17 +31,24 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    // Views
-    public $edit_view = 'hotcoffee::admin.user';
-    public $index_view = 'hotcoffee::admin.users';
+    /**
+     * Admin views for model
+     * The $edit_view is used when you create or adit a user.
+     * The $list_view is used for listing all users.
+     * You are free to overwrite these in the extended model (usually App/Users) if you
+     * would like to use custom made views for the user module.
+     *
+     */
+    public static $edit_view = 'hotcoffee::admin.user';
+    public static $list_view = 'hotcoffee::admin.users';
 
-    // Messages
-    public $update_success_message = 'hotcoffee::admin.user_update_suc';
-    public $create_success_message = 'hotcoffee::admin.user_create_suc';
+    /**
 
     //===== ROLES =====//
 
     /**
+    * Throws 401 if user doesn't have any of the roles.
+    *
     * @param string|array $roles
     */
     public function authorizeRoles($roles) {
@@ -56,6 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
     * Check multiple roles
+    *
     * @param array $roles
     */
     public function hasAnyRole($roles) {
@@ -64,6 +71,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
     * Check one role
+    *
     * @param string $role
     */
     public function hasRole($role) {
@@ -74,6 +82,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Roles
+     *
      */
     public function roles() {
         return $this->belongsToMany('TaffoVelikoff\HotCoffee\Role');
@@ -81,6 +90,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * User Address
+     *
      */
     public function address() {
         return $this->hasOne(config('hotcoffee.custom_user_address_namespace'));
@@ -90,81 +100,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Password hasher
+     *
      */
     public function setPasswordAttribute($password) {
         $this->attributes['password'] = bcrypt($password);
-    }
-
-    //===== VALIDATIONS ====//
-    public static function validationRulesForAdmin() {
-        $rules = [
-            'name'      => 'required|min:3|max:18',
-            'email'     => 'required|without_spaces|email',
-            'city'      => 'max:32',
-            'country'   => 'max:32',
-            'company'   => 'max:48',
-            'bio'       => 'max:64',
-            'role'      => 'required',
-        ];
-
-        if(request()->edit && request()->edit == 1) {
-            $rules['role'] = '';
-        }
-
-        if(request()->edit) {
-            $rules['password'] = 'sometimes|nullable|confirmed|min:6';
-        }
-
-        if(!request()->edit) {
-             $rules['password'] = 'required|confirmed|min:6';
-        }
-
-        if(!request()->edit) {
-            $rules['email'] = 'unique:users,email|required|without_spaces|email';
-        }
-
-        if(request()->edit) {
-            $rules['email'] = Rule::unique('users')->ignore(request()->edit).'|email';
-        }
-
-        return $rules;
-    }
-
-    public static function validationMessagesForAdmin() {
-        return [];
-    }
-
-    //===== SAVE & UPDATE MODEL VIA ADMIN =====//
-
-    /**
-     *
-     *
-     */
-    public function additionalCreatesViaAdmin($request) {
-
-        // Update roles
-        $this->updateRole($request);
-
-        // Attach avatar
-        $this->attachAvatar($request);
-
-        // Verify user
-        $this->markEmailAsVerified();
-
-    }
-
-    /**
-     * You can re-define this method in your App/User model if you need some additional custom logic
-     * to be executed while updating the model via admin.
-     */
-    public function additionalUpdatesViaAdmin($request) {
-
-        // Update roles
-        $this->updateRole($request);
-
-        // Attach avatar
-        $this->attachAvatar($request);
-
     }
 
     /**

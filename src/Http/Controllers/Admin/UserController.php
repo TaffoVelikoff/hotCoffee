@@ -6,6 +6,9 @@ use App\User;
 use Illuminate\Http\Request;
 use TaffoVelikoff\HotCoffee\Role;
 use App\Http\Controllers\Controller;
+use TaffoVelikoff\HotCoffee\Events\UserCreated;
+use TaffoVelikoff\HotCoffee\Events\UserDeleted;
+use TaffoVelikoff\HotCoffee\Events\UserUpdated;
 use TaffoVelikoff\HotCoffee\Http\Requests\Admin\StoreUser;
 
 class UserController extends Controller
@@ -23,7 +26,7 @@ class UserController extends Controller
         view()->share('customPageName', __('hotcoffee::admin.users'));
 
     	// Display view
-        return view((new User)->index_view);
+        return view(User::$list_view);
 
     }
 
@@ -37,7 +40,7 @@ class UserController extends Controller
 
         // Display view
         view()->share('customPageName', __('hotcoffee::admin.user_create'));
-        return view((new User)->edit_view);
+        return view(User::$edit_view);
 
     }
 
@@ -58,7 +61,7 @@ class UserController extends Controller
 
 		// Display view
 		view()->share('customPageName', __('hotcoffee::admin.user_edit'));
-		return view($user->edit_view);
+		return view(User::$edit_view);
 
     }
 
@@ -77,14 +80,22 @@ class UserController extends Controller
             $request->all()
         ));
 
-        // Any additional logic
-        $user->additionalCreatesViaAdmin($request);
+        // Update roles
+        $user->updateRole($request);
+
+        // Attach avatar
+        $user->attachAvatar($request);
+
+        $user->markEmailAsVerified();
 
         // Flash success message
         session()->flash('notify', array(
             'type'      => 'success',
-            'message'   => __($user->create_success_message)
+            'message'   => __('hotcoffee::admin.user_create_suc')
         ));
+
+        // Trigger event
+        event(new UserCreated($user));
 
         return redirect()->route('hotcoffee.admin.users.index');
 
@@ -103,14 +114,20 @@ class UserController extends Controller
         // Update user address
         $user->address->update($request->all());
 
-        // Any additional updates
-        $user->additionalUpdatesViaAdmin($request);
+        // Update roles
+        $user->updateRole($request);
+
+        // Attach avatar
+        $user->attachAvatar($request);
 
         // Flash success message
         session()->flash('notify', array(
             'type'      => 'success',
-            'message'   => __($user->update_success_message)
+            'message'   => __('hotcoffee::admin.user_update_suc')
         ));
+
+        // Trigger event
+        event(new UserUpdated($user));
 
         return back();
 
@@ -135,6 +152,9 @@ class UserController extends Controller
 
         // Delete user
         $user->delete();
+
+        // Trigger event
+        event(new UserDeleted);
 
         return array(
             'type'  => 'warning',

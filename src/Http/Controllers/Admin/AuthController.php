@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use TaffoVelikoff\HotCoffee\Facades\HotCoffee;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use TaffoVelikoff\HotCoffee\Events\AdminLogin;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -75,6 +76,8 @@ class AuthController extends Controller
 
             // Log auth
             HotCoffee::recordAuth();
+
+            event(new AdminLogin(auth()->user()));
 
             // Redirect
 			return redirect()->route(config('hotcoffee.start_route'));

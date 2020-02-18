@@ -26,16 +26,16 @@ class SefController extends Controller
         // Check if url exists
         if(!$sef) abort(404);
 
-        $id = $sef->model_id;
-        $model = $sef->model_type;
+        // Get owner model
+        $model = $sef->model_type::find($sef->model_id);
 
-        $sefModels = config('hotcoffee.sefs');
+        // Check if model exists
+        if(!$model) abort(404);
 
-        if(array_key_exists($model, $sefModels)) {
-            return app()->call($sefModels[$model]['controller'].'@'.$sefModels[$model]['method'], ['id' => $id]);
-        } else {
-            abort(404);
-        }
+        // Check for sef method
+        if($model->sef_method === null) abort(404);
+
+        return app()->call($model->sef_method, ['id' => $sef->model_id]);
         
     }
 
