@@ -1,4 +1,4 @@
-@extends('hotcoffee::_layouts._admin')
+@extends('hotcoffee::admin._layout')
 
 @section('content')
   <div class="col-xl-12 mb-5 mb-xl-0">

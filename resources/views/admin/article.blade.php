@@ -1,4 +1,4 @@
-@extends('hotcoffee::_layouts._admin')
+@extends('hotcoffee::admin._layout')
 
 @section('content')
 <div class="container-fluid">
@@ -18,12 +18,15 @@
 
                 <h6 class="heading-small text-muted mb-4">{{ __('hotcoffee::admin.page_nfo') }}</h6>
 
+                @yield('custom_top')
+
                 <!-- TRANSLATABLE FIELDS -->
-                {!! language_fields([
+                @yield('custom_translatables', language_fields([
                   'title' => ['type' => 'text', 'title' => __('hotcoffee::admin.title')],
                   'content' => ['type' => 'textarea', 'title' => 'Content', 'class' => 'tinymce'],
                   'meta_desc' => ['type' => 'textarea', 'title' => __('hotcoffee::admin.meta_desc'), 'info' => ['content' => __('hotcoffee::admin.meta_desc_nfo')], 'rows' => '4']
-                ]) !!}
+                ]))
+               
                 <!-- END TRANSLATABLE FIELDS -->
 
                 <hr class="my-4"/>
@@ -55,35 +58,14 @@
                 <!-- END TAGS -->
 
                 <!-- CUSTOM URL -->
-                <h6 class="heading-small text-muted mb-4">
-                  {{ __('hotcoffee::admin.custom_url') }}
-                  <span class="text-danger">*</span>
-                </h6>
-
-                <div class="pl-lg-4">
-
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <div @if($errors->has('keyword')) class="has-danger" @endif>
-                          <input type="text" name="keyword" id="keyword" class="form-control form-control-alternative @if($errors->has('keyword')) is-invalid-alt @endif" @if(session('post')) value="{{ session('post.keyword') }}" @elseif(isset($edit)) value="{{ $edit->keyword() }}" @endif>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row mt-2">
-                    <div class="col-lg-12 info-div">
-                      {{ __('hotcoffee::admin.sef_nfo') }}
-                    </div>
-                  </div>
-
-                </div>
+                @include('hotcoffee::admin.components.sef')
                 <!-- END CUSTOM URL -->
 
-                @if(config('hotcoffee.article_image_atts') == true)
-                  @include('hotcoffee::admin.sections.imgatt')
+                @if(config('hotcoffee.articles.image_attachments') == true)
+                  @include('hotcoffee::admin.components.imgatt')
                 @endif
+
+                @yield('custom_bottom')
 
                 <hr class="my-4"/>
 
@@ -101,13 +83,10 @@
           </div>
         </div>
       </div>
-
-      <!-- Footer -->
-      <footer class="footer"></footer>
-
+      
     </div>
 
-    @include('hotcoffee::admin.sections.tinymce')
+    @include('hotcoffee::admin.components.tinymce')
 @endsection
 
 @section('page_js')

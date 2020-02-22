@@ -5,7 +5,6 @@ namespace TaffoVelikoff\HotCoffee\Http\Controllers\Admin;
 use Image;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use TaffoVelikoff\HotCoffee\Article;
 use TaffoVelikoff\HotCoffee\Events\ArticleCreated;
 use TaffoVelikoff\HotCoffee\Events\ArticleUpdated;
 use TaffoVelikoff\HotCoffee\Events\ArticleDeleted;
@@ -15,25 +14,32 @@ use TaffoVelikoff\HotCoffee\Http\Requests\Admin\StoreArticle;
 class ArticleController extends Controller
 {
 
+    // Article model in use
+    public $model_name;
+
+    public function __construct() {
+      $this->model_name = config('hotcoffee.articles.model');
+    }
+
     /**
      * Show all
      */
     public function index() {
 
-      // Get articles
-      $articles = Article::orderBy('id', 'desc');
+        // Get articles
+        $articles = $this->model_name::orderBy('id', 'desc');
 
-      if(isset(request()->tag))
-        $articles->withAnyTag(request()->tag);
+        if(isset(request()->tag))
+            $articles->withAnyTag(request()->tag);
 
-      $articles = $articles->paginate(settings('paginate'));
-      view()->share('articles', $articles);
+        $articles = $articles->paginate(settings('paginate'));
+        view()->share('articles', $articles);
 
-      // Custom page name
-      view()->share('customPageName', __('hotcoffee::admin.articles'));
+        // Custom page name
+        view()->share('customPageName', __('hotcoffee::admin.articles'));
 
-    	// Display view
-      return view('hotcoffee::admin.articles');
+        // Display view
+        return view('hotcoffee::admin.articles');
 
     }
 
@@ -43,7 +49,7 @@ class ArticleController extends Controller
     public function create() {
 
       // Get all tags
-      view()->share('allTags', Article::existingTags());
+      view()->share('allTags', $this->model_name::existingTags());
 
       // Custom page name
       view()->share('customPageName', __('hotcoffee::admin.article_create'));
@@ -56,10 +62,10 @@ class ArticleController extends Controller
     /**
      * Edit
      */
-    public function edit(Article $article) {
+    public function edit($article) {
       
       // Get all tags
-      view()->share('allTags', Article::existingTags());
+      view()->share('allTags', $this->model_name::existingTags());
 
       // Send article to view
       view()->share('edit', $article);
@@ -82,7 +88,7 @@ class ArticleController extends Controller
     public function store(StoreArticle $request) {
 
       // Store article
-      $article = Article::create(
+      $article = $this->model_name::create(
           prepare_request(
             $request, ['title', 'content']
           )
@@ -117,7 +123,7 @@ class ArticleController extends Controller
     /**
      * Update
      */
-    public function update(Article $article, StoreArticle $request) {
+    public function update($article, StoreArticle $request) {
 
       // Update article page
       $article->update(
@@ -156,7 +162,7 @@ class ArticleController extends Controller
      * Delete
      *
      */
-    public function destroy(Article $article) {
+    public function destroy($article) {
 
         $article->delete();
 

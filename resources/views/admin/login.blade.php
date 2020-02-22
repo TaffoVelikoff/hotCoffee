@@ -11,18 +11,18 @@
   <meta name="author" content="Creative Tim">
 
   <!-- Favicon -->
-  <link href="{{ coffee_asset('img/favicon.png') }}" rel="icon" type="image/png">
+  <link href="{{ asset('vendor/hotcoffee/img/favicon.png') }}" rel="icon" type="image/png">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
   <!-- Icons -->
-  <link href="{{ coffee_asset('plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/hotcoffee/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
 
   <!-- CSS -->
-  <link type="text/css" href="{{ coffee_asset('css/admin/argon.css') }}" rel="stylesheet">
-  <link type="text/css" href="{{ coffee_asset('css/admin/admin.css') }}" rel="stylesheet">
-  <link type="text/css" href="{{ coffee_asset('vendor/animate.css') }}" rel="stylesheet">
+  <link type="text/css" href="{{ asset('vendor/hotcoffee/css/admin/argon.css') }}" rel="stylesheet">
+  <link type="text/css" href="{{ asset('vendor/hotcoffee/css/admin/admin.css') }}" rel="stylesheet">
+  <link type="text/css" href="{{ asset('vendor/hotcoffee/plugins/animate.css') }}" rel="stylesheet">
 </head>
 
 <body class="bg-default">
@@ -94,18 +94,12 @@
   </div>
 
   <!-- JS -->
-  <script src="{{ coffee_asset('vendor/jquery/dist/jquery.min.js') }}"></script>
-  <script src="{{ coffee_asset('vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ coffee_asset('vendor/notify.min.js') }}"></script>
-  <script src="{{ coffee_asset('vendor/croppie/croppie.min.js') }}"></script>
-  <script src="{{ coffee_asset('vendor/exif.js') }}"></script>
-  <script src="{{ coffee_asset('vendor/chart.js/dist/Chart.min.js') }}"></script>
-  <script src="{{ coffee_asset('vendor/chart.js/dist/Chart.extension.js') }}"></script>
-  <script src="{{ coffee_asset('vendor/jquery-ui.js') }}"></script>
-  <script src="{{ coffee_asset('plugins/nested_sortable/jquery.mjs.nestedSortable.js') }}"></script>
+  <script src="{{ asset('vendor/hotcoffee/plugins/jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ asset('vendor/hotcoffee/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('vendor/hotcoffee/plugins/notify.min.js') }}"></script>
+  <script src="{{ asset('vendor/hotcoffee/plugins/jquery-ui.js') }}"></script>
 
-  <script src="{{ coffee_asset('js/admin/admin.js') }}"></script>
-  <script src="{{ coffee_asset('js/admin/argon.js') }}"></script>
+  <script src="{{ asset('vendor/hotcoffee/js/admin/argon.js') }}"></script>
 
   @include('hotcoffee::admin.sections.notify')
 

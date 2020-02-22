@@ -2,11 +2,12 @@
 
 namespace TaffoVelikoff\HotCoffee;
 
+use Illuminate\Support\Str;
+use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use TaffoVelikoff\HotCoffee\Traits\HasSef;
 use Bnb\Laravel\Attachments\HasAttachment;
-use Conner\Tagging\Taggable;
 
 class Article extends Model
 {
@@ -28,6 +29,5 @@ class Article extends Model
      *
      * @var array
      */
-    public $sef_method = 'App\Http\Controllers\Front\ArticleController@index';
-
+    public static $sef_method = 'App\Http\Controllers\Front\ArticleController@index';
 }

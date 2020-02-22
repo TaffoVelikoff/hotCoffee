@@ -28,7 +28,7 @@
           <div class="row">
             <div class="col-6 collapse-brand">
               <a href="./index.html">
-                <img src="{{ coffee_asset('img/admin/logo.png') }}">
+                <img src="{{ asset('vendor/hotcoffee/img/admin/logo.png') }}">
               </a>
             </div>
             <div class="col-6 collapse-close">

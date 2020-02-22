@@ -181,7 +181,7 @@ return [
     'user_lname'            => 'Фамилно име',
     'user_city'             => 'Град',
     'user_country'          => 'Страна',
-    'user_role'             => 'Потребителска роля',
+    'user_role'             => 'Роля',
     'user_language'         => 'Избран език',
 
 

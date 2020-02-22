@@ -6,22 +6,28 @@ use Image;
 use Illuminate\Http\Request;
 use TaffoVelikoff\HotCoffee\Role;
 use App\Http\Controllers\Controller;
-use TaffoVelikoff\HotCoffee\InfoPage;
 use TaffoVelikoff\HotCoffee\Events\InfoPageCreated;
 use TaffoVelikoff\HotCoffee\Events\InfoPageUpdated;
 use TaffoVelikoff\HotCoffee\Events\InfoPageDeleted;
 use TaffoVelikoff\HotCoffee\Http\Requests\Admin\StoreInfoPage;
-
+use TaffoVelikoff\HotCoffee\InfoPage;
 
 class InfoPageController extends Controller
 {
+
+    // Info page model in use
+    public $model_name;
+
+    public function __construct() {
+      $this->model_name = config('hotcoffee.infopages.model');
+    }
 
     /**
      * Show all
      */
     public function index() {
 
-      $infos = InfoPage::orderBy('id', 'desc')->paginate(settings('paginate'));
+      $infos = $this->model_name::orderBy('id', 'desc')->paginate(settings('paginate'));
       view()->share('infos', $infos);
 
       // Custom page name
@@ -51,8 +57,8 @@ class InfoPageController extends Controller
     /**
      * Edit
      */
-    public function edit(InfoPage $info) {
-      
+    public function edit($info) {
+
       // All roles
       view()->share('roles', Role::all());
       
@@ -74,7 +80,7 @@ class InfoPageController extends Controller
     public function store(StoreInfoPage $request) {
 
 	    // Store info page
-      $info = InfoPage::create(
+      $info = $this->model_name::create(
           prepare_request(
             $request, ['title', 'content']
           )
@@ -106,7 +112,7 @@ class InfoPageController extends Controller
     /**
      * Update
      */
-    public function update(InfoPage $info, StoreInfoPage $request) {
+    public function update($info, StoreInfoPage $request) {
 
       // Update info page
       $info->update(
@@ -145,7 +151,7 @@ class InfoPageController extends Controller
      * Delete
      *
      */
-    public function destroy(InfoPage $info) {
+    public function destroy($info) {
 
         $info->delete();
 

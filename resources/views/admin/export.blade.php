@@ -1,4 +1,4 @@
-@extends('hotcoffee::_layouts._admin')
+@extends('hotcoffee::admin._layout')
 
 @section('content')
 	<div class="card-body">

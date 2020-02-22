@@ -22,27 +22,27 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 
 		// Settings model
 		$this->app->singleton(Settings::class, function () {
-            return Settings::make(storage_path('app/settings.json'));
-        });
+			return Settings::make(storage_path('app/settings.json'));
+		});
 
-        // Custom validation rules
-        Validator::extend('without_spaces', function($attr, $value){
-            return preg_match('/^\S*$/u', $value);
-        });
+		// Register custom validation rules
+		$this->registerCustomValidationRules();
 
-        Route::model('info', \TaffoVelikoff\HotCoffee\InfoPage::class);
-        Route::model('item', \TaffoVelikoff\HotCoffee\MenuItem::class);
+		// Route bindings
+		Route::model('article', config('hotcoffee.articles.model'));
+		Route::model('info', config('hotcoffee.infopages.model'));
+		Route::model('item', \TaffoVelikoff\HotCoffee\MenuItem::class);
 		
 	}
 
 	public function register() {
 		
 		// Default string lenght
-        Schema::defaultStringLength(255);
+		Schema::defaultStringLength(255);
 
-        // Facades
+		// Facades
 		$loader = AliasLoader::getInstance();
-        $loader->alias('HotCoffee', \TaffoVelikoff\HotCoffee\Facades\HotCoffee::class);
+		$loader->alias('HotCoffee', \TaffoVelikoff\HotCoffee\Facades\HotCoffee::class);
 
 		$this->app->bind('hotcoffee', function() {
 			return new HotCoffee();
@@ -50,17 +50,19 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 		
 		// Extending Bnb\Laravel\Attachments\Attachment
 		$this->app->bind(
-            \Bnb\Laravel\Attachments\Contracts\AttachmentContract::class,
-            \TaffoVelikoff\HotCoffee\Attachment::class
-        );
+			\Bnb\Laravel\Attachments\Contracts\AttachmentContract::class,
+			\TaffoVelikoff\HotCoffee\Attachment::class
+		);
 
-        // Artisan commands
-        $this->commands([
-        	Console\MakeAdmin::class,
-        	Console\DeleteUser::class,
-        	Console\Install::class,
-        ]);
+		//
+		$this->mergeConfigurations();
 
+		// Artisan commands
+		$this->commands([
+			Console\MakeAdmin::class,
+			Console\DeleteUser::class,
+			Console\Install::class,
+		]);
 	}
 
 	/*
@@ -68,27 +70,22 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 	 */
 	private function registerResources() {
 
-		// Routes
-		//$this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-
 		// Views
 		$this->loadViewsFrom(__DIR__.'/../resources/views', 'hotcoffee');
 
 		// Translations
-	    $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'hotcoffee');
+		$this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'hotcoffee');
 
-	    // Migrations
-	    $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+		// Migrations
+		$this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-	    // Config
-	    $this->publishes([
-	        __DIR__.'/../config/hotcoffee.php' => config_path('hotcoffee.php'),
-	    ], 'hotcoffee.config');
+		// Configs
+		$this->publishesConfigurations();
 
-	    // Assets
-	    $this->publishes([
-	        __DIR__.'/../public' => public_path('hotcoffee'),
-	    ], 'hotcoffee.assets');
+		// Assets
+		$this->publishes([
+			__DIR__.'/../public' => public_path('vendor/hotcoffee'),
+		], 'hotcoffee_assets');
 	}
 
 	/*
@@ -101,5 +98,67 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 			\TaffoVelikoff\HotCoffee\Http\Middleware\HotCoffee::class
 		]);
 
+	}
+
+	/**
+	 * Custom validation rules
+	 */
+	private function registerCustomValidationRules() {
+
+		Validator::extend('without_spaces', function($attr, $value){
+			return preg_match('/^\S*$/u', $value);
+		});
+
+	}
+
+	private function publishesConfigurations() {
+
+		// Main hotcoffee config file
+		$this->publishes([
+			__DIR__.'/../config/hotcoffee.php' => config_path('hotcoffee.php'),
+		], 'hotcoffee_config');
+
+		// Settings config file
+		$this->publishes([
+			__DIR__.'/../config/hotcoffee/settings.php' => config_path('hotcoffee/settings.php'),
+		], 'hotcoffee_config_settings');
+
+		// Settings config file
+		$this->publishes([
+			__DIR__.'/../config/hotcoffee/infopages.php' => config_path('hotcoffee/infopages.php'),
+		], 'hotcoffee_config_infopages');
+
+		// Articles config file
+		$this->publishes([
+			__DIR__.'/../config/hotcoffee/articles.php' => config_path('hotcoffee/articles.php'),
+		], 'hotcoffee_config_articles');
+
+		// Users config file
+		$this->publishes([
+			__DIR__.'/../config/hotcoffee/users.php' => config_path('hotcoffee/users.php'),
+		], 'hotcoffee_config_users');
+	}
+
+	private function mergeConfigurations() {
+
+		// Settings
+		$this->mergeConfigFrom(
+			__DIR__.'/../config/hotcoffee/settings.php', 'hotcoffee.settings'
+		);
+
+		// Info Pages
+		$this->mergeConfigFrom(
+			__DIR__.'/../config/hotcoffee/infopages.php', 'hotcoffee.infopages'
+		);
+
+		// Articles
+		$this->mergeConfigFrom(
+			__DIR__.'/../config/hotcoffee/articles.php', 'hotcoffee.articles'
+		);
+
+		// Users
+		$this->mergeConfigFrom(
+			__DIR__.'/../config/hotcoffee/users.php', 'hotcoffee.users'
+		);
 	}
 }

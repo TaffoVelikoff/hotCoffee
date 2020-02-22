@@ -190,21 +190,7 @@ class HotCoffee
 
 		return array_merge($mainFields, $trans, $special);
 	}
-
-	/**
-	 * Get an asset from the package public folder.
-	 * @param string $asset Path to the asset.
-	 *
-	 * @return string Returns a url to the asset.
-	 */
-	function asset($asset) { 
-		if(!config('hotcoffee.load_published_assets') == false) {
-			return asset('hotcoffee/'.$asset);
-		}
-
-		return url('coffee_assets/'.$asset);
-	}
-
+	
 	/**
 	 * Get the admin panel logo
 	 *
@@ -214,7 +200,7 @@ class HotCoffee
 		if(config('hotcoffee.custom_logo_url'))
 			return config('hotcoffee.custom_logo_url');
 
-		return coffee_asset('img/admin/logo.png');
+		return asset('vendor/hotcoffee/img/admin/logo.png');
 	}
 
 
@@ -300,7 +286,7 @@ class HotCoffee
 
 		$empty = [];
 
-		foreach(config('hotcoffee.settings') as $group) {
+		foreach(config('hotcoffee.settings.fields') as $group) {
 			foreach($group as $setting) {
 				if(($setting['field_type'] == 'checkbox' || $setting['field_type'] == 'toggle') && !array_key_exists($setting['name'], request()->except('_token'))) {
 					$empty[$setting['name']] = null;
@@ -313,9 +299,8 @@ class HotCoffee
 	}
 
 	public function languageFields($fields = []) {
-
 		view()->share('fields', $fields);
-		return view()->make('hotcoffee::components.language_fields');
+		return view()->make('hotcoffee::admin.components.language_fields');
 
 	}
 

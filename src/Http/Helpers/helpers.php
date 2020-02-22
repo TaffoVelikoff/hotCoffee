@@ -1,11 +1,5 @@
 <?php
 
-	if (!function_exists('coffee_asset')) {
-	   	function coffee_asset($asset) { 
-	   		return TaffoVelikoff\HotCoffee\Facades\HotCoffee::asset($asset);
-		}
-	}
-
 	if (!function_exists('coffee_info')) {
 		function coffee_info($field) {
 			return TaffoVelikoff\HotCoffee\Facades\HotCoffee::info($field);

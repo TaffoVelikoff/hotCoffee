@@ -26,7 +26,7 @@ class StoreSettings extends FormRequest
      */
     public function rules()
     {
-        return config('hotcoffee.settings_validation_rules');
+        return config('hotcoffee.settings.validation_rules');
     }
 
     /**
@@ -37,7 +37,7 @@ class StoreSettings extends FormRequest
     public function messages()
     {
         $messages = [];
-        foreach(config('hotcoffee.settings_validation_messages') as $message) {
+        foreach(config('hotcoffee.settings.validation_messages') as $message) {
             $messages[] = __($message);
         }
 

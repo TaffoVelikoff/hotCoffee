@@ -1,8 +1,8 @@
-@extends('hotcoffee::_layouts._admin')
+@extends('hotcoffee::admin._layout')
 
 @section('content')
-	<div class="card-body">
-		<div class="row">
+  <div class="card-body">
+    <div class="row">
         <div class="col">
           <div class="card shadow">
 
@@ -23,7 +23,7 @@
 
                 <div class="col text-right">
                   <a href="{{ route('hotcoffee.admin.articles.create') }}" class="btn btn-primary text-uppercase">
-                  	<i class="fas fa-plus-circle"></i> &nbsp; {{ __('hotcoffee::admin.create') }}
+                    <i class="fas fa-plus-circle"></i> &nbsp; {{ __('hotcoffee::admin.create') }}
                   </a>
                 </div>
               </div>
@@ -78,15 +78,15 @@
               </table>
             </div>
 
-      			<div class="card-footer py-4">
-      				{{ $articles->links() }}
-      			</div>
+            <div class="card-footer py-4">
+              {{ $articles->links() }}
+            </div>
 
           </div>
         </div>
       </div>
-	</div>
+  </div>
 
-    @include('hotcoffee::admin.modals.delete')
+  @include('hotcoffee::admin.modals.delete')
 
 @endsection

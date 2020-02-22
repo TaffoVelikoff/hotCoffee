@@ -90,14 +90,6 @@ input[type='text'], textarea, select {
     width: 102%;
 }
 
-.att-btns {
-    margin-top: 16px;
-}
-
-.btn-att {
-    padding: 6px;
-}
-
 /* Sortable */
 .sortable {
     list-style-type: none;
@@ -131,4 +123,13 @@ input[type='text'], textarea, select {
 
 .menu-flag {
     width: 36px;
+}
+
+
+.att-btns {
+    margin-top: 16px;
+}
+
+.btn-att {
+    padding: 6px;
 }

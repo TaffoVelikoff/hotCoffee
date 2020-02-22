@@ -34,7 +34,10 @@ trait HasSef
 	*
 	*/
 	public function keyword() {
-		return $this->sef->keyword;
+		if($this->sef)
+			return $this->sef->keyword;
+		
+		return null;
 	}
 
 	/**

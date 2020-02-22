@@ -1,4 +1,4 @@
-@extends('hotcoffee::_layouts._admin')
+@extends('hotcoffee::admin._layout')
 
 @section('content')
   <div class="card-body">
@@ -20,7 +20,7 @@
                       <strong>How to use?</strong> To get the value of any setting you can call <strong>settings('field')</strong> anywhere in your code.
                     </div>
 
-                    @foreach(config('hotcoffee.settings') as $settingKey=>$settings)
+                    @foreach(config('hotcoffee.settings.fields') as $settingKey=>$settings)
 
                       <div class="col-md-12 form-header text-uppercase">
                         {{ __($settingKey) }}

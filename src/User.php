@@ -31,18 +31,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Admin views for model
-     * The $edit_view is used when you create or adit a user.
-     * The $list_view is used for listing all users.
-     * You are free to overwrite these in the extended model (usually App/Users) if you
-     * would like to use custom made views for the user module.
-     *
-     */
-    public static $edit_view = 'hotcoffee::admin.user';
-    public static $list_view = 'hotcoffee::admin.users';
-
-    /**
 
     //===== ROLES =====//
 
@@ -93,7 +81,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      */
     public function address() {
-        return $this->hasOne(config('hotcoffee.custom_user_address_namespace'));
+        return $this->hasOne(config('hotcoffee.users.model'));
     }
 
     //===== SETTERS =====//

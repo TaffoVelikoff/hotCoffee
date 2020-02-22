@@ -17,7 +17,7 @@
                     @foreach(config('hotcoffee.languages') as $acr=>$lang)
                       <li class="nav-item">
                         <a class="nav-link rounded-circle mt-2 @if(config('app.locale') == $acr) active @endif" id="{{ $acr }}-tab" data-toggle="tab" href="#{{ $acr }}" role="tab" aria-controls="{{ $acr }}" aria-selected="true" style="width: 32px; height: 32px;">
-                          <img src="{{ coffee_asset('img/flags/'.$acr.'.svg') }}" alt="{{ $lang }}" class="flag-img" style="margin-top: -31px;"/>
+                          <img src="{{ asset('vendor/hotcoffee/img/flags/'.$acr.'.svg') }}" alt="{{ $lang }}" class="flag-img" style="margin-top: -31px;"/>
                         </a>
                       </li>
                     @endforeach

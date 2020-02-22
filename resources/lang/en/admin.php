@@ -96,7 +96,7 @@ return [
     'settings'              => 'Settings',
     'clear_cache'           => 'Flush Cache',
     'xls_export'            => 'Export',
-    'user_roles'            => 'User Roles',
+    'user_roles'            => 'Roles',
 
     //===== Navigation
     'dashboard'             => 'Dashboard',
@@ -181,7 +181,7 @@ return [
     'user_lname'            => 'Last name',
     'user_city'             => 'City',
     'user_country'          => 'Country',
-    'user_role'             => 'User Role',
+    'user_role'             => 'Role',
     'user_language'         => 'User language',
 
 

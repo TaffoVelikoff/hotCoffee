@@ -114,12 +114,13 @@ class Install extends Command {
         ]);
 
         // Publish hotCoffee config
-        $this->info("Publishing assets...");
-        Artisan::call('vendor:publish --tag=hotcoffee.config');
+        $this->info("Publishing assets. This may take a while...");
+        Artisan::call('vendor:publish --tag=hotcoffee_config');
 
         // Publish unisharp/laravel-filemanager assets
         Artisan::call('vendor:publish --tag=lfm_config');
         Artisan::call('vendor:publish --tag=lfm_public');
+        Artisan::call('vendor:publish --tag=hotcoffee_assets');
 
         // Link storage
         $this->info('Adding the storage symlink to your public folder...');

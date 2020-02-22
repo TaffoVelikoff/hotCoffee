@@ -26,7 +26,7 @@ class UserController extends Controller
         view()->share('customPageName', __('hotcoffee::admin.users'));
 
     	// Display view
-        return view(User::$list_view);
+        return view('hotcoffee::admin.users');
 
     }
 
@@ -40,7 +40,7 @@ class UserController extends Controller
 
         // Display view
         view()->share('customPageName', __('hotcoffee::admin.user_create'));
-        return view(User::$edit_view);
+        return view('hotcoffee::admin.user');
 
     }
 
@@ -61,7 +61,7 @@ class UserController extends Controller
 
 		// Display view
 		view()->share('customPageName', __('hotcoffee::admin.user_edit'));
-		return view(User::$edit_view);
+		return view('hotcoffee::admin.user');
 
     }
 

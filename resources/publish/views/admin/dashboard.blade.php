@@ -1,4 +1,4 @@
-@extends('hotcoffee::_layouts._admin')
+@extends('hotcoffee::admin._layout')
 
 @section('header_content')
       <div class="row">
