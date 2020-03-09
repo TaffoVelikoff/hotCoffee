@@ -298,10 +298,32 @@ class HotCoffee
 
 	}
 
-	public function languageFields($fields = []) {
-		view()->share('fields', $fields);
-		return view()->make('hotcoffee::admin.components.language_fields');
+	/**
+	 * Automatically generates fields for the translatable atributes.
+	 * @param array $fields HTML fields.
+	 * @param mixed $edit Model to be updated.
+	 */
 
+	public function languageFields($fields = [], $edit = null) {
+		return view()->make('hotcoffee::admin.components.language_fields')
+			->with('fields', $fields)
+			->with('edit', $edit);
+	}
+
+	/**
+	 * Automatically generates field for the SEF keyword (for search engine frieldy urls)
+	 * @param mixed $edit Model to be updated.
+	 */
+	public function sefField($edit = null) {
+		return view()->make('hotcoffee::admin.components.sef')->with('edit', $edit);
+	}
+
+	/**
+	 * Automatically generates field for the image attachments.
+	 * @param mixed $edit Model to be updated.
+	 */
+	public function imageAttachmentsField($edit = null) {
+		return view()->make('hotcoffee::admin.components.imgatt')->with('edit', $edit);
 	}
 
 }

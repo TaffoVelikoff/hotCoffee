@@ -42,7 +42,8 @@
 	"extra": {
         "laravel": {
             "providers": [
-                "TaffoVelikoff\\HotCoffee\\HotCoffeeServiceProvider"
+                "TaffoVelikoff\\HotCoffee\\HotCoffeeServiceProvider",
+                "TaffoVelikoff\\HotCoffee\\HotCoffeeViewServiceProvider"
             ]
         }
     },

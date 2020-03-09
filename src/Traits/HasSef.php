@@ -19,21 +19,25 @@ trait HasSef
 	*
 	*/
 	public function saveSef($keyword) {
-
-		(!$this->sef) ? $sef = new Sef : $sef = $this->sef;
-
-		$class = get_class($this);
-		$sef->keyword = $keyword;
-		$sef->model_id = $this->id;
-		$sef->model_type = $class;
+		$sef = Sef::create(['keyword' => $keyword]);
+		$this->sync($sef);
 		$sef->save();
+	}
+
+	/**
+	* Update custom url
+	*
+	*/
+	public function updateSef($keyword) {
+		$this->sef->keyword = $keyword;
+		$this->sef->save();
 	}
 
 	/**
 	* Keyword
 	*
 	*/
-	public function keyword() {
+	public function sefKeyword() {
 		if($this->sef)
 			return $this->sef->keyword;
 		

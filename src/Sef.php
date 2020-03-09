@@ -15,10 +15,10 @@ class Sef extends Model
     protected $guarded = [''];
 
     /**
-     * Get the owning sefable model.
+     * Get the owning model.
      */
-    public function sefable()
+    public function model()
     {
-        return $this->morphTo();
+        return $this->morphTo('model');
     }
 }

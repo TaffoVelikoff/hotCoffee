@@ -67,7 +67,19 @@
 
 
 	if (!function_exists('language_fields')) {
-		function language_fields($fields = []) {
-			return TaffoVelikoff\HotCoffee\Facades\HotCoffee::languageFields($fields);
+		function language_fields($fields = [], $edit = null) {
+			return TaffoVelikoff\HotCoffee\Facades\HotCoffee::languageFields($fields, $edit);
+		}
+	}
+
+	if (!function_exists('sef_field')) {
+		function sef_field($edit = null) {
+			return TaffoVelikoff\HotCoffee\Facades\HotCoffee::sefField($edit);
+		}
+	}
+
+	if (!function_exists('image_attachments_field')) {
+		function image_attachments_field($edit = null) {
+			return TaffoVelikoff\HotCoffee\Facades\HotCoffee::imageAttachmentsField($edit);
 		}
 	}

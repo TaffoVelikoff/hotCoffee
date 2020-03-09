@@ -35,4 +35,31 @@ return [
     */
 
     'image_attachments' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Additional validation rules
+    |--------------------------------------------------------------------------
+    | Any additional validation rules and messages when updating or creating an
+    | article. You can also overwrite the defaults.
+    */
+
+    'validations' => [
+        'normal'    => [
+            //'myfield' => 'required', //- this will add a new validation for "myfield".
+        ],
+        'translatable'  => [
+            //'title' => 'max:96'// - this will overwrite the title validations.
+        ],
+    ],
+
+    'messages' => [
+        'normal'    => [
+            //'myfield.required' => 'My custom message.',
+        ],
+        'translatable'  => [
+            //'title.max' => 'The title for one of the languages is too long.',
+        ],
+    ],
+
 ];

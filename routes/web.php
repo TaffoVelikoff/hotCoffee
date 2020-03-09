@@ -40,10 +40,10 @@ Route::group(['namespace' => '\TaffoVelikoff\HotCoffee\Http\Controllers'], funct
 				Route::get('/create', 'Admin\ArticleController@create')->name('hotcoffee.admin.articles.create');
 				Route::post('/', 'Admin\ArticleController@store')->name('hotcoffee.admin.articles.store');
 
-				Route::get('/{article}', 'Admin\ArticleController@edit')->name('hotcoffee.admin.articles.edit');
-				Route::post('/{article}', 'Admin\ArticleController@update')->name('hotcoffee.admin.articles.update');
+				Route::get('/{id}', 'Admin\ArticleController@edit')->name('hotcoffee.admin.articles.edit');
+				Route::post('/{id}', 'Admin\ArticleController@update')->name('hotcoffee.admin.articles.update');
 
-				Route::delete('/{article}', 'Admin\ArticleController@destroy')->name('hotcoffee.admin.articles.destroy');
+				Route::delete('/{id}', 'Admin\ArticleController@destroy')->name('hotcoffee.admin.articles.destroy');
 			});
 
 			// Info pages

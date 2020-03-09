@@ -66,8 +66,6 @@
 
                 @if(isset($edit)) <input type="hidden" value="{{ $edit->id }}" name="edit" /> @endif
 
-                @yield('custom_top')
-
                 <h6 class="heading-small text-muted mb-4">{{ __('hotcoffee::admin.user_info') }}</h6>
 
                 <div class="pl-lg-4">
@@ -94,8 +92,6 @@
                   </div>
                 </div>
 
-                @yield('custom_after_user_name')
-
                 @if(config('hotcoffee.users.contact_info'))
                   <hr class="my-4">
                   <!-- Address -->
@@ -104,8 +100,6 @@
                   <div class="pl-lg-4">
 
                     <div class="row">
-
-                      @yield('custom_user_address_top')
 
                       <div class="col-lg-6">
                         <div class="form-group focused">
@@ -152,8 +146,6 @@
                           </div>
                         </div>
                       </div>
-
-                      @yield('custom_user_address_bottom')
 
                     </div>
                   </div>
@@ -204,8 +196,6 @@
                   </div>
                 @endif
 
-                @yield('custom_before_profile_picture')
-
                 <hr class="my-4">
 
                 <!-- Profile picture -->
@@ -231,8 +221,6 @@
                     <button class="btn btn-outline-warning attCancel"><i class="fas fa-ban"></i> &nbsp; {{ __('hotcoffee::admin.cancel') }}</button>
                   </div>
                 </div>
-
-                @yield('custom_ater_profile_picture')
 
                 <hr class="my-4"/>
 
@@ -260,8 +248,6 @@
 
                   </div>
                 </div>
-
-                @yield('custom_bottom')
 
                 <hr class="my-4"/>
 

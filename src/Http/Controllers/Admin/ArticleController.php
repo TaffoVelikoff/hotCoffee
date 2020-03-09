@@ -5,6 +5,7 @@ namespace TaffoVelikoff\HotCoffee\Http\Controllers\Admin;
 use Image;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use TaffoVelikoff\HotCoffee\Sef;
 use TaffoVelikoff\HotCoffee\Events\ArticleCreated;
 use TaffoVelikoff\HotCoffee\Events\ArticleUpdated;
 use TaffoVelikoff\HotCoffee\Events\ArticleDeleted;
@@ -14,166 +15,156 @@ use TaffoVelikoff\HotCoffee\Http\Requests\Admin\StoreArticle;
 class ArticleController extends Controller
 {
 
-    // Article model in use
-    public $model_name;
+	// Article model in use
+	public $model_name;
 
-    public function __construct() {
-      $this->model_name = config('hotcoffee.articles.model');
-    }
+	public function __construct() {
+		$this->model_name = config('hotcoffee.articles.model');
+	}
 
-    /**
-     * Show all
-     */
-    public function index() {
+	/**
+	 * Show all
+	 */
+	public function index() {
 
-        // Get articles
-        $articles = $this->model_name::orderBy('id', 'desc');
+		// Get articles
+		$articles = $this->model_name::orderBy('id', 'desc');
 
-        if(isset(request()->tag))
-            $articles->withAnyTag(request()->tag);
+		if(isset(request()->tag))
+			$articles->withAnyTag(request()->tag);
 
-        $articles = $articles->paginate(settings('paginate'));
-        view()->share('articles', $articles);
+		$articles = $articles->paginate(settings('paginate'));
 
-        // Custom page name
-        view()->share('customPageName', __('hotcoffee::admin.articles'));
+		// Display view
+		return view('hotcoffee::admin.articles', [
+			'customPageName' =>  __('hotcoffee::admin.articles'),
+			'articles' => $articles
+		]);
 
-        // Display view
-        return view('hotcoffee::admin.articles');
+	}
 
-    }
+	/**
+	 * Create
+	 */
+	public function create() {
 
-    /**
-     * Create
-     */
-    public function create() {
+		// Display view
+		return view('hotcoffee::admin.article', [
+			'customPageName' => __('hotcoffee::admin.article_create')
+		]);
 
-      // Get all tags
-      view()->share('allTags', $this->model_name::existingTags());
+	}
 
-      // Custom page name
-      view()->share('customPageName', __('hotcoffee::admin.article_create'));
+	/**
+	 * Edit
+	 */
+	public function edit($id) {
 
-      // Display view
-      return view('hotcoffee::admin.article');
+		$article = $this->model_name::findOrFail($id);
 
-    }
+		// Display view
+		return view('hotcoffee::admin.article', [
+			'customPageName' => __('hotcoffee::admin.article_edit'),
+			'edit'	=> $article,
+			'tags'	=> implode(',', $article->tagNames())
+		]);
 
-    /**
-     * Edit
-     */
-    public function edit($article) {
-      
-      // Get all tags
-      view()->share('allTags', $this->model_name::existingTags());
+	}
 
-      // Send article to view
-      view()->share('edit', $article);
+	/**
+	 * Store
+	 *
+	 */
+	public function store(StoreArticle $request) {
 
-      // Get tags
-      view()->share('tags', implode(',', $article->tagNames()));
+		// Store article
+		$article = $this->model_name::create(
+			prepare_request($request, ['title', 'content'])
+		);
 
-      // Custom page name
-      view()->share('customPageName', __('hotcoffee::admin.article_edit'));
+		// Save tags
+		$article->tag($request->tags);
 
-      // Display view
-      return view('hotcoffee::admin.article');
+		// Save custom url (SEF)
+		$article->saveSef($request->keyword);
+		
+		// Attach pictures
+		if($request->file('images')) {
+			foreach($request->file('images') as $file) {
+				$article->attach($file, ['group' => 'images']); 
+			}
+		}
+		
+		// Flash success message
+		session()->flash('notify', array(
+			'type'      => 'success',
+			'message'   => __('hotcoffee::admin.article_create_suc')
+		));
 
-    }
+		// Trigger event
+		event(new ArticleCreated($article));
 
-    /**
-     * Store
-     *
-     */
-    public function store(StoreArticle $request) {
+		return redirect()->route('hotcoffee.admin.articles.index');
 
-      // Store article
-      $article = $this->model_name::create(
-          prepare_request(
-            $request, ['title', 'content']
-          )
-      );
+	}
 
-      // Save tags
-      $article->tag($request->tags);
+	/**
+	 * Update
+	 */
+	public function update($id, StoreArticle $request) {
 
-      // Save custom url (SEF)
-      $article->saveSef($request->keyword);
-      
-      // Attach pictures
-      if($request->file('images')) {
-          foreach($request->file('images') as $file) {
-            $article->attach($file, ['group' => 'images']); 
-          }
-      }
-      
-      // Flash success message
-      session()->flash('notify', array(
-          'type'      => 'success',
-          'message'   => __('hotcoffee::admin.article_create_suc')
-      ));
+		$article = $this->model_name::findOrFail($id);
 
-      // Trigger event
-      event(new ArticleCreated($article));
+		// Update article page
+		$article->update(
+			prepare_request(
+				$request, ['title', 'content', 'meta_desc']
+			)
+		);
 
-      return redirect()->route('hotcoffee.admin.articles.index');
+		// Save custom url (SEF)
+		$article->updateSef($request->keyword);
 
-    }
+		// Retag
+		$article->retag($request->tags);
 
-    /**
-     * Update
-     */
-    public function update($article, StoreArticle $request) {
+		// Attach pictures
+		if($request->file('images')) {
+			foreach($request->file('images') as $file) {
+				$article->attach($file, ['group' => 'images']); 
+			}
+		}
+		
+		// Flash success message
+		session()->flash('notify', array(
+			'type'      => 'success',
+			'message'   => __('hotcoffee::admin.article_update_suc')
+		));
 
-      // Update article page
-      $article->update(
-          prepare_request(
-            $request, ['title', 'content', 'meta_desc']
-          )
-      );
+		// Trigger event
+		event(new ArticleUpdated($article));
 
-      // Save custom url (SEF)
-      $article->saveSef($request->keyword);
+		return redirect()->route('hotcoffee.admin.articles.index');
 
-      // Retag
-      $article->retag($request->tags);
+	}
 
-      // Attach pictures
-      if($request->file('images')) {
-          foreach($request->file('images') as $file) {
-            $article->attach($file, ['group' => 'images']); 
-          }
-      }
-      
-      // Flash success message
-      session()->flash('notify', array(
-          'type'      => 'success',
-          'message'   => __('hotcoffee::admin.article_update_suc')
-      ));
+	/**
+	 * Delete
+	 *
+	 */
+	public function destroy($id) {
 
-      // Trigger event
-      event(new ArticleUpdated($article));
+		$article = $this->model_name::findOrFail($id);
+		$article->delete();
 
-      return redirect()->route('hotcoffee.admin.articles.index');
-
-    }
-
-    /**
-     * Delete
-     *
-     */
-    public function destroy($article) {
-
-        $article->delete();
-
-        // Trigger event
-        event(new ArticleDeleted);
-
-        return array(
-            'type'  => 'warning',
-            'title' => __('hotcoffee::admin.success').'!',
-            'message' => __('hotcoffee::admin.suc_deleted')
-        );
-    }
+		// Trigger event
+		event(new ArticleDeleted);
+		
+		return array(
+			'type'  => 'warning',
+			'title' => __('hotcoffee::admin.success').'!',
+			'message' => __('hotcoffee::admin.suc_deleted')
+		);
+	}
 
 }

@@ -25,9 +25,29 @@ class Article extends Model
     ];
 
     /**
-     * The controller 
+     * Where the SefController will redirect
      *
      * @var array
      */
     public static $sef_method = 'App\Http\Controllers\Front\ArticleController@index';
+
+    /**
+     * Boot
+     */
+    public static function boot() {
+        parent::boot();
+
+        // Deleting article
+        static::deleting(function($article) {
+
+            // Remove attachments
+            $article->attachments()->delete();
+
+            // Remove sef
+            $article->sef()->delete();
+
+            // Untag
+            $article->untag();
+        });
+    }
 }

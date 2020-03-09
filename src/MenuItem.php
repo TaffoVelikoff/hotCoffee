@@ -82,7 +82,11 @@ class MenuItem extends Model
 
             case 'page':
                 $page = InfoPage::find($this->page_id);
-                return url($page->keyword());
+                if($page) {
+                    return url($page->sefKeyword());
+                } else {
+                    return '';
+                }
 
             case 'route':
                 return route($this->url);

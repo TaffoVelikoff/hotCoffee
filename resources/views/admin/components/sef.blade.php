@@ -9,7 +9,7 @@
     <div class="col-md-12">
       <div class="form-group">
         <div @if($errors->has('keyword')) class="has-danger" @endif>
-          <input type="text" name="keyword" id="keyword" class="form-control form-control-alternative @if($errors->has('keyword')) is-invalid-alt @endif" @if(session('post')) value="{{ session('post.keyword') }}" @elseif(isset($edit)) value="{{ $edit->keyword() }}" @endif>
+          <input type="text" name="keyword" id="keyword" class="form-control form-control-alternative @if($errors->has('keyword')) is-invalid-alt @endif" @if(session('post')) value="{{ session('post.keyword') }}" @elseif(isset($edit)) value="{{ $edit->sefKeyword() }}" @endif>
         </div>
       </div>
     </div>

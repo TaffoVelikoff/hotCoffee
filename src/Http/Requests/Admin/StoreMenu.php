@@ -25,13 +25,9 @@ class StoreMenu extends FormRequest
      */
     public function rules()
     {
-        $normalRules = [
+        return [
             'keyword'     => 'sometimes|required|unique:menus|max:16|min:3|without_spaces'
-        ]; 
-
-        $languageRules = [];
-
-        return array_merge($normalRules, $languageRules);
+        ];
     }
 
     /**
@@ -41,18 +37,12 @@ class StoreMenu extends FormRequest
      */
     public function messages()
     {
-        
-        $normalMessages = [
+        return [
             'keyword.required'        => __('hotcoffee::admin.err_keyword_required'),
             'keyword.max'             => __('hotcoffee::admin.err_keyword_max'),
             'keyword.min'             => __('hotcoffee::admin.err_keyword_min'),
             'keyword.without_spaces'  => __('hotcoffee::admin.err_keyword_spaces'),
             'keyword.unique'            => __('hotcoffee::admin.err_keyword_unique'),
         ];
-
-        $languageMessages = [];
-
-        return array_merge($normalMessages, $languageMessages);
-
     }
 }

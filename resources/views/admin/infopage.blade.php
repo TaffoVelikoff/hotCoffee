@@ -18,14 +18,12 @@
 
                 <h6 class="heading-small text-muted mb-4">{{ __('hotcoffee::admin.page_nfo') }}</h6>
 
-                @yield('custom_top')
-
                 <!-- TRANSLATABLE FIELDS -->
-                @yield('custom_translatables', language_fields([
+                {!! language_fields([
                   'title' => ['type' => 'text', 'title' => __('hotcoffee::admin.title')],
                   'content' => ['type' => 'textarea', 'title' => 'Content', 'class' => 'tinymce'],
                   'meta_desc' => ['type' => 'textarea', 'title' => __('hotcoffee::admin.meta_desc'), 'info' => ['content' => __('hotcoffee::admin.meta_desc_nfo')], 'rows' => '4']
-                ]))
+                ], $edit ?? null) !!}
                 <!-- END TRANSLATABLE FIELDS -->
 
                 <hr class="my-4"/>
@@ -79,8 +77,6 @@
                 @if(config('hotcoffee.article_image_atts') == true)
                   @include('hotcoffee::admin.components.imgatt')
                 @endif
-
-                @yield('custom_bottom')
 
                 <hr class="my-4"/>
 

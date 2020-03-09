@@ -10,99 +10,92 @@ use TaffoVelikoff\HotCoffee\Http\Requests\Admin\StoreMenuItem;
 class MenuItemController extends Controller
 {
 
-    /**
-     * Store
-     *
-     */
-    public function store(StoreMenuItem $request) {
+	/**
+	 * Store
+	 *
+	 */
+	public function store(StoreMenuItem $request) {
 
-      // Store menu item
-      //$item = MenuItem::create(request()->all());
-      $item = MenuItem::create(
-        prepare_request(
-          $request, ['name']
-        )
-      );
+		// Store menu item
+		$item = MenuItem::create(
+			prepare_request($request, ['name'])
+		);
 
-      // Convert type
-      $item->setType(request());
+		// Convert type
+		$item->setType(request());
 
-      // Flash success message
-      return [
-        'type'      => 'success',
-        'message'   => __('hotcoffee::admin.menu_create_suc'),
-        'id'        => $item->id,
-        'name'      => $item->name,
-        'del'       => route('hotcoffee.admin.menuitems.destroy', $item)
-      ];
+		// Flash success message
+		return [
+			'type'      => 'success',
+			'message'   => __('hotcoffee::admin.menu_create_suc'),
+			'id'        => $item->id,
+			'name'      => $item->name,
+			'del'       => route('hotcoffee.admin.menuitems.destroy', $item)
+		];
 
-    }
+	}
 
-    /**
-     * Edit
-     *
-     */
-    public function edit($item) {
-      return [
-        'id'          => $item->id,
-        'name'        => $item->getTranslations('name'),
-        'url'         => $item->url,
-        'icon'        => $item->icon,
-        'page_id'     => $item->page_id,
-        'new_window'  => $item->new_window
-      ];
-    }
+	/**
+	 * Edit
+	 *
+	 */
+	public function edit($item) {
+		
+		return [
+			'id'          => $item->id,
+			'name'        => $item->getTranslations('name'),
+			'url'         => $item->url,
+			'icon'        => $item->icon,
+			'page_id'     => $item->page_id,
+			'new_window'  => $item->new_window
+		];
+		
+	}
 
-    /**
-     * Update
-     *
-     */
-    public function update(MenuItem $item, StoreMenuItem $request) {
-      
-      // Update item
-      /*$item->update(request()->only([
-        'name', 'page_id', 'new_window', 'url', 'icon', 'menu_id'
-      ]));*/
-      
-      $item->update(
-        prepare_request(
-          $request, ['name']
-        )
-      );
+	/**
+	 * Update
+	 *
+	 */
+	public function update($item, StoreMenuItem $request) {
+	  
+		// Update item
+		$item->update(
+			prepare_request($request, ['name'])
+		);
 
-      // Disable checkbox [needs a fix]
-      if(!request()->has('new_window')) {
-        $item->new_window = 0;
-        $item->save();
-      }
+		// Disable checkbox
+		if(!request()->has('new_window')) {
+			$item->new_window = 0;
+			$item->save();
+		}
 
-      // Convert type
-      $item->setType(request());
+		// Convert type
+		$item->setType(request());
 
-      // Flash success message
-      return [
-        'type'      => 'success',
-        'message'   => __('hotcoffee::admin.menu_update_suc'),
-        'id'        => $item->id,
-        'name'      => $item->name
-      ];
+		// Flash success message
+		return [
+			'type'      => 'success',
+			'message'   => __('hotcoffee::admin.menu_update_suc'),
+			'id'        => $item->id,
+			'name'      => $item->name
+		];
 
-    }
+	}
 
-    /**
-     * Delete
-     *
-     */
-    public function destroy(MenuItem $item) {
+	/**
+	 * Delete
+	 *
+	 */
+	public function destroy($item) {
 
-      $item->delete();
+		$item->delete();
 
-      return [
-          'type'  => 'warning',
-          'title' => __('hotcoffee::admin.success').'!',
-          'message' => __('hotcoffee::admin.suc_deleted'),
-          'id'    => $item->id
-      ];
+		return [
+			'type'  => 'warning',
+			'title' => __('hotcoffee::admin.success').'!',
+			'message' => __('hotcoffee::admin.suc_deleted'),
+			'id'    => $item->id
+		];
 
-    }
+	}
 }

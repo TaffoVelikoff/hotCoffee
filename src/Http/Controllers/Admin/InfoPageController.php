@@ -15,155 +15,145 @@ use TaffoVelikoff\HotCoffee\InfoPage;
 class InfoPageController extends Controller
 {
 
-    // Info page model in use
-    public $model_name;
+	// Info page model in use
+	public $model_name;
 
-    public function __construct() {
-      $this->model_name = config('hotcoffee.infopages.model');
-    }
+	public function __construct() {
+		$this->model_name = config('hotcoffee.infopages.model');
+	}
 
-    /**
-     * Show all
-     */
-    public function index() {
+	/**
+	 * Show all
+	 */
+	public function index() {
 
-      $infos = $this->model_name::orderBy('id', 'desc')->paginate(settings('paginate'));
-      view()->share('infos', $infos);
+		$infos = $this->model_name::orderBy('id', 'desc')
+			->paginate(settings('paginate'));
 
-      // Custom page name
-      view()->share('customPageName', __('hotcoffee::admin.infopages'));
+		// Display view
+		return view('hotcoffee::admin.infopages', [
+			'infos' => $infos,
+			'customPageName' => __('hotcoffee::admin.infopages')
+		]);
 
-    	// Display view
-      return view('hotcoffee::admin.infopages');
+	}
 
-    }
+	/**
+	 * Create
+	 */
+	public function create() {
 
-    /**
-     * Create
-     */
-    public function create() {
+		// Display view
+		return view('hotcoffee::admin.infopage', [
+			'customPageName' => __('hotcoffee::admin.page_create')
+		]);
 
-      // All roles
-      view()->share('roles', Role::all());
+	}
 
-      // Custom page name
-      view()->share('customPageName', __('hotcoffee::admin.page_create'));
+	/**
+	 * Edit
+	 */
+	public function edit($id) {
 
-    	// Display view
-      return view('hotcoffee::admin.infopage');
+		$info = InfoPage::findOrFail($id);
 
-    }
+		// Display view
+		return view('hotcoffee::admin.infopage', [
+			'edit' => $info,
+			'customPageName' => __('hotcoffee::admin.page_edit')
+		]);
 
-    /**
-     * Edit
-     */
-    public function edit($info) {
+	}
 
-      // All roles
-      view()->share('roles', Role::all());
-      
-      // Send info page to view
-      view()->share('edit', $info);
+	/**
+	 * Store
+	 *
+	 */
+	public function store(StoreInfoPage $request) {
 
-      // Custom page name
-      view()->share('customPageName', __('hotcoffee::admin.page_edit'));
+		// Store info page
+		$info = $this->model_name::create(
+			prepare_request($request, ['title', 'content'])
+		);
 
-      // Display view
-      return view('hotcoffee::admin.infopage');
+		// Save custom url (SEF)
+		$info->saveSef($request->keyword);
 
-    }
+		// Attach pictures
+		if($request->file('images')) {
+			foreach($request->file('images') as $file) {
+				$info->attach($file, ['group' => 'images']); 
+			}
+		}
 
-    /**
-     * Store
-     *
-     */
-    public function store(StoreInfoPage $request) {
+		// Flash success message
+		session()->flash('notify', array(
+			'type'      => 'success',
+			'message'   => __('hotcoffee::admin.page_create_suc')
+		));
 
-	    // Store info page
-      $info = $this->model_name::create(
-          prepare_request(
-            $request, ['title', 'content']
-          )
-      );
+		// Trigger event
+		event(new InfoPageCreated($info));
 
-      // Save custom url (SEF)
-      $info->saveSef($request->keyword);
+		return redirect()->route('hotcoffee.admin.infopages.index');
 
-      // Attach pictures
-      if($request->file('images')) {
-          foreach($request->file('images') as $file) {
-            $info->attach($file, ['group' => 'images']); 
-          }
-      }
-      
-      // Flash success message
-      session()->flash('notify', array(
-          'type'      => 'success',
-          'message'   => __('hotcoffee::admin.page_create_suc')
-      ));
+	}
 
-      // Trigger event
-      event(new InfoPageCreated($info));
+	/**
+	 * Update
+	 */
+	public function update($id, StoreInfoPage $request) {
 
-      return redirect()->route('hotcoffee.admin.infopages.index');
+		$info = InfoPage::findOrFail($id);
 
-    }
+		// Update info page
+		$info->update(
+			prepare_request($request, ['title', 'content', 'meta_desc'])
+		);
 
-    /**
-     * Update
-     */
-    public function update($info, StoreInfoPage $request) {
+		// Attach access roles
+		$info->access_roles()->attach($request->roles);
 
-      // Update info page
-      $info->update(
-          prepare_request(
-            $request, ['title', 'content', 'meta_desc']
-          )
-      );
+		// Save custom url (SEF)
+		$info->updateSef($request->keyword);
 
-      // Attach access roles
-      $info->access_roles()->attach($request->roles);
+		// Attach pictures
+		if($request->file('images')) {
+			foreach($request->file('images') as $file) {
+				$info->attach($file, ['group' => 'images']); 
+			}
+		}
 
-      // Save custom url (SEF)
-      $info->saveSef($request->keyword);
+		// Flash success message
+		session()->flash('notify', array(
+			'type'		=> 'success',
+			'message'	=> __('hotcoffee::admin.page_update_suc')
+		));
 
-      // Attach pictures
-      if($request->file('images')) {
-          foreach($request->file('images') as $file) {
-            $info->attach($file, ['group' => 'images']); 
-          }
-      }
-      
-      // Flash success message
-      session()->flash('notify', array(
-          'type'      => 'success',
-          'message'   => __('hotcoffee::admin.page_update_suc')
-      ));
+		// Trigger event
+		event(new InfoPageUpdated($info));
 
-      // Trigger event
-      event(new InfoPageUpdated($info));
+		return redirect()->route('hotcoffee.admin.infopages.index');
 
-      return redirect()->route('hotcoffee.admin.infopages.index');
+	}
 
-    }
+	/**
+	 * Delete
+	 *
+	 */
+	public function destroy($info) {
 
-    /**
-     * Delete
-     *
-     */
-    public function destroy($info) {
+		$info->delete();
 
-        $info->delete();
+		// Trigger event
+		event(new InfoPageDeleted);
 
-        // Trigger event
-        event(new InfoPageDeleted);
+		return array(
+			'type'  => 'warning',
+			'title' => __('hotcoffee::admin.success').'!',
+			'message' => __('hotcoffee::admin.suc_deleted')
+		);
 
-        return array(
-            'type'  => 'warning',
-            'title' => __('hotcoffee::admin.success').'!',
-            'message' => __('hotcoffee::admin.suc_deleted')
-        );
-
-    }
+	}
 
 }

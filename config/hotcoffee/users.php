@@ -28,4 +28,26 @@ return [
 
     'sidebar'       => true,
     'contact_info'  => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Additional validation rules
+    |--------------------------------------------------------------------------
+    | Any additional validation rules and messages when updating or creating
+    | user. You can also overwrite the defaults.
+    */
+
+    'validations' => [
+        'normal'    => [
+            //'myfield' => 'required', //- this will add a new validation for "myfield".
+        ],
+        'translatable'  => [],
+    ],
+
+    'messages' => [
+        'normal'    => [
+            //'myfield.required' => 'My custom message.',
+        ],
+        'translatable'  => [],
+    ],
 ];

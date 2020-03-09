@@ -1,5 +1,11 @@
  <?php
 
+/**
+ | hotCoffee package configuration
+ | You can find related documentation on https://taffo.gitbook.io/hotcoffee
+ |
+ */
+
 return [
 
     /*
@@ -12,7 +18,7 @@ return [
     |
     */
 
-    'prefix'    => 'admin',
+    'prefix'    => env('ADMIN_PREFIX', '/admin'),
 
     /*
     |--------------------------------------------------------------------------
@@ -37,20 +43,6 @@ return [
     */
 
     'start_route'   => 'hotcoffee.admin.dashboard',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Where to load the assets from?
-    |--------------------------------------------------------------------------
-    |
-    | If you want to make any changes to css/js of the admin dashboard you need 
-    | to first publush the assets. Then you can change the value of the parameter
-    | bellow to true in order to make the package load the assets from your app's
-    | public folder, instead of it's own folder.
-    |
-    */
-
-    'load_published_assets'  => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -114,21 +106,6 @@ return [
     'admin_languages' => [
         'en'    => 'English',
         'bg'    => 'Български [Bulgarian]'
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Page groups
-    |--------------------------------------------------------------------------
-    |
-    | Also called page key. You can use this to group your info pages.
-    | For example you might want to create a submenu somewhere in your website,
-    | like for a FAQ. You can then search for the related info page by key.
-    |
-    */
-
-    'page_groups' => [
-        'default' => 'default group / uncategorised',
     ],
 
     /*
@@ -306,6 +283,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Tinymce Options
+    |--------------------------------------------------------------------------
+    | Below you can setup the tinymce integration (WYSIWYG editor for pages and articles).
+    |
+    */
+    'tinymce_plugins' => 'textcolor preview fullpage importcss fullscreen image link media codesample table charmap hr insertdatetime advlist lists imagetools textpattern noneditable charmap',
+    'tinymce_context' => 'link image imagetools table spellchecker',
+    'tinymce_toolbar' => 'undo redo | alignleft aligncenter alignright alignjustify | bold italic underline strikethrough | outdent indent | fontselect fontsizeselect formatselect |  numlist bullist | forecolor backcolor | charmap | image media link codesample insertdatetime fullscreen',
+    'tinymce_file_manager'  => false,
+
+    /*
+    |--------------------------------------------------------------------------
     | Disabled controllers
     |--------------------------------------------------------------------------
     | Some times you might want to disable access to some controllers if you don't plan
@@ -319,33 +308,6 @@ return [
         // 'TaffoVelikoff\HotCoffee\Http\Controllers\Admin\RoleController',
         // 'TaffoVelikoff\HotCoffee\Http\Controllers\Admin\FlushController'
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | UserAddress
-    |--------------------------------------------------------------------------
-    | You can extend or use your own custom model for UserAddress. Read more in documentation.
-    |
-    */
-
-    'custom_user_address_namespace'    => 'TaffoVelikoff\HotCoffee\UserAddress',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Attachable images to models
-    |--------------------------------------------------------------------------
-    | For the Article (blog posts/news) and InfoPage model you can use by default
-    | the WYSIWYG editor to upload images and other files. However, if you have a
-    | special template for the frontend (for example a slider with product photos)
-    | the WYSIWYG becomes absolite. In this case a better way would be to use the 
-    | "ATTACH IMAGES" section and create dedicated attachments. By default this 
-    | option is enabled, but if you think you rather only use the WYSIWYG editor to
-    | add files to an article or an info page you can disable it bellow.
-    |
-    */
-
-    'info_image_atts'       => true,
-    'article_image_atts'    => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -391,146 +353,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Tinymce Options
-    |--------------------------------------------------------------------------
-    | Below you can setup the tinymce integration (WYSIWYG editor for pages and articles).
-    |
-    */
-    'tinymce_plugins' => 'textcolor preview fullpage importcss fullscreen image link media codesample table charmap hr insertdatetime advlist lists imagetools textpattern noneditable charmap',
-    'tinymce_context' => 'link image imagetools table spellchecker',
-    'tinymce_toolbar' => 'undo redo | alignleft aligncenter alignright alignjustify | bold italic underline strikethrough | outdent indent | fontselect fontsizeselect formatselect |  numlist bullist | forecolor backcolor | charmap | image media link codesample insertdatetime fullscreen',
-    'tinymce_file_manager'  => false,
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Settings Page
-    |--------------------------------------------------------------------------
-    | You can easily edit the settings page sections and fields below.
-    |
-    */
-
-    'settings'  => [
-
-        // Contact info section
-        'hotcoffee::admin.contact_info'  => [
-
-            // Contact e-mail field
-            [
-                'name'          => 'mail',
-                'label'         => 'hotcoffee::admin.main_mail',
-                'field_type'    => 'text',
-                'icon'          => 'ni ni-email-83',
-                'info_text'     => 'hotcoffee::admin.nfo_main_mail',
-                'required'      => true,
-                'content'       => null,
-            ],
-
-        ],
-
-        // SEO options section
-        'hotcoffee::admin.seo_options'  => [
-
-            // Website name field
-            [
-                'name'          => 'website_name',
-                'label'         => 'hotcoffee::admin.website_name',
-                'field_type'    => 'text',
-                'icon'          => 'ni ni-bold',
-                'info_text'     => null,
-                'required'      => true,
-                'content'       => null,
-            ],
-
-            // Website description field
-            [
-                'name'          => 'website_description',
-                'label'         => 'hotcoffee::admin.website_description',
-                'field_type'    => 'textarea',
-                'icon'          => 'ni ni-bold',
-                'info_text'     => 'hotcoffee::admin.nfo_website_desc',
-                'required'      => false,
-                'content'       => null,
-            ],
-
-        ],
-
-        // Other settings section
-        'hotcoffee::admin.other_settings'  => [
-
-            // Header color
-            [
-                'name'          => 'header_color',
-                'label'         => 'hotcoffee::admin.header_color',
-                'field_type'    => 'select',
-                'icon'          => null,
-                'info_text'     => false,
-                'required'      => false,
-                'content'       => [
-                    'primary'   => 'hotcoffee::admin.default',
-                    'info'      => 'hotcoffee::admin.blue',
-                    'success'   => 'hotcoffee::admin.green',
-                    'danger'    => 'hotcoffee::admin.red',
-                    'warning'   => 'hotcoffee::admin.orange',
-                    'light'     => 'hotcoffee::admin.gray',
-                    'dark'      => 'hotcoffee::admin.black',
-                ],
-            ],
-
-            // Items per page field
-            [
-                'name'          => 'paginate',
-                'label'         => 'hotcoffee::admin.items_per_page',
-                'field_type'    => 'text',
-                'icon'          => 'ni ni-bullet-list-67',
-                'info_text'     => false,
-                'required'      => true,
-                'content'       => null,
-            ],
-
-            // Date format field
-            [
-                'name'          => 'date_format',
-                'label'         => 'hotcoffee::admin.date_format',
-                'field_type'    => 'text',
-                'icon'          => 'ni ni-watch-time',
-                'info_text'     => 'hotcoffee::admin.nfo_date_format',
-                'required'      => true,
-                'content'       => null,
-            ],
-
-            // Timezone field
-            [
-                'name'          => 'timezone',
-                'label'         => 'hotcoffee::admin.timezone',
-                'field_type'    => 'select',
-                'icon'          => null,
-                'info_text'     => false,
-                'required'      => false,
-                'content'       => array_combine(DateTimeZone::listIdentifiers(DateTimeZone::ALL), DateTimeZone::listIdentifiers(DateTimeZone::ALL)),
-            ],
-
-        ],
-
-    ],
-
-    'settings_validation_rules' => [
-        'mail'                  => 'required|email',
-        'support_mail'          => 'nullable|email',
-        'website_name'          => 'required|max:48',
-        'website_description'   => 'max:128',
-        'paginate'              => 'required|numeric',
-        'testfield'             => 'numeric',
-    ],
-
-    'settings_validation_messages'  => [
-        //'mail.required'           => 'admin.something_from_translation_file',
-        //'mail.email'              => 'Or just a string.',
-    ],
-
-
-    /*
-    |--------------------------------------------------------------------------
     | Exportable models
     |--------------------------------------------------------------------------
     | These models will be included on the export page
@@ -565,4 +387,5 @@ return [
         ],
 
     ],
+
 ];

@@ -19,16 +19,6 @@ class HotCoffee
         // Verify admin
         $request->user()->authorizeRoles(['admin']);
 
-        // Catch view name, default page name and auth user
-        view()->composer('*', function($view){
-            // Page name
-            $pageName = explode('.', $view->getName());
-            view()->share('pageName', end($pageName));
-
-            // View name
-            view()->share('viewName', $view->getName());
-        });
-
         // Language
         if(session()->has('locale'))
             app()->setLocale(session('locale'));

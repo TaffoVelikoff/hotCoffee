@@ -15,8 +15,8 @@ class CreateSefsTable extends Migration
     {
         Schema::create('sefs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('model_id');
-            $table->string('model_type');
+            $table->bigInteger('model_id')->nullable();
+            $table->string('model_type')->nullable();
             $table->string('keyword');
             $table->timestamps();
         });

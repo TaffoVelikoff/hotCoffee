@@ -25,21 +25,16 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 			return Settings::make(storage_path('app/settings.json'));
 		});
 
-		// Register custom validation rules
-		$this->registerCustomValidationRules();
-
-		// Route bindings
-		Route::model('article', config('hotcoffee.articles.model'));
-		Route::model('info', config('hotcoffee.infopages.model'));
-		Route::model('item', \TaffoVelikoff\HotCoffee\MenuItem::class);
-		
-	}
-
-	public function register() {
-		
 		// Default string lenght
 		Schema::defaultStringLength(255);
 
+		// Register custom validation rules
+		$this->registerCustomValidationRules();
+
+		Route::model('item', \TaffoVelikoff\HotCoffee\MenuItem::class);
+	}
+
+	public function register() {
 		// Facades
 		$loader = AliasLoader::getInstance();
 		$loader->alias('HotCoffee', \TaffoVelikoff\HotCoffee\Facades\HotCoffee::class);
@@ -66,7 +61,7 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 	}
 
 	/*
-	 *	Registers views, routes, translations and all other resources
+	 *	Registers views, translations and all other resources
 	 */
 	private function registerResources() {
 

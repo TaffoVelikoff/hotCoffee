@@ -27,23 +27,35 @@ class StoreArticle extends FormRequest
     public function rules()
     {
 
-        $normalRules = array(
+        // For non-translatable (or normal) fields
+        $normal = [
             'images.*'  => 'image|max:2048',
             'tags'      => 'nullable',
-        ); 
+        ]; 
         
-        $languageRules = language_validation_rules(array(
-            'title'     => 'required|max:32|min:3',
+        // For translatable fields
+        $translatable = language_validation_rules([
+            'title'     => 'required|max:64|min:3',
             'content'   => 'min:69',
-        ));
+        ]);
 
+        // Validate SEF keyword
+        $normal['keyword'] = Rule::unique('sefs')->ignore(request()->keyword, 'keyword').'|required|min:3|max:64|without_spaces|alpha_dash';
         if(!request()->edit) {
-            $normalRules['keyword'] = 'required|min:3|max:64|without_spaces|alpha_dash|unique:sefs';
-        } else {
-            $normalRules['keyword'] = Rule::unique('sefs')->ignore(request()->keyword, 'keyword').'|required|min:3|max:64|without_spaces|alpha_dash';
+            $normal['keyword'] = 'required|min:3|max:64|without_spaces|alpha_dash|unique:sefs';
         }
 
-        return array_merge($normalRules, $languageRules);
+        // Additional validation rules specified in the config files.
+        $additional = array_merge(
+            config('hotcoffee.articles.validations.normal'), 
+            language_validation_rules(
+                config('hotcoffee.articles.validations.translatable')
+            )
+        );
+
+        // Merge all
+        return array_merge($normal, $translatable, $additional);
+
     }
 
     /**
@@ -54,7 +66,8 @@ class StoreArticle extends FormRequest
     public function messages()
     {
         
-        $normalMessages = array(
+        // For non-translatable (or normal) fields
+        $normal = [
             'images.*.image'    => __('hotcoffee::admin.err_must_be_image'),
             'images.*.uploaded' => __('hotcoffee::admin.err_image_upload'),
             'sef.required'      => __('hotcoffee::admin.err_sef_req'),
@@ -62,16 +75,25 @@ class StoreArticle extends FormRequest
             'sef.max'           => __('hotcoffee::admin.err_sef_max'),
             'sef.without_spaces'=> __('hotcoffee::admin.err_sef_spaces'),
             'sef.alpha_dash'    => __('hotcoffee::admin.err_sef_alpha_dash')
-        );
+        ];
 
-        $languageMessages = language_validation_messages(array(
+        // For translatable fields
+        $translatable = language_validation_messages([
             'title.required'        => 'hotcoffee::admin.err_title_required',
             'title.max'             => 'hotcoffee::admin.err_title_max',
             'title.min'             => 'hotcoffee::admin.err_title_min',
             'content.min'           => 'hotcoffee::admin.err_content_required',
-        ));
+        ]);
 
-        return array_merge($normalMessages, $languageMessages);
+        // Additional validation messages specified in the config files.
+        $additional = array_merge(
+            config('hotcoffee.articles.messages.normal'), 
+            language_validation_messages(
+                config('hotcoffee.articles.messages.translatable')
+            )
+        );
 
+        // Merge all
+        return array_merge($normal, $translatable, $additional);
     }
 }

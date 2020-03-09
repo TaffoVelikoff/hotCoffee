@@ -37,7 +37,7 @@
                                 @endif
 
                                 @if($attributes['type'] == 'text')
-
+                                    
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-{{ $field }}-{{ $langKey }}">{{ $attributes['title'] }}</label>
