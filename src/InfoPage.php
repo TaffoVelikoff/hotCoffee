@@ -4,7 +4,7 @@ namespace TaffoVelikoff\HotCoffee;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
-use TaffoVelikoff\HotCoffee\Traits\HasSef;
+use TaffoVelikoff\LaravelSef\Traits\HasSef;
 use TaffoVelikoff\HotCoffee\Traits\HasAccessRole;
 use TaffoVelikoff\HotCoffee\Traits\HasAttachment;
 
@@ -38,7 +38,7 @@ class InfoPage extends Model
      *
      * @var array
      */
-    public $sef_method = 'App\Http\Controllers\Front\InfoPageController@index';
+    public static $sef_method = 'App\Http\Controllers\Front\InfoPageController@index';
 
     /**
      * Boot

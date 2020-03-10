@@ -89,7 +89,7 @@ class MenuItem extends Model
                 }
 
             case 'route':
-                return route($this->url);
+                return url($this->url);
 
             default:
                 return '#';

@@ -45,7 +45,7 @@ class HotCoffee
 	public function infoFromComposer() {
 		return \Cache::remember('hotcoffee_info', \Carbon\Carbon::now()->addDays(30), function () {
 			$composerJson = json_decode(File::get(__DIR__.'/../composer.json'));
-			$info = collect($composerJson)->only(['name', 'description', 'homepage', 'version', 'license']);
+			$info = collect($composerJson)->only(['name', 'description', 'homepage', 'license']);
 			
 			foreach(get_object_vars($composerJson->authors[0]) as $key=>$value) {
 				$info->put('author.'.$key, $composerJson->authors[0]->$key);
@@ -148,18 +148,19 @@ class HotCoffee
 				break;
 
 			case 'bootstrap':
-				view()->share('menuItems', $items);
-				return view()->make('hotcoffee::components.menu_bootstrap');
+				return view()->make('hotcoffee::components.menu_bootstrap')->with('menuItems', $items);
+				break;
+
+			case 'material-kit':
+				return view()->make('hotcoffee::components.menu_material')->with('menuItems', $items);
 				break;
 
 			case 'ul':
-				view()->share('menuItems', $items);
-				return view()->make('hotcoffee::components.menu_ul');
+				return view()->make('hotcoffee::components.menu_ul')->with('menuItems', $items);
 				break;
 			
 			default:
-				view()->share('menuItems', $items);
-				return view()->make($type);
+				return view()->make($type)->with('menuItems', $items);
 				break;
 		}
 

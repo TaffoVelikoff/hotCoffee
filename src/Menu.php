@@ -29,6 +29,7 @@ class Menu extends Model
 
         static::deleted(function ($model) {
             $model->removeFromCache();
+            $model->items()->delete();
         });
     }
 

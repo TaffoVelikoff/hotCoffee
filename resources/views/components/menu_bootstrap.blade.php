@@ -17,7 +17,7 @@
 						@if($item->children_count > 0)
 							<div class="dropdown-menu" aria-labelledby="{{ $item->name }}">
 								@foreach($item->children as $child)
-									<a class="dropdown-item" href="{{ $child->url }}" @if($item->new_window == 1) target="_blank" @endif>
+									<a class="dropdown-item" href="{{ $child->url }}" @if($child->new_window == 1) target="_blank" @endif>
 										{!! $child->icon !!} {{ $child->name }}
 									</a>
 								@endforeach

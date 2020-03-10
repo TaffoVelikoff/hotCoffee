@@ -81,6 +81,11 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 		$this->publishes([
 			__DIR__.'/../public' => public_path('vendor/hotcoffee'),
 		], 'hotcoffee_assets');
+
+		// Assets for example code
+		$this->publishes([
+			__DIR__.'/../publishable/assets/front' => public_path('front'),
+		], 'hotcoffee_example_assets');
 	}
 
 	/*

@@ -53,10 +53,10 @@ Route::group(['namespace' => '\TaffoVelikoff\HotCoffee\Http\Controllers'], funct
 				Route::get('/create', 'Admin\InfoPageController@create')->name('hotcoffee.admin.infopages.create');
 				Route::post('/', 'Admin\InfoPageController@store')->name('hotcoffee.admin.infopages.store');
 
-				Route::get('/{info}', 'Admin\InfoPageController@edit')->name('hotcoffee.admin.infopages.edit');
-				Route::post('/{info}', 'Admin\InfoPageController@update')->name('hotcoffee.admin.infopages.update');
+				Route::get('/{id}', 'Admin\InfoPageController@edit')->name('hotcoffee.admin.infopages.edit');
+				Route::post('/{id}', 'Admin\InfoPageController@update')->name('hotcoffee.admin.infopages.update');
 
-				Route::delete('/{info}', 'Admin\InfoPageController@destroy')->name('hotcoffee.admin.infopages.destroy');
+				Route::delete('/{id}', 'Admin\InfoPageController@destroy')->name('hotcoffee.admin.infopages.destroy');
 			});
 
 			// Menus

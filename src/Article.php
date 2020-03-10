@@ -6,8 +6,8 @@ use Illuminate\Support\Str;
 use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
-use TaffoVelikoff\HotCoffee\Traits\HasSef;
 use Bnb\Laravel\Attachments\HasAttachment;
+use TaffoVelikoff\LaravelSef\Traits\HasSef;
 
 class Article extends Model
 {

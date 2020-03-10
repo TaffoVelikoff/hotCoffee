@@ -14,7 +14,7 @@ class AddCustomDescFieldToInfoPagesTable extends Migration
     public function up()
     {
         Schema::table('info_pages', function (Blueprint $table) {
-            $table->string('meta_desc')->nullable()->after('content');
+            $table->text('meta_desc')->nullable()->after('content');
         });
     }
 

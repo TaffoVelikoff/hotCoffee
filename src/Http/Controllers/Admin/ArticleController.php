@@ -86,7 +86,7 @@ class ArticleController extends Controller
 		$article->tag($request->tags);
 
 		// Save custom url (SEF)
-		$article->saveSef($request->keyword);
+		$article->createSef($request->keyword);
 		
 		// Attach pictures
 		if($request->file('images')) {

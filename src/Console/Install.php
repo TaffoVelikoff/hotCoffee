@@ -50,37 +50,42 @@ class Install extends Command {
 
           $this->info("Publishing example code...");
 
-          // Create _backup directory
-          if(!File::exists(base_path('_backup')))
-              File::makeDirectory(base_path('_backup'));
-
-          // Move some files to the _backup folder
-          File::move(base_path('/routes/web.php'), base_path('_backup/web.php'));
-
           // Copy hotCoffee routes
-          File::put(base_path('/routes/web.php'), File::get(__DIR__.'/../../resources/publish/routes/web.php'));
+          File::put(base_path('/routes/web.php'), File::get(__DIR__.'/../../publishable/routes/web.php'));
 
           // Copy example front controllers
           if(!File::exists(base_path('/app/Http/Controllers/Front')))
               File::makeDirectory(base_path('/app/Http/Controllers/Front'));
 
-          File::put(base_path('/app/Http/Controllers/Front/ArticleController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Front/ArticleController.php'));
-          File::put(base_path('/app/Http/Controllers/Front/HomeController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Front/HomeController.php'));
-          File::put(base_path('/app/Http/Controllers/Front/InfoPageController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Front/InfoPageController.php'));
+          File::put(base_path('/app/Http/Controllers/Front/ArticleController.php'), File::get(__DIR__.'/../../publishable/Controllers/Front/ArticleController.php'));
+          File::put(base_path('/app/Http/Controllers/Front/HomeController.php'), File::get(__DIR__.'/../../publishable/Controllers/Front/HomeController.php'));
+          File::put(base_path('/app/Http/Controllers/Front/InfoPageController.php'), File::get(__DIR__.'/../../publishable/Controllers/Front/InfoPageController.php'));
 
           // Copy front views
           if(!File::exists(base_path('/resources/views/front')))
             File::makeDirectory(base_path('/resources/views/front'));
 
-          File::put(base_path('/resources/views/front/_layout.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/_layout.blade.php'));
-          File::put(base_path('/resources/views/front/article.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/article.blade.php'));
-          File::put(base_path('/resources/views/front/home.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/home.blade.php'));
-          File::put(base_path('/resources/views/front/infopage.blade.php'), File::get(__DIR__.'/../../resources/publish/views/front/infopage.blade.php'));
+          File::put(base_path('/resources/views/front/_layout.blade.php'), File::get(__DIR__.'/../../publishable/views/front/_layout.blade.php'));
+          File::put(base_path('/resources/views/front/internal.blade.php'), File::get(__DIR__.'/../../publishable/views/front/internal.blade.php'));
+          File::put(base_path('/resources/views/front/article.blade.php'), File::get(__DIR__.'/../../publishable/views/front/article.blade.php'));
+          File::put(base_path('/resources/views/front/home.blade.php'), File::get(__DIR__.'/../../publishable/views/front/home.blade.php'));
+          File::put(base_path('/resources/views/front/infopage.blade.php'), File::get(__DIR__.'/../../publishable/views/front/infopage.blade.php'));
+
+          // Publish example assets
+          $this->info("Publishing assets for the example code...");
+          Artisan::call('vendor:publish --tag=hotcoffee_example_assets');
+
+          // Seed the database
+          $this->info("Seeding the database with some example records...");
+          Artisan::call('db:seed --class=TaffoVelikoff\HotCoffee\Database\Seeds\ExampleSeeder');
 
         } else {
 
           $this->info("Appending the routes to routes/web.php...");
-          File::append(base_path("routes/web.php"), "\n\nHotCoffee::routes();");
+          File::append(base_path("routes/web.php"), "
+            \n\nHotCoffee::routes();
+            \n\nRoute::get('{keyword}', '\TaffoVelikoff\LaravelSef\Http\Controllers\SefController@viaProperty')->name('sef');
+          ");
 
         }
 
@@ -89,21 +94,21 @@ class Install extends Command {
         if(!File::exists(base_path('/app/Http/Controllers/Admin')))
             File::makeDirectory(base_path('/app/Http/Controllers/Admin'));
 
-        File::put(base_path('/app/Http/Controllers/Admin/CustomExportController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Admin/CustomExportController.php'));
-        File::put(base_path('/app/Http/Controllers/Admin/DashboardController.php'), File::get(__DIR__.'/../../resources/publish/Controllers/Admin/DashboardController.php'));
+        File::put(base_path('/app/Http/Controllers/Admin/CustomExportController.php'), File::get(__DIR__.'/../../publishable/Controllers/Admin/CustomExportController.php'));
+        File::put(base_path('/app/Http/Controllers/Admin/DashboardController.php'), File::get(__DIR__.'/../../publishable/Controllers/Admin/DashboardController.php'));
 
         // Copy admin views
         $this->info("Publishing some admin views to the /app directory...");
         if(!File::exists(base_path('/resources/views/admin')))
           File::makeDirectory(base_path('/resources/views/admin'));
 
-        File::put(base_path('/resources/views/admin/dashboard.blade.php'), File::get(__DIR__.'/../../resources/publish/views/admin/dashboard.blade.php'));
+        File::put(base_path('/resources/views/admin/dashboard.blade.php'), File::get(__DIR__.'/../../publishable/views/admin/dashboard.blade.php'));
 
         // Copy the settings file
-        File::put(base_path('/storage/app/settings.json'), File::get(__DIR__.'/../../resources/publish/settings.json'));
+        File::put(base_path('/storage/app/settings.json'), File::get(__DIR__.'/../../publishable/settings.json'));
 
         // Migrate
-        $this->info("Migrating database...");
+        $this->info("Migrating the database...");
         Artisan::call('migrate');
 
         // Create admin role

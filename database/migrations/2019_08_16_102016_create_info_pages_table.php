@@ -15,7 +15,7 @@ class CreateInfoPagesTable extends Migration
     {
         Schema::create('info_pages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
+            $table->text('title');
             $table->mediumText('content');
             $table->string('key')->default('default');
             $table->timestamps();

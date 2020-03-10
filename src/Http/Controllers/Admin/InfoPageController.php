@@ -77,7 +77,7 @@ class InfoPageController extends Controller
 		);
 
 		// Save custom url (SEF)
-		$info->saveSef($request->keyword);
+		$info->createSef($request->keyword);
 
 		// Attach pictures
 		if($request->file('images')) {
@@ -141,7 +141,9 @@ class InfoPageController extends Controller
 	 * Delete
 	 *
 	 */
-	public function destroy($info) {
+	public function destroy($id) {
+
+		$info = InfoPage::findOrFail($id);
 
 		$info->delete();
 

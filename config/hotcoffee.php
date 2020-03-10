@@ -288,7 +288,7 @@ return [
     | Below you can setup the tinymce integration (WYSIWYG editor for pages and articles).
     |
     */
-    'tinymce_plugins' => 'textcolor preview fullpage importcss fullscreen image link media codesample table charmap hr insertdatetime advlist lists imagetools textpattern noneditable charmap',
+    'tinymce_plugins' => 'textcolor preview importcss fullscreen image link media codesample table charmap hr insertdatetime advlist lists imagetools textpattern noneditable charmap',
     'tinymce_context' => 'link image imagetools table spellchecker',
     'tinymce_toolbar' => 'undo redo | alignleft aligncenter alignright alignjustify | bold italic underline strikethrough | outdent indent | fontselect fontsizeselect formatselect |  numlist bullist | forecolor backcolor | charmap | image media link codesample insertdatetime fullscreen',
     'tinymce_file_manager'  => false,

@@ -9,7 +9,7 @@
 				@if($item->children_count > 0)
 					<ul>
 						@foreach($item->children as $child)
-							<a href="{{ $child->url }}" @if($item->new_window == 1) target="_blank" @endif>
+							<a href="{{ $child->url }}" @if($child->new_window == 1) target="_blank" @endif>
 								{!! $item->icon !!} {{ $child->name }}
 							</a>
 						@endforeach
