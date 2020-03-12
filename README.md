@@ -19,7 +19,24 @@
 
 ## What is hotCoffee?
 
--- will add description soon --
+**HotCoffee** is a free Laravel admin interface package. It  includes a few "modules" for:
+
+-   Articles/Blog Posts
+-   Info Pages
+-   Admin Search
+-   XLS/CSV Export
+-   Menu Builder
+-   File Manager
+-   User Roles
+-   Users
+-   Thumbnail Viewer
+-   Global Website Settings
+-   Custom Search Engine Friendly URLs (SEF URLs) for models
+-   and more!
+
+**HotCoffee** aims to help you with the generic tasks of creating an admin panel and lets you focus on building the app. The admin panel is easily extendable and you can edit most of it's appearance from a single config file.
+
+This package is **not a CMS** (or blogging system), but it could be used in building one.
 
 #### User Profile
 ![alt text](http://dev.taffovelikoff.com/images/hotcoffee/profile.png "hotCoffee User Profile")
@@ -94,4 +111,7 @@ Login with your admin credential.
 👏 That's it!
 
 ## Documentation
--- DOCUMENTATION IS NOT READY YET --
+You can read the full documentation on https://taffo.gitbook.io/hotcoffee/
+
+## License
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
