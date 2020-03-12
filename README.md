@@ -9,13 +9,13 @@
 [Computer psd created by rawpixel.com - www.freepik.com](https://www.freepik.com/free-photos-vectors/computer)
 
 ## Contents
-[🤔  What is hotCoffee?](https://github.com/TaffoVelikoff/hotCoffee#what-is-hotcoffee)
+[🤔  What is hotCoffee?](#what-is-hotcoffee)
 
-[💻 Requirements](https://github.com/TaffoVelikoff/hotCoffee#requirements)
+[💻 Requirements](#requirements)
 
-[⚙️ Installation](https://github.com/TaffoVelikoff/hotCoffee#installation)
+[⚙️ Installation](#installation)
 
-[📚 Documentation](https://github.com/TaffoVelikoff/hotCoffee#documentation)
+[📚 Documentation](#documentation)
 
 ## What is hotCoffee?
 
@@ -32,7 +32,7 @@
 
 ## Requirements
 
-Before installing hotCoffee make sure you have installed Laravel 6 or above and PHP 7.2 or newer.
+Before installing hotCoffee make sure you have installed Laravel 5.8 or above and PHP 7.2 or newer.
 
 ## Installation
 

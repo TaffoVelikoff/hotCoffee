@@ -165,32 +165,6 @@ class HotCoffee
 		}
 
 	}
-
-	/**
-	 * Prepare the data in the translatable fields to be stored and merge with the rest fn the request.
-	 * @param object $request All the fields that have to be stored/updated in the model's table.
-	 * @param array $translatables All translatable fields should be placed in this array.
-	 * @param array $special Anything that needs to be removed and not saved/updated.
-	 *
-	 * @return array Returns an array of fields and values to be stored in the database by an update() or create() method.
-	 */
-	public function prepareRequest($request, array $translatables, array $special = null) {
-
-		$trans = [];
-		if(!$special)
-			$special = [];
-
-		$mainFields = $request->except(array_keys($special));
-
-		foreach(config('hotcoffee.languages') as $langKey => $langName) {
-			foreach($translatables as $trnslatable) {
-				$trans[$trnslatable][$langKey] = $request->$langKey[$trnslatable];
-			}
-			unset($mainFields[$langKey]);
-		}
-
-		return array_merge($mainFields, $trans, $special);
-	}
 	
 	/**
 	 * Get the admin panel logo
@@ -225,7 +199,7 @@ class HotCoffee
 
 		foreach(config('hotcoffee.languages') as $langKey => $langName) {
 			foreach($ruleLines as $field=>$fieldRule) {
-				$rules[$langKey.'.'.$field] = $fieldRule;
+				$rules[$field.'.'.$langKey] = $fieldRule;
 			}
 		}
 
@@ -244,10 +218,10 @@ class HotCoffee
 
 		foreach(config('hotcoffee.languages') as $langKey => $langName) {
 			foreach($messageLines as $fieldRule => $trans) {
-				$messages[$langKey.'.'.$fieldRule]	= trans($trans, ['lang' => $langName]);
+				$splitRule = explode('.', $fieldRule);
+				$messages[$splitRule[0].'.'.$langKey.'.'.$splitRule[1]]	= trans($trans, ['lang' => $langName]);
 			}
 		}
-
 		return $messages;
 	}
 

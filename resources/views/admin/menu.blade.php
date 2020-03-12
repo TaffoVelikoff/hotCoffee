@@ -123,7 +123,7 @@
       	</div>
 	</div>
 
-	@if(isset($edit)) @include('hotcoffee::admin.modals.item_copy') @endif
+	@if(isset($edit)) @include('hotcoffee::admin.modals.item') @endif
 	@include('hotcoffee::admin.modals.delete')
 @endsection
 

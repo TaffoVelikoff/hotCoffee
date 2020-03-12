@@ -17,9 +17,7 @@ class MenuItemController extends Controller
 	public function store(StoreMenuItem $request) {
 
 		// Store menu item
-		$item = MenuItem::create(
-			prepare_request($request, ['name'])
-		);
+		$item = MenuItem::create($request->all());
 
 		// Convert type
 		$item->setType(request());
@@ -59,9 +57,7 @@ class MenuItemController extends Controller
 	public function update($item, StoreMenuItem $request) {
 	  
 		// Update item
-		$item->update(
-			prepare_request($request, ['name'])
-		);
+		$item->update($request->all());
 
 		// Disable checkbox
 		if(!request()->has('new_window')) {

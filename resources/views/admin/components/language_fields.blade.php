@@ -37,12 +37,12 @@
                                 @endif
 
                                 @if($attributes['type'] == 'text')
-                                    
+
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-{{ $field }}-{{ $langKey }}">{{ $attributes['title'] }}</label>
-                                            <div class="@if(isset($errors) && $errors->has($langKey.'.'.$field)) has-danger @endif">
-                                                <input type="text" name="{{ $langKey }}[{{ $field }}]" id="input-{{ $field }}-{{ $langKey }}" class="form-control form-control-alternative @if(isset($errors) && $errors->has($langKey.'.'.$field)) is-invalid-alt @endif" @if(session('post')) value="{{ session('post.'.$langKey.'.'.$field) }}" @elseif(isset($edit)) value="{{ $edit->getTranslation($field, $langKey) }}" @endif />
+                                            <div class="@if(isset($errors) && $errors->has($field.'.'.$langKey)) has-danger @endif">
+                                                <input type="text" name="{{ $field }}[{{ $langKey }}]" id="input-{{ $field }}-{{ $langKey }}" class="form-control form-control-alternative @if(isset($errors) && $errors->has($field.'.'.$langKey)) is-invalid-alt @endif" @if(session('post')) value="{{ session('post.'.$field.'.'.$langKey) }}" @elseif(isset($edit)) value="{{ $edit->getTranslation($field, $langKey) }}" @endif />
                                             </div>
                                         </div>
                                     </div>
@@ -54,8 +54,8 @@
                                     <div class="col-lg-12">
                                         <div class="form-group" id="div-{{ $field }}-{{ $langKey }}">
                                             <label class="form-control-label" for="input-{{ $field }}-{{ $langKey }}">{{ $attributes['title'] }}</label>
-                                            <div class="@if(isset($errors) && $errors->has($langKey.'.'.$field)) has-danger is-invalid-alt @endif">
-                                                <textarea id="input-{{ $field }}-{{ $langKey }}" rows="@if(isset($attributes['rows'])) @attributes['rows'] @else 12 @endif" name="{{ $langKey }}[{{ $field }}]" class="form-control form-control-alternative @if(isset($attributes['class'])) {{ $attributes['class'] }} @endif" placeholder="">@if(session('post')){{ session('post.'.$langKey.'.'.$field) }}@elseif(isset($edit)){{ $edit->getTranslation($field, $langKey) }}@endif</textarea>
+                                            <div class="@if(isset($errors) && $errors->has($field.'.'.$langKey)) has-danger is-invalid-alt @endif">
+                                                <textarea id="input-{{ $field }}-{{ $langKey }}" rows="@if(isset($attributes['rows'])) @attributes['rows'] @else 12 @endif" name="{{ $field }}[{{ $langKey }}]" class="form-control form-control-alternative @if(isset($attributes['class'])) {{ $attributes['class'] }} @endif" placeholder="">@if(session('post')){{ session('post.'.$field.'.'.$langKey) }}@elseif(isset($edit)){{ $edit->getTranslation($field, $langKey) }}@endif</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -64,7 +64,6 @@
                                 @endif
 
                                 @if(isset($attributes['info']))
-
                                     <div class="col-lg-12 info-div @if(isset($attributes['info']['type'])) text-{{ $attributes['info']['type'] }} @endif">
                                         {{ $attributes['info']['content'] }}
                                     </div>

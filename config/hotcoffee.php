@@ -25,7 +25,7 @@ return [
     | Admin panel logo
     |--------------------------------------------------------------------------
     |
-    | Want to use your own image as a logo in the admin panel? Just define a path 
+    | Want to use your own logo in the admin panel? Just define a path 
     | to the image bellow. If null the default logo image will be used.
     |
     */
@@ -291,7 +291,7 @@ return [
     'tinymce_plugins' => 'textcolor preview importcss fullscreen image link media codesample table charmap hr insertdatetime advlist lists imagetools textpattern noneditable charmap',
     'tinymce_context' => 'link image imagetools table spellchecker',
     'tinymce_toolbar' => 'undo redo | alignleft aligncenter alignright alignjustify | bold italic underline strikethrough | outdent indent | fontselect fontsizeselect formatselect |  numlist bullist | forecolor backcolor | charmap | image media link codesample insertdatetime fullscreen',
-    'tinymce_file_manager'  => false,
+    'tinymce_file_manager'  => true,
 
     /*
     |--------------------------------------------------------------------------

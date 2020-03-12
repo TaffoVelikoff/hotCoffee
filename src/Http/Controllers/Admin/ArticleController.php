@@ -76,11 +76,8 @@ class ArticleController extends Controller
 	 *
 	 */
 	public function store(StoreArticle $request) {
-
 		// Store article
-		$article = $this->model_name::create(
-			prepare_request($request, ['title', 'content'])
-		);
+		$article = $this->model_name::create($request->all());
 
 		// Save tags
 		$article->tag($request->tags);
@@ -116,11 +113,7 @@ class ArticleController extends Controller
 		$article = $this->model_name::findOrFail($id);
 
 		// Update article page
-		$article->update(
-			prepare_request(
-				$request, ['title', 'content', 'meta_desc']
-			)
-		);
+		$article->update($request->all());
 
 		// Save custom url (SEF)
 		$article->updateSef($request->keyword);

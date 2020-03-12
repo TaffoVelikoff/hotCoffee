@@ -72,9 +72,7 @@ class InfoPageController extends Controller
 	public function store(StoreInfoPage $request) {
 
 		// Store info page
-		$info = $this->model_name::create(
-			prepare_request($request, ['title', 'content'])
-		);
+		$info = $this->model_name::create($request->all());
 
 		// Save custom url (SEF)
 		$info->createSef($request->keyword);
@@ -107,9 +105,7 @@ class InfoPageController extends Controller
 		$info = InfoPage::findOrFail($id);
 
 		// Update info page
-		$info->update(
-			prepare_request($request, ['title', 'content', 'meta_desc'])
-		);
+		$info->update($request->all());
 
 		// Attach access roles
 		$info->access_roles()->attach($request->roles);

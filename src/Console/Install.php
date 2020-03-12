@@ -6,35 +6,36 @@ use File;
 use Artisan;
 use Illuminate\Console\Command;
 use TaffoVelikoff\HotCoffee\Role;
+use TaffoVelikoff\HotCoffee\Database\Seeds\ExampleSeeder;
 
 class Install extends Command {
 
-	/**
+  /**
      * The name and signature of the console command.
      *
      * @var string
      */
-	protected $signature = 'hotcoffee:install';
+  protected $signature = 'hotcoffee:install';
 
-	/**
+  /**
      * The console command description.
      *
      * @var string
      */
-	protected $description = 'This will install the hotCoffee admin panel.';
+  protected $description = 'This will install the hotCoffee admin panel.';
 
-	/**
+  /**
      * Create a new command instance.
      *
      * @return void
      */
-   	public function __construct() {
-		  parent::__construct();
-   	}
+    public function __construct() {
+      parent::__construct();
+    }
 
-   	/*
-   	 * Process the command
-   	 */
+    /*
+     * Process the command
+     */
     public function handle() {
 
       if(!File::exists(base_path('config/hotcoffee.php'))) {
@@ -75,10 +76,6 @@ class Install extends Command {
           $this->info("Publishing assets for the example code...");
           Artisan::call('vendor:publish --tag=hotcoffee_example_assets');
 
-          // Seed the database
-          $this->info("Seeding the database with some example records...");
-          Artisan::call('db:seed --class=TaffoVelikoff\HotCoffee\Database\Seeds\ExampleSeeder');
-
         } else {
 
           $this->info("Appending the routes to routes/web.php...");
@@ -110,6 +107,13 @@ class Install extends Command {
         // Migrate
         $this->info("Migrating the database...");
         Artisan::call('migrate');
+
+        // Seed the database with example records
+        if($example == true) {
+          $this->info("Seeding the database with some example records...");
+          $seeder = new ExampleSeeder;
+          $seeder->run();
+        }
 
         // Create admin role
         $this->info("Creating the admin user role...");
@@ -163,6 +167,6 @@ class Install extends Command {
 
       }
 
-	}
+  }
 
 }

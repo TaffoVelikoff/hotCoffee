@@ -13,9 +13,6 @@
 
 Route::group(['namespace' => '\TaffoVelikoff\HotCoffee\Http\Controllers'], function () {
 
-	//===== RESOURRCES =====//
-	Route::get('/coffee_assets/{asset}', 'ResourceController@resource')->where('asset', '.*')->name('hotcoffee.assets');
-
 	//===== THUMBNAILER =====//
 	Route::get('/img/{path}', 'ThumbnailController@show')->where('path', '.*')->name('hotcoffee.thumbnail');
 

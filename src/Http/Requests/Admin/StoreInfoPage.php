@@ -35,7 +35,7 @@ class StoreInfoPage extends FormRequest
         // For translatable fields
         $trnslatable = language_validation_rules([
             'title'     => 'required|max:32|min:3',
-            'content'   => 'min:69',
+            'content'   => 'required',
         ]);
 
         // Validate SEF keyword
@@ -80,7 +80,7 @@ class StoreInfoPage extends FormRequest
             'title.required'        => 'hotcoffee::admin.err_title_required',
             'title.max'             => 'hotcoffee::admin.err_title_max',
             'title.min'             => 'hotcoffee::admin.err_title_min',
-            'content.min'           => 'hotcoffee::admin.err_content_required',
+            'content.req'           => 'hotcoffee::admin.err_content_required',
         ]);
 
         // Additional validation messages specified in the config files.

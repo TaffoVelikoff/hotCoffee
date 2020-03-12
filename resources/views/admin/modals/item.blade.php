@@ -9,10 +9,43 @@
 
               <input type="hidden" id="input-menu-id" name="menu_id" value="{{ $edit->id }}">
 
-              <div class="form-group">
-                <label class="form-control-label" for="input-name">{{ __('hotcoffee::admin.name') }} <span class="text-danger">*</span></label>
-                <input type="text" id="input-name" class="form-control form-control-alternative" name="name" required="" placeholder="{{ __('hotcoffee::admin.menu_item_name_holder') }}">
-              </div>
+              @if(count(config('hotcoffee.languages')) > 1)
+                <div class="nav-wrapper">
+                  <label class="form-control-label text-capitalize" for="input-name">{{ __('hotcoffee::admin.title') }} <span class="text-danger">*</span></label>
+                  <ul class="nav nav-pills nav-pills-circle" id="tabs-icons-text" role="tablist" @if(count(config('hotcoffee.languages')) > 4) style="width: 240px; margin: 0px auto;" @endif>
+                    
+                    @foreach(config('hotcoffee.languages') as $acr=>$lang)
+                      <li class="nav-item">
+                        <a class="nav-link rounded-circle mt-2 @if(config('app.locale') == $acr) active @endif" id="{{ $acr }}-tab" data-toggle="tab" href="#{{ $acr }}" role="tab" aria-controls="{{ $acr }}" aria-selected="true" style="width: 32px; height: 32px;">
+                          <img src="{{ asset('vendor/hotcoffee/img/flags/'.$acr.'.svg') }}" alt="{{ $lang }}" class="flag-img" style="margin-top: -31px;"/>
+                        </a>
+                      </li>
+                    @endforeach
+
+                  </ul>
+                </div>
+
+                <div class="card shadow mb-4 mt-2">
+                  <div class="card-body">
+                      <div class="tab-content mt-2" id="myTabContent">
+                        @foreach(config('hotcoffee.languages') as $acr=>$lang)
+                          <div class="tab-pane fade @if(config('app.locale') == $acr) active show @endif" id="{{ $acr }}" role="tabpanel" aria-labelledby="{{ $acr }}-tab">
+                            <input type="text" id="input-name-{{ $acr }}" class="form-control form-control-alternative input-name" name="name[{{ $acr }}]" required="" placeholder="{{ __('hotcoffee::admin.menu_item_name_holder') }} ({{ $acr }})" data-lang="{{ $acr }}">
+                          </div>
+                        @endforeach
+                      </div>
+                  </div>
+                </div>
+              @else
+                <div class="form-group">
+                  <label class="form-control-label text-capitalize" for="input-name">{{ __('hotcoffee::admin.title') }} <span class="text-danger">*</span></label>
+                  @foreach(config('hotcoffee.languages') as $acr=>$lang)
+                    <input type="text" id="input-name-{{ $acr }}" class="form-control form-control-alternative mt-2 input-name" name="name[{{ $acr }}]" required="" placeholder="{{ __('hotcoffee::admin.menu_item_name_holder') }}" data-lang="{{ $acr }}">
+                  @endforeach
+                </div>
+              @endif
+
+              
 
               <div class="form-group">
                 <label class="form-control-label" for="input-rul">{{ __('hotcoffee::admin.url') }} <a href="#" id="question-url"><i class="fas fa-question-circle"></i></a></label>
