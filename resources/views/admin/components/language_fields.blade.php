@@ -1,7 +1,4 @@
 @if(count(config('hotcoffee.languages')) > 1)
-    {{--<p class="text-small">
-        <small>Icons made by Freepik from <a href="https://www.flaticon.com/packs/countrys-flags" target="_blank">www.flaticon.com</a></small>
-    </p>--}}
     <div class="nav-wrapper">
         <ul class="nav nav-pills nav-pills-circle" role="tablist" id="tabs_2">
 
@@ -59,7 +56,6 @@
                                             </div>
                                         </div>
                                     </div>
-
 
                                 @endif
 

@@ -27,24 +27,7 @@ return [
             ],
 
         ],
-
-        'Section name / header text' => [ // Text for the header
-            [
-                'name'          => 'my_setting', // the value of this setting will be called with settings('my_setting')
-                'label'         => 'My Setting', // the lable for the field
-                'field_type'    => 'radio', // the type of the field. Here 'text' will generate <input type="text" /> field in the front-end
-                'icon'          => 'ni ni-email-83', // icon code for the field
-                'info_text'     => 'This is my new setting.', // this text will appear bellow the field. Use it to explain where/how the setting is used
-                'required'      => true, // true will add required attribute to the generated field
-                'content'       => [
-                    [
-                        'value'    => 'asd',
-                        'label'     => 'label'
-                    ]
-                ] // this can be used when adding a "select" type field. Content can be 
-            ]
-        ],
-
+        
         // SEO options section
         'hotcoffee::admin.seo_options'  => [
 

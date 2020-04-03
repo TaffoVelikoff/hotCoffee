@@ -38,6 +38,8 @@
 
 This package is **not a CMS** (or blogging system), but it could be used in building one.
 
+## Screenshots
+
 #### User Profile
 ![alt text](http://dev.taffovelikoff.com/images/hotcoffee/profile.png "hotCoffee User Profile")
 

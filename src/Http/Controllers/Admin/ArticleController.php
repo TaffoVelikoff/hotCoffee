@@ -75,7 +75,8 @@ class ArticleController extends Controller
 	 * Store
 	 *
 	 */
-	public function store(StoreArticle $request) {
+	public function store(Request $request) {
+
 		// Store article
 		$article = $this->model_name::create($request->all());
 

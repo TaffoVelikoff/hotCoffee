@@ -29,7 +29,8 @@
     },
     "autoload": {
         "psr-4": {
-            "TaffoVelikoff\\HotCoffee\\": "src/"
+            "TaffoVelikoff\\HotCoffee\\": "src/",
+            "TaffoVelikoff\\HotCoffee\\Database\\Seeds\\": "database/seeds/"
         },
         "files": [
             "src/Http/Helpers/helpers.php"
@@ -49,8 +50,6 @@
         }
     },
     "require-dev": {
-        "orchestra/testbench": "^4.0",
-        "orchestra/testbench-browser-kit": "^4.0",
-        "phpunit/phpunit": "^8"
+        "laravel/framework": "^5.8"
     }
 }

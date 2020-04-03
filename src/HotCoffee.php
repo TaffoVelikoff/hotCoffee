@@ -104,6 +104,7 @@ class HotCoffee
 	/**
 	 * Get a menu and it's elements by keyword
 	 * @param string $keyword Keyword of the menu.
+	 * @param string $type Type of menu or blade view to render.
 	 *
 	 * @return mixed[] Returns the menu, menu items or renders a template.
 	 */
@@ -189,7 +190,7 @@ class HotCoffee
 	}
 
 	/**
-	 * Dynamically generate validation rules for a translatable field for every languages defined in hotcoffee.php config file.
+	 * Dynamically generate validation rules for a translatable field for all languages defined in hotcoffee.php config file.
 	 * @param array Array of Laravel validations (example: ['title' => 'required|unique:posts|max:255', 'content' => 'required|min:32']).
 	 *
 	 * @return array Returns an array of validation rules.
@@ -226,10 +227,10 @@ class HotCoffee
 	}
 
 	/**
-	 * This will dynamically generate a thumbnail for an image from the public folder.
+	 * Dynamically generates a thumbnail for an image, stores it in the cache and renders it.
 	 * @param string $filePath Path to an image file.
 	 * @param mixed $dimensions String or array of dimensions. For example [300, 400] will create a thumbnail with width of 300px and height of 400px and '300' will create a square image of 300px.
-	 * @param bool $fit
+	 * @param string $fit Sets how the image is fitted to its target dimensions.
 	 */
 	public function thumbnail($filePath, $dimentions, $fit = null, $source = null) {
 		if(!isset($dimentions))
@@ -274,7 +275,7 @@ class HotCoffee
 	}
 
 	/**
-	 * Automatically generates fields for the translatable atributes.
+	 * Automatically generates fields for the translatable attributes.
 	 * @param array $fields HTML fields.
 	 * @param mixed $edit Model to be updated.
 	 */
@@ -286,7 +287,7 @@ class HotCoffee
 	}
 
 	/**
-	 * Automatically generates field for the SEF keyword (for search engine frieldy urls)
+	 * Generates field for the SEF keyword (for search engine friendly URLs).
 	 * @param mixed $edit Model to be updated.
 	 */
 	public function sefField($edit = null) {
@@ -294,7 +295,7 @@ class HotCoffee
 	}
 
 	/**
-	 * Automatically generates field for the image attachments.
+	 * Generates an upload field for the image attachments.
 	 * @param mixed $edit Model to be updated.
 	 */
 	public function imageAttachmentsField($edit = null) {
