@@ -57,6 +57,7 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 			Console\MakeAdmin::class,
 			Console\DeleteUser::class,
 			Console\Install::class,
+			Console\Module::class,
 		]);
 	}
 

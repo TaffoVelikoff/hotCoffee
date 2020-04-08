@@ -33,7 +33,7 @@ class MenuItem extends Model
      * Get all children items
      */
     public function children() {
-        return $this->hasMany('TaffoVelikoff\HotCoffee\MenuItem', 'parent');
+        return $this->hasMany('TaffoVelikoff\HotCoffee\MenuItem', 'parent')->orderBy('ord', 'asc');
     }
 
     /**
