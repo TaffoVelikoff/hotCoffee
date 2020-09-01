@@ -22,7 +22,7 @@ class Install extends Command {
    *
    * @var string
    */
-  protected $description = 'This will install the hotCoffee admin panel.';
+  protected $description = 'This will do the initial setup for the hotCoffee admin panel.';
 
   /**
    * Create a new command instance.
@@ -38,7 +38,7 @@ class Install extends Command {
    */
   public function handle() {
 
-    if($this->confirm('This will do the intial setup for hotCoffee. Are you sure you want to continue?')) {
+    if($this->confirm('This will do the initial setup for hotCoffee. Are you sure you want to continue?')) {
 
       // Ask for example controllers and other logic
       ($this->confirm(
