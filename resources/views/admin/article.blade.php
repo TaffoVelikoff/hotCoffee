@@ -24,7 +24,6 @@
                   'content' => ['type' => 'textarea', 'title' => 'Content', 'class' => 'tinymce'],
                   'meta_desc' => ['type' => 'textarea', 'title' => __('hotcoffee::admin.meta_desc'), 'info' => ['content' => __('hotcoffee::admin.meta_desc_nfo')], 'rows' => '4']
                 ], $edit ?? null) !!}
-               
                 <!-- END TRANSLATABLE FIELDS -->
 
                 <hr class="my-4"/>

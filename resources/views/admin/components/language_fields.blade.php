@@ -4,7 +4,7 @@
 
             @foreach(config('hotcoffee.languages') as $langKey=>$langName)
                 <li class="nav-item">
-                    <a class="nav-link rounded-circle @if(config('app.locale') == $langKey) active @endif" id="{{ $langKey }}" data-toggle="tab" href="#tab-{{ $langKey }}" role="tab" aria-controls="{{ $langKey }}" aria-selected="true">
+                    <a class="nav-link rounded-circle @if(config('app.locale') == $langKey) active @endif" id="{{ $langKey }}-{{ $rid }}" data-toggle="tab" href="#tab-{{ $langKey }}-{{ $rid }}" role="tab" aria-controls="{{ $langKey }}-{{ $rid }}" aria-selected="true">
                         <img src="{{ asset('vendor/hotcoffee/img/flags/'.$langKey.'.svg') }}" alt="{{ $langName }}" class="flag-img" />
                     </a>
                 </li>
@@ -19,7 +19,7 @@
         <div class="tab-content" id="lang-tabs">
 
             @foreach(config('hotcoffee.languages') as $langKey=>$langName)
-                <div class="tab-pane fade @if(config('app.locale') == $langKey) active show @endif" id="tab-{{ $langKey }}" role="tabpanel" aria-labelledby="tab-{{ $langKey }}">
+                <div class="tab-pane fade @if(config('app.locale') == $langKey) active show @endif" id="tab-{{ $langKey }}-{{ $rid }}" role="tabpanel" aria-labelledby="tab-{{ $langKey }}-{{ $rid }}">
                     <div class="pl-lg-4">
                         <div class="row">
 
@@ -37,9 +37,9 @@
 
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="input-{{ $field }}-{{ $langKey }}">{{ $attributes['title'] }}</label>
+                                            <label class="form-control-label" for="input-{{ $field }}-{{ $langKey }}">{{ $attributes['title'] }}@if(isset($attributes['required']) && $attributes['required'] === true)<span class="text-danger">*</span>@endif</label>
                                             <div class="@if(isset($errors) && $errors->has($field.'.'.$langKey)) has-danger @endif">
-                                                <input type="text" name="{{ $field }}[{{ $langKey }}]" id="input-{{ $field }}-{{ $langKey }}" class="form-control form-control-alternative @if(isset($errors) && $errors->has($field.'.'.$langKey)) is-invalid-alt @endif" @if(session('post')) value="{{ session('post.'.$field.'.'.$langKey) }}" @elseif(isset($edit)) value="{{ $edit->getTranslation($field, $langKey) }}" @endif />
+                                                <input type="text" name="{{ $field }}[{{ $langKey }}]" id="input-{{ $field }}-{{ $langKey }}" class="form-control form-control-alternative @if(isset($errors) && $errors->has($field.'.'.$langKey)) is-invalid-alt @endif" @if(session('post')) value="{{ session('post.'.$field.'.'.$langKey) }}" @elseif(isset($edit)) value="{{ $edit->getTranslation($field, $langKey) }}" @endif @if(isset($attributes['required']) && $attributes['required'] === true) required="" @endif />
                                             </div>
                                         </div>
                                     </div>
@@ -50,9 +50,9 @@
 
                                     <div class="col-lg-12">
                                         <div class="form-group" id="div-{{ $field }}-{{ $langKey }}">
-                                            <label class="form-control-label" for="input-{{ $field }}-{{ $langKey }}">{{ $attributes['title'] }}</label>
+                                            <label class="form-control-label" for="input-{{ $field }}-{{ $langKey }}">{{ $attributes['title'] }}@if(isset($attributes['required']) && $attributes['required'] === true)<span class="text-danger">*</span>@endif</label>
                                             <div class="@if(isset($errors) && $errors->has($field.'.'.$langKey)) has-danger is-invalid-alt @endif">
-                                                <textarea id="input-{{ $field }}-{{ $langKey }}" rows="@if(isset($attributes['rows'])) @attributes['rows'] @else 12 @endif" name="{{ $field }}[{{ $langKey }}]" class="form-control form-control-alternative @if(isset($attributes['class'])) {{ $attributes['class'] }} @endif" placeholder="">@if(session('post')){{ session('post.'.$field.'.'.$langKey) }}@elseif(isset($edit)){{ $edit->getTranslation($field, $langKey) }}@endif</textarea>
+                                                <textarea id="input-{{ $field }}-{{ $langKey }}" rows="@if(isset($attributes['rows'])) @attributes['rows'] @else 12 @endif" name="{{ $field }}[{{ $langKey }}]" class="form-control form-control-alternative @if(isset($attributes['class'])) {{ $attributes['class'] }} @endif" placeholder="" @if(isset($attributes['required']) && $attributes['required'] === true) required="" @endif>@if(session('post')){{ session('post.'.$field.'.'.$langKey) }}@elseif(isset($edit)){{ $edit->getTranslation($field, $langKey) }}@endif</textarea>
                                             </div>
                                         </div>
                                     </div>

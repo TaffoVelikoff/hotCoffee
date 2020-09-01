@@ -2,7 +2,6 @@
     "name": "taffovelikoff/hotcoffee",
     "description": "A simple laravel admin panel to kick start your new web app.",
     "homepage": "https://github.com/TaffoVelikoff/hotcoffee",
-    "version": "1.0.0",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -24,7 +23,7 @@
 		"spatie/valuestore": "^1.2",
 		"rtconner/laravel-tagging": "~3.2",
 		"laravel/helpers": "^1.0",
-		"unisharp/laravel-filemanager": "v2.0.0",
+		"unisharp/laravel-filemanager": "^2.1",
         "taffovelikoff/laravel-sef": "^1.0"
     },
     "autoload": {
@@ -50,6 +49,6 @@
         }
     },
     "require-dev": {
-        "laravel/framework": "^5.8"
+        "laravel/framework": "^7.0"
     }
 }

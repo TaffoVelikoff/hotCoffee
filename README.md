@@ -1,6 +1,6 @@
 # hotCoffee Admin Panel
 
-☕ Laravel admin panel package to kick start your new web app.
+☕ Laravel 7 admin panel package to kick start your new web app.
 
 🛠️ Created by [Taffo Velikoff](https://taffovelikoff.com) (TAVVO Ltd.), Bulgaria.
 
@@ -16,6 +16,8 @@
 [⚙️ Installation](#installation)
 
 [📚 Documentation](#documentation)
+
+[📜 TO DO LIST](#to-do)
 
 ## What is hotCoffee?
 
@@ -51,7 +53,7 @@ This package is **not a CMS** (or blogging system), but it could be used in buil
 
 ## Requirements
 
-Before installing hotCoffee make sure you have installed Laravel 5.8 or above and PHP 7.2 or newer.
+Before installing hotCoffee make sure you have installed Laravel 7.0 or above and PHP 7.2 or newer.
 
 ## Installation
 
@@ -93,7 +95,7 @@ namespace App;
 
 class User extends \TaffoVelikoff\HotCoffee\User
 {
-	//
+    //
 }
 
 ```
@@ -117,3 +119,7 @@ You can read the full documentation on https://taffo.gitbook.io/hotcoffee/
 
 ## License
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+## To Do
+⭕ Translatable fields view/helper function for the settings page
+⭕ Unit tests

@@ -45,13 +45,13 @@
                                 @case('text')
                                   <div class="input-group input-group-alternative mb-4 @if($errors->has($setting['name'])) has-danger is-invalid-alt @endif">
 
-                                    @if(isset($settings['icon']) && $setting['icon'] != null)
+                                    @if(isset($setting['icon']) && $setting['icon'] != null)
                                       <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="{{ $setting['icon'] }}"></i></span>
                                       </div>
                                     @endif
 
-                                    <input type="text" id="input-{{ $setting['name'] }}" class="form-control form-control-alternative" @if(session('post')) value="{{ session('post.'.$setting['name']) }}" @else value="{{ settings($setting['name']) }}" @endif name="{{ $setting['name'] }}" @if(isset($settings['required']) && $setting['required'] == true) required="" @endif>
+                                    <input type="text" id="input-{{ $setting['name'] }}" class="form-control form-control-alternative" @if(session('post')) value="{{ session('post.'.$setting['name']) }}" @else value="{{ settings($setting['name']) }}" @endif name="{{ $setting['name'] }}" @if(isset($setting['required']) && $setting['required'] == true) required="" @endif>
 
                                   </div>
                                   @break

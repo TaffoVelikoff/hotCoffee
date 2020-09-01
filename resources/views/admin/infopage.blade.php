@@ -74,7 +74,7 @@
                 @include('hotcoffee::admin.components.roles')
                 <!-- END ROLES -->
 
-                @if(config('hotcoffee.article_image_atts') == true)
+                @if(config('hotcoffee.infopages.image_attachments') == true)
                   @include('hotcoffee::admin.components.imgatt')
                 @endif
 

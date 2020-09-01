@@ -6,9 +6,6 @@ use App\User;
 use Illuminate\Http\Request;
 use TaffoVelikoff\HotCoffee\Role;
 use App\Http\Controllers\Controller;
-use TaffoVelikoff\HotCoffee\Events\UserCreated;
-use TaffoVelikoff\HotCoffee\Events\UserDeleted;
-use TaffoVelikoff\HotCoffee\Events\UserUpdated;
 use TaffoVelikoff\HotCoffee\Http\Requests\Admin\StoreUser;
 
 class UserController extends Controller
@@ -94,9 +91,6 @@ class UserController extends Controller
             'message'   => __('hotcoffee::admin.user_create_suc')
         ));
 
-        // Trigger event
-        event(new UserCreated($user));
-
         return redirect()->route('hotcoffee.admin.users.index');
 
     }
@@ -126,9 +120,6 @@ class UserController extends Controller
             'message'   => __('hotcoffee::admin.user_update_suc')
         ));
 
-        // Trigger event
-        event(new UserUpdated($user));
-
         return back();
 
     }
@@ -152,9 +143,6 @@ class UserController extends Controller
 
         // Delete user
         $user->delete();
-
-        // Trigger event
-        event(new UserDeleted);
 
         return array(
             'type'  => 'warning',

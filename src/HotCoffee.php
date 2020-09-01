@@ -2,6 +2,7 @@
 
 namespace TaffoVelikoff\HotCoffee;
 
+use Str;
 use File;
 use Route;
 
@@ -9,9 +10,10 @@ class HotCoffee
 {
 
 	protected $info;
-	protected $author;
+	protected $version;
 
 	public function __construct() {
+		$this->version = '1.1.0';
 		$this->info = $this->infoFromComposer();
 	}
 
@@ -43,7 +45,9 @@ class HotCoffee
 	 * @return Collection Returns a collection containing package information.
 	 */
 	public function infoFromComposer() {
-		return \Cache::remember('hotcoffee_info', \Carbon\Carbon::now()->addDays(30), function () {
+
+		// Get info from composer or cache
+		$info = \Cache::remember('hotcoffee_info', \Carbon\Carbon::now()->addDays(30), function () {
 			$composerJson = json_decode(File::get(__DIR__.'/../composer.json'));
 			$info = collect($composerJson)->only(['name', 'description', 'homepage', 'license']);
 			
@@ -53,6 +57,11 @@ class HotCoffee
 
 			return $info;
 		});
+
+		// Also put version info
+		$info->put('version', $this->version);
+		
+		return $info;
 	}
 
     /**
@@ -283,6 +292,7 @@ class HotCoffee
 	public function languageFields($fields = [], $edit = null) {
 		return view()->make('hotcoffee::admin.components.language_fields')
 			->with('fields', $fields)
+			->with('rid', Str::random(16)) // Random id to make it possible to have multiple groups of tabs on same page
 			->with('edit', $edit);
 	}
 

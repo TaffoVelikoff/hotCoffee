@@ -12,7 +12,7 @@ class InfoPage extends Model
 {
 
 	use HasTranslations, HasAttachment, HasSef, HasAccessRole;
-	
+
 	public $translatable = ['title', 'content', 'meta_desc'];
 
 	/**

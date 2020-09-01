@@ -6,9 +6,6 @@ use Image;
 use Illuminate\Http\Request;
 use TaffoVelikoff\HotCoffee\Role;
 use App\Http\Controllers\Controller;
-use TaffoVelikoff\HotCoffee\Events\InfoPageCreated;
-use TaffoVelikoff\HotCoffee\Events\InfoPageUpdated;
-use TaffoVelikoff\HotCoffee\Events\InfoPageDeleted;
 use TaffoVelikoff\HotCoffee\Http\Requests\Admin\StoreInfoPage;
 use TaffoVelikoff\HotCoffee\InfoPage;
 
@@ -90,9 +87,6 @@ class InfoPageController extends Controller
 			'message'   => __('hotcoffee::admin.page_create_suc')
 		));
 
-		// Trigger event
-		event(new InfoPageCreated($info));
-
 		return redirect()->route('hotcoffee.admin.infopages.index');
 
 	}
@@ -126,9 +120,6 @@ class InfoPageController extends Controller
 			'message'	=> __('hotcoffee::admin.page_update_suc')
 		));
 
-		// Trigger event
-		event(new InfoPageUpdated($info));
-
 		return redirect()->route('hotcoffee.admin.infopages.index');
 
 	}
@@ -142,9 +133,6 @@ class InfoPageController extends Controller
 		$info = InfoPage::findOrFail($id);
 
 		$info->delete();
-
-		// Trigger event
-		event(new InfoPageDeleted);
 
 		return array(
 			'type'  => 'warning',
