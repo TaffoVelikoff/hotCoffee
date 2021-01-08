@@ -2,7 +2,6 @@
 
 namespace TaffoVelikoff\HotCoffee\Console;
 
-use App\User;
 use Illuminate\Console\Command;
 
 class DeleteUser extends Command {
@@ -36,7 +35,7 @@ class DeleteUser extends Command {
 	public function handle() {
 
         // Get user
-        $user = User::where('email', $this->argument('email'))->first();
+        $user = config('hotcoffee.users.model')::where('email', $this->argument('email'))->first();
         
         // Check if exists
         if(!$user) {

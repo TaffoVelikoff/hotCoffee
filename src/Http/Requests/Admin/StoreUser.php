@@ -2,7 +2,6 @@
 
 namespace TaffoVelikoff\HotCoffee\Http\Requests\Admin;
 
-use App\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 

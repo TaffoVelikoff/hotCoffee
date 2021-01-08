@@ -2,7 +2,6 @@
 
 namespace TaffoVelikoff\HotCoffee\Http\Controllers\Exports;
 
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Concerns\Exportable;

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Cache;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use TaffoVelikoff\HotCoffee\Login;
 use App\Http\Controllers\Controller;

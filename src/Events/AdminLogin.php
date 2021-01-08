@@ -2,7 +2,6 @@
 
 namespace TaffoVelikoff\HotCoffee\Events;
 
-use App\User;
 use Illuminate\Queue\SerializesModels;
 
 class AdminLogin
@@ -14,11 +13,10 @@ class AdminLogin
     /**
      * Create a new event instance.
      *
-     * @param  \App\User  $user
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct()
     {
-        $this->user = $user;
+        $this->user = auth()->user();
     }
 }

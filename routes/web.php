@@ -87,10 +87,10 @@ Route::group(['namespace' => '\TaffoVelikoff\HotCoffee\Http\Controllers'], funct
 				Route::get('/create', 'Admin\UserController@create')->name('hotcoffee.admin.users.create');
 				Route::post('/', 'Admin\UserController@store')->name('hotcoffee.admin.users.store');
 
-				Route::get('/{user}', 'Admin\UserController@edit')->name('hotcoffee.admin.users.edit');
-				Route::post('/{user}', 'Admin\UserController@update')->name('hotcoffee.admin.users.update');
+				Route::get('/{id}', 'Admin\UserController@edit')->name('hotcoffee.admin.users.edit');
+				Route::post('/{id}', 'Admin\UserController@update')->name('hotcoffee.admin.users.update');
 
-				Route::delete('/{user}', 'Admin\UserController@destroy')->name('hotcoffee.admin.users.destroy');
+				Route::delete('/{id}', 'Admin\UserController@destroy')->name('hotcoffee.admin.users.destroy');
 			});
 
 			// User roles

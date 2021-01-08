@@ -81,7 +81,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      */
     public function address() {
-        return $this->hasOne(config('hotcoffee.users.model'));
+        return $this->hasOne(config('hotcoffee.users.address_model'));
     }
 
     //===== SETTERS =====//

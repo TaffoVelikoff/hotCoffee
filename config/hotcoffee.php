@@ -1,4 +1,4 @@
- <?php
+<?php
 
 /**
  | hotCoffee package configuration
@@ -361,7 +361,7 @@ return [
 
     'exportables' => [
 
-        'App\User' => [ // Model export
+        'App\Models\User' => [ // Model export
             'name'      => 'hotcoffee::admin.users',
             'type'      => 'model',
             'fields'    => ['name', 'email', 'created_at'],

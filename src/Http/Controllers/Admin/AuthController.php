@@ -3,7 +3,6 @@
 namespace TaffoVelikoff\HotCoffee\Http\Controllers\Admin;
 
 use View;
-use App\User;
 use Illuminate\Http\Request;
 use TaffoVelikoff\HotCoffee\Login;
 use App\Http\Controllers\Controller;

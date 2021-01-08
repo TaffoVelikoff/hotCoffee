@@ -12,13 +12,25 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | User Address Model
+    | User Model
     |--------------------------------------------------------------------------
-    | This allows to extend the model.
+    | Older versions of Laravel did not ship with a "models" folder.
+    | If your models are in the root of "app" and not in "app/models" you
+    | can change this to "\App\User::class"
     |
     */
 
-    'model'    => \TaffoVelikoff\HotCoffee\UserAddress::class, // \App\UserAddress
+    'model'            => \App\Models\User::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | User Address Model
+    |--------------------------------------------------------------------------
+    | This allows to extend the user address model.
+    |
+    */
+
+    'address_model'    => \TaffoVelikoff\HotCoffee\UserAddress::class, // \App\UserAddress
 
     /**
     | UI

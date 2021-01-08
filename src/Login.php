@@ -17,6 +17,6 @@ class Login extends Model
      * User relationship
      */
     public function user() {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(config('hotcoffee.users.model'));
     }
 }

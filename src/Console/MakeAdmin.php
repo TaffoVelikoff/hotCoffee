@@ -2,7 +2,6 @@
 
 namespace TaffoVelikoff\HotCoffee\Console;
 
-use App\User;
 use Illuminate\Console\Command;
 
 class MakeAdmin extends Command {
@@ -70,7 +69,7 @@ class MakeAdmin extends Command {
         if($repeat == $password) {
 
         	// Create user
-        	$user = User::create([
+        	$user = config('hotcoffee.users.model')::create([
 				'name'	=> $name,
 				'email' => $email,
 				'password' => $password

@@ -2,7 +2,6 @@
 
 namespace TaffoVelikoff\HotCoffee\Http\Controllers\Admin;
 
-use App\User;
 use Illuminate\Http\Request;
 use TaffoVelikoff\HotCoffee\Role;
 use App\Http\Controllers\Controller;
@@ -16,7 +15,7 @@ class UserController extends Controller
     public function index() {
 
         // All users
-        $users = User::paginate(settings('paginate'));
+        $users = config('hotcoffee.users.model')::paginate(settings('paginate'));
         view()->share('users', $users);
 
         // Custom page name
@@ -44,7 +43,9 @@ class UserController extends Controller
     /**
      * Edit
      */
-    public function edit(User $user) {
+    public function edit($id) {
+
+        $user = config('hotcoffee.users.model')::findOrfail($id);
 
         // Send user view
         view()->share('edit', $user);
@@ -70,7 +71,7 @@ class UserController extends Controller
     public function store(StoreUser $request) {
 
         // Store user
-        $user = User::create($request->all());
+        $user = config('hotcoffee.users.model')::create($request->all());
 
         $user->address()->create(array_merge(
             ['user_id' => $user->id],
@@ -100,7 +101,9 @@ class UserController extends Controller
      *
      * @param  StoreUser  $request
      */
-    public function update(User $user, StoreUser $request) {
+    public function update($id, StoreUser $request) {
+
+        $user = config('hotcoffee.users.model')::findOrfail($id);
 
         // Update user
         (empty($request->get('password'))) ? $user->update($request->except('password')) : $user->update($request->all());
@@ -130,8 +133,10 @@ class UserController extends Controller
      * @param int $user
      * @return array
      */
-    public function destroy(User $user) {
+    public function destroy($id) {
 
+        $user = config('hotcoffee.users.model')::findOrfail($id);
+        
         // Root admin can't be deleted
         if($user->id == 1) {
             return array(
