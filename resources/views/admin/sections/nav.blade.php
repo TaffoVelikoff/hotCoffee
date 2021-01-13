@@ -8,7 +8,7 @@
       </button>
 
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="{{ route('hotcoffee.admin.dashboard') }}">
+      <a class="navbar-brand pt-0" href="{{ route(config('hotcoffee.home_route')) }}">
         <img src="{{ coffee_logo() }}" />
       </a>
 

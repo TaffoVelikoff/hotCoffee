@@ -25,7 +25,6 @@ class InfoPageController extends Controller
 		return view('front.infopage', [
 			'page' 		=> $page,
 			'metaTitle'	=> $page->title,
-			
 		]);
 
     }

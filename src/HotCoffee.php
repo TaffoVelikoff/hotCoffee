@@ -13,7 +13,7 @@ class HotCoffee
 	protected $version;
 
 	public function __construct() {
-		$this->version = '1.1.1';
+		$this->version = '1.1.3';
 		$this->info = $this->infoFromComposer();
 	}
 

@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Http\Controllers\Front\HomeController;
+
 /**
  * ADMIN
  * Below are all custom admin routes for your application.
@@ -10,8 +13,11 @@ Route::group(['prefix' => config('hotcoffee.prefix'), 'middleware' => ['hotcoffe
 
     // ===== ANY CUSTOM ROUTES FOR YOUR ADMIN ZONE SHOULD GO HERE ===== //
 
-    // Dashboard
-    Route::get('/dashboard', 'Admin\DashboardController@index')->name('hotcoffee.admin.dashboard');
+    //Route::get('/example', [ExampleController::class, 'method'])->name('admin.example');
+
+    // Alternatively you can run "php artisan hotcoffee:publish-routes" if you prefer or need to edit
+    // any of the admin routes. Read more in the documentation.
+
 });
 
 /**
@@ -20,10 +26,11 @@ Route::group(['prefix' => config('hotcoffee.prefix'), 'middleware' => ['hotcoffe
  */
 
 // ===== ADD YOUR ROUTES HERE ===== //
-Route::get('/', 'Front\HomeController@index')->name('home');
-Route::get('/internal_page', 'Front\HomeController@internal')->name('internal');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/internal_page', [HomeController::class, 'internal'])->name('internal');
 
 /**
- * For models with the HasSef trait. Read more on https://github.com/TaffoVelikoff/laravel-sef
+ * For models with the HasSef trait. Always keep on bottom. 
+ * Read more on https://github.com/TaffoVelikoff/laravel-sef
  */
-Route::get('{keyword}', '\TaffoVelikoff\LaravelSef\Http\Controllers\SefController@viaProperty')->name('sef');
+Route::get('{keyword}', [TaffoVelikoff\LaravelSef\Http\Controllers\SefController::class, 'viaProperty'])->name('sef');

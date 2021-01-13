@@ -29,7 +29,7 @@ class AuthController extends Controller
     public function index() {
 
     	if(auth()->user()) {
-    		return redirect()->intended('admin/dashboard');
+    		return redirect()->route(config('hotcoffee.home_route'));
     	}
 
     	return View('hotcoffee::admin.login');
@@ -79,7 +79,7 @@ class AuthController extends Controller
             event(new AdminLogin(auth()->user()));
 
             // Redirect
-			return redirect()->route(config('hotcoffee.start_route'));
+			return redirect()->route(config('hotcoffee.home_route'));
 		}
 
         $this->incrementLoginAttempts(request());

@@ -2,36 +2,31 @@
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| HotCoffee Admin Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
 |
 */
 
 Route::group(['namespace' => '\TaffoVelikoff\HotCoffee\Http\Controllers'], function () {
 
-	//===== THUMBNAILER =====//
-	Route::get('/img/{path}', 'ThumbnailController@show')->where('path', '.*')->name('hotcoffee.thumbnail');
-
 	//===== ADMIN =====//
 	Route::group(['prefix' => config('hotcoffee.prefix')], function () {
 
-		// NO AUTH
+		// Below are defined routes for which a user DOES NOT NEED to be authenticated.
 		Route::get('/', 'Admin\AuthController@index');
 		Route::get('/login', 'Admin\AuthController@index')->name('hotcoffee.admin.login');
 		Route::post('/auth', 'Admin\AuthController@authenticate')->name('hotcoffee.admin.auth');
 
-		// AUTH
+		// Below are defined routes for which a user DOES NEED to be authenticated.
 		Route::group(['middleware' => ['hotcoffee']], function () {
 
 			// Dashboard
 			Route::get('/dashboard', '\App\Http\Controllers\Admin\DashboardController@index')->name('hotcoffee.admin.dashboard');
 
+			// ====== YOU CAN ADD YOUR CUSTOM ADMIN ROUTES HERE ===== //
+
 			// Articles
-			Route::group(['prefix' => 'article'], function () {
+			Route::group(['prefix' => 'articles'], function () {
 				Route::get('/', 'Admin\ArticleController@index')->name('hotcoffee.admin.articles.index');
 
 				Route::get('/create', 'Admin\ArticleController@create')->name('hotcoffee.admin.articles.create');
@@ -144,9 +139,12 @@ Route::group(['namespace' => '\TaffoVelikoff\HotCoffee\Http\Controllers'], funct
 		});
 
 	});
+
+	//===== THUMBNAILER =====//
+	Route::get('/img/{path}', 'ThumbnailController@show')->where('path', '.*')->name('hotcoffee.thumbnail');
 });
 
-//== FILEMANAGER ==//
+//===== FILEMANAGER =====//
 if (config('lfm.use_package_routes')) {
     Route::group(['prefix' => 'filemanager', 'middleware' => ['hotcoffee']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();

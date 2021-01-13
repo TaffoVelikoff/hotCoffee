@@ -58,6 +58,7 @@ class HotCoffeeServiceProvider extends ServiceProvider {
 			Console\DeleteUser::class,
 			Console\Install::class,
 			Console\Module::class,
+			Console\PublishRoutes::class,
 		]);
 	}
 
