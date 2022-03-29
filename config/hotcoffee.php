@@ -34,15 +34,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Starting Route
+    | Home Route
     |--------------------------------------------------------------------------
     |
     | The name of the default route where the admin users are redirected to when 
-    | they login.
+    | they login. By default it is the dashboard.
     |
     */
 
-    'start_route'   => 'hotcoffee.admin.dashboard',
+    'home_route'   => 'hotcoffee.admin.dashboard',
 
     /*
     |--------------------------------------------------------------------------
