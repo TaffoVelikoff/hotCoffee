@@ -20,7 +20,7 @@
         "illuminate/database": "^11.0|^12.0",
         "spatie/laravel-translatable": "^6.12",
         "maatwebsite/excel": "^3.1.67",
-        "intervention/image": "^3.11",
+        "intervention/image": ">=3.1", 
         "intervention/image-laravel": "^1.2",
         "spatie/valuestore": "^1.3",
         "league/glide": "^3.0",
@@ -32,7 +32,7 @@
         "laravel/framework": "^12.0",
         "phpunit/phpunit": "^11.0",
         "nunomaduro/collision": "^8.1"
-    },
+    }
     "autoload": {
         "psr-4": {
             "TaffoVelikoff\\HotCoffee\\": "src/",
