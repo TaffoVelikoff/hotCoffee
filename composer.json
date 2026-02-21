@@ -32,7 +32,7 @@
         "laravel/framework": "^12.0",
         "phpunit/phpunit": "^11.0",
         "nunomaduro/collision": "^8.1"
-    }
+    },
     "autoload": {
         "psr-4": {
             "TaffoVelikoff\\HotCoffee\\": "src/",
